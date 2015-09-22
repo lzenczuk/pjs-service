@@ -10,6 +10,7 @@ repositories {
 dependencies {
     compile 'org.seleniumhq.selenium:selenium-java:2.47.1'
     compile 'com.github.detro.ghostdriver:phantomjsdriver:1.1.0'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.6.1'
 
     testCompile 'commons-io:commons-io:2.4'
     testCompile 'junit:junit:4.11'

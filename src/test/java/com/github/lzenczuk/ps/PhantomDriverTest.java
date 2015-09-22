@@ -1,9 +1,14 @@
 package com.github.lzenczuk.ps;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.lzenczuk.ps.log.LogContainer;
 import org.apache.commons.io.FileUtils;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.logging.LogEntries;
 import org.openqa.selenium.phantomjs.PhantomJSDriverService;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -136,6 +141,48 @@ public class PhantomDriverTest {
         }
 
         assertThat(result, hasItems("Bloomberg", "Bing"));
+    }
+
+    @Test
+    public void checkingLogs(){
+
+        DesiredCapabilities phantomjs = DesiredCapabilities.phantomjs();
+
+        System.out.println(phantomjs);
+
+
+        RemoteWebDriver driver = new RemoteWebDriver(service.getUrl(), phantomjs);
+
+        driver.get("http://notexistingpage.com/");
+        log(driver);
+
+        driver.get("http://www.bloomberg.com/");
+        log(driver);
+
+        driver.get("http://www.bloomberg.com/blablabla");
+        log(driver);
+
+        driver.close();
+    }
+
+    private void log(RemoteWebDriver driver) {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.setVisibility(mapper.getVisibilityChecker().withFieldVisibility(JsonAutoDetect.Visibility.ANY));
+
+        WebDriver.Options options = driver.manage();
+        LogEntries browserLogs = options.logs().get("har");
+
+        browserLogs.getAll().stream().forEach(le -> {
+
+            try {
+                LogContainer log = mapper.readValue(le.getMessage(), LogContainer.class);
+
+                System.out.println("> " + log.result().isSuccessful());
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     @Test
