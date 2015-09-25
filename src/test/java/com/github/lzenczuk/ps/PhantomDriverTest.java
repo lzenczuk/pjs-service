@@ -13,8 +13,13 @@ import org.openqa.selenium.phantomjs.PhantomJSDriverService;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
+import javax.script.SimpleBindings;
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -186,12 +191,32 @@ public class PhantomDriverTest {
     }
 
     @Test
+    public void shouldConnectToPhantomjsAndFetchWikipediaPageAndContext(){
+
+        RemoteWebDriver driver = new RemoteWebDriver(service.getUrl(), DesiredCapabilities.phantomjs());
+
+        Map<String, Object> context = new HashMap<>();
+        context.put("label", "Title");
+
+        String initScript = "var context=arguments[0];";
+
+        driver.get("https://www.wikipedia.org/");
+        Object result = driver.executeScript(initScript + "return context.label+': '+document.title", context);
+
+        assertThat(result.toString(), is("Title: Wikipedia"));
+
+        driver.close();
+    }
+
+    @Test
     public void shouldFetchJsonResultAsMap(){
 
         RemoteWebDriver driver = new RemoteWebDriver(service.getUrl(), DesiredCapabilities.phantomjs());
 
         driver.get("http://www.bing.com/");
         Object resultObject = driver.executeScript("return { title: document.title}");
+
+        WebDriver.Navigation navigation = driver.navigate();
 
         assertThat(resultObject.getClass(), typeCompatibleWith(Map.class));
 
@@ -209,5 +234,42 @@ public class PhantomDriverTest {
         assertThat(resultJsonString.getClass(), typeCompatibleWith(String.class));
 
         driver.close();
+    }
+
+    /**
+     * Unified method of executing scripts in nashorn and phantomjs
+     */
+    @Test
+    public void shouldExecuteScript() {
+
+        String jsScript =
+                "function main(input, ctx){" +
+                        "var name = ctx.name;" +
+                        "ctx.in = input;" +
+                        "ctx.name = ctx.name+'Test';" +
+                        "return input+12" +
+                        "}";
+
+        String execScript =
+                ";ctx=arguments[0];" +
+                        "return {out: main(arguments[1], ctx), context: ctx};";
+
+        Map<String, Object> ctx = new HashMap<>();
+        ctx.put("name", "Mark");
+
+        Object param = "Test1";
+
+        RemoteWebDriver engine = new RemoteWebDriver(service.getUrl(), DesiredCapabilities.phantomjs());
+
+        System.out.println("Ctx: "+ctx);
+
+        Map<String, Object> result = (Map<String, Object>) engine.executeScript(jsScript+execScript, ctx, param);
+        Object out = result.get("out");
+        ctx = (Map<String, Object>) result.get("context");
+
+        System.out.println("Out: "+out);
+        System.out.println("Ctx: "+ctx);
+
+        engine.close();
     }
 }
