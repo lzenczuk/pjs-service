@@ -24,7 +24,8 @@ public class NashornScriptExecutor implements ScriptExecutor {
     @Override
     public ScriptExecutionResult executeScript(String script, Map<String, Object> ctx, Object input) {
 
-        HashMap<String, Object> internalContextMap = new HashMap<>(ctx);
+        // Nashorn updating objects send as parameter. This unify it behavior with PhantomJS
+        HashMap<String, Object> internalContextMap = ctx == null ? new HashMap<>() : new HashMap<>(ctx);
 
         try {
             engine.eval(script);

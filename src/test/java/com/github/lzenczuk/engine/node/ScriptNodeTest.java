@@ -5,6 +5,7 @@ import com.github.lzenczuk.ps.engine.node.NodeExecutionResult;
 import com.github.lzenczuk.ps.engine.node.ScriptNode;
 import com.github.lzenczuk.ps.engine.node.slots.Slots;
 import com.github.lzenczuk.ps.engine.node.slots.SlotsValidationResult;
+import com.github.lzenczuk.ps.engine.script.ScriptExecutorManager;
 import com.github.lzenczuk.ps.engine.script.phantomjs.PhantomJSScriptExecutor;
 import org.junit.Test;
 
@@ -35,14 +36,17 @@ public class ScriptNodeTest {
 
             scriptExecutor = new PhantomJSScriptExecutor();
 
+            ScriptExecutorManager scriptExecutorManager = new ScriptExecutorManager();
+            scriptExecutorManager.addExecutor("ph", scriptExecutor);
+
             Slots slotsMock = mock(Slots.class);
-            Node nextNode = (ctx, input) -> null;
+            Node nextNode = (ctx, input, sem) -> null;
 
             when(slotsMock.getNextNode(anyMap(), any(), any())).thenReturn(new SlotsValidationResult(nextNode));
 
-            ScriptNode node = new ScriptNode(script, slotsMock, scriptExecutor);
+            ScriptNode node = new ScriptNode(script, slotsMock, "ph");
 
-            NodeExecutionResult result = node.execute(Collections.singletonMap("n", 4), "test");
+            NodeExecutionResult result = node.execute(Collections.singletonMap("n", 4), "test", scriptExecutorManager);
 
             assertThat(result, is(notNullValue()));
 
@@ -74,14 +78,17 @@ public class ScriptNodeTest {
 
             scriptExecutor = new PhantomJSScriptExecutor();
 
+            ScriptExecutorManager scriptExecutorManager = new ScriptExecutorManager();
+            scriptExecutorManager.addExecutor("ph", scriptExecutor);
+
             Slots slotsMock = mock(Slots.class);
-            Node nextNode = (ctx, input) -> null;
+            Node nextNode = (ctx, input, sem) -> null;
 
             when(slotsMock.getNextNode(anyMap(), any(), any())).thenReturn(new SlotsValidationResult(nextNode));
 
-            ScriptNode node = new ScriptNode(script, slotsMock, scriptExecutor);
+            ScriptNode node = new ScriptNode(script, slotsMock);
 
-            NodeExecutionResult result = node.execute(Collections.singletonMap("n", 4), "test");
+            NodeExecutionResult result = node.execute(Collections.singletonMap("n", 4), "test", scriptExecutorManager);
 
             assertThat(result, is(notNullValue()));
             assertThat(result.isError(), is(true));
@@ -106,13 +113,16 @@ public class ScriptNodeTest {
 
             scriptExecutor = new PhantomJSScriptExecutor();
 
+            ScriptExecutorManager scriptExecutorManager = new ScriptExecutorManager();
+            scriptExecutorManager.addExecutor("ph", scriptExecutor);
+
             Slots slotsMock = mock(Slots.class);
 
             when(slotsMock.getNextNode(anyMap(), any(), any())).thenReturn(new SlotsValidationResult("Error message"));
 
-            ScriptNode node = new ScriptNode(script, slotsMock, scriptExecutor);
+            ScriptNode node = new ScriptNode(script, slotsMock);
 
-            NodeExecutionResult result = node.execute(Collections.singletonMap("n", 4), "test");
+            NodeExecutionResult result = node.execute(Collections.singletonMap("n", 4), "test", scriptExecutorManager);
 
             assertThat(result, is(notNullValue()));
             assertThat(result.isError(), is(true));

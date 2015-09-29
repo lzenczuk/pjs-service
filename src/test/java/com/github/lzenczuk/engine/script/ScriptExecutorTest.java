@@ -219,4 +219,60 @@ public class ScriptExecutorTest {
             if(scriptExecutor!=null) scriptExecutor.shutDown();
         }
     }
+
+    @Test
+    public void nullInput() throws IOException {
+
+        String script = "function main(input, ctx){" +
+                "return ctx.n+2" +
+                "}";
+
+        ScriptExecutor scriptExecutor=null;
+
+        try {
+            scriptExecutor = new PhantomJSScriptExecutor();
+
+            ScriptExecutionResult result = scriptExecutor.executeScript(script, Collections.singletonMap("n", 4), null);
+            assertThat(result.getOutPut(), equalTo(6L));
+        }finally {
+            if(scriptExecutor!=null) scriptExecutor.shutDown();
+        }
+
+        try {
+            scriptExecutor = new NashornScriptExecutor();
+
+            ScriptExecutionResult result = scriptExecutor.executeScript(script, Collections.singletonMap("n", 4), null);
+            assertThat(result.getOutPut(), equalTo(6.0));
+        }finally {
+            if(scriptExecutor!=null) scriptExecutor.shutDown();
+        }
+    }
+
+    @Test
+    public void nullCtx() throws IOException {
+
+        String script = "function main(input, ctx){" +
+                "return input+2" +
+                "}";
+
+        ScriptExecutor scriptExecutor=null;
+
+        try {
+            scriptExecutor = new PhantomJSScriptExecutor();
+
+            ScriptExecutionResult result = scriptExecutor.executeScript(script, null, 4);
+            assertThat(result.getOutPut(), equalTo(6L));
+        }finally {
+            if(scriptExecutor!=null) scriptExecutor.shutDown();
+        }
+
+        try {
+            scriptExecutor = new NashornScriptExecutor();
+
+            ScriptExecutionResult result = scriptExecutor.executeScript(script, null, 4);
+            assertThat(result.getOutPut(), equalTo(6.0));
+        }finally {
+            if(scriptExecutor!=null) scriptExecutor.shutDown();
+        }
+    }
 }

@@ -34,8 +34,8 @@ public class SlotsTest {
 
             scriptExecutor = new PhantomJSScriptExecutor();
 
-            Node n1= (ctx, input) -> null;
-            Node n2= (ctx, input) -> null;
+            Node n1= (ctx, input, sem) -> null;
+            Node n2= (ctx, input, sem) -> null;
 
             Slot s1 = new Slot(falseScript, n1);
             Slot s2 = new Slot(trueScript, n2);
@@ -90,8 +90,8 @@ public class SlotsTest {
 
             scriptExecutor = new PhantomJSScriptExecutor();
 
-            Node n1= (ctx, input) -> null;
-            Node n2= (ctx, input) -> null;
+            Node n1= (ctx, input, sem) -> null;
+            Node n2= (ctx, input, sem) -> null;
 
             Slot s1 = new Slot(falseScript, n1);
             Slot s2 = new Slot(falseScript, n2);
@@ -124,8 +124,8 @@ public class SlotsTest {
 
             scriptExecutor = new PhantomJSScriptExecutor();
 
-            Node n1= (ctx, input) -> null;
-            Node n2= (ctx, input) -> null;
+            Node n1= (ctx, input, sem) -> null;
+            Node n2= (ctx, input, sem) -> null;
 
             Slot s1 = new Slot(errorScript, n1);
             Slot s2 = new Slot(errorScript, n2);

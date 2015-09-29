@@ -4,6 +4,7 @@ import com.github.lzenczuk.ps.engine.node.slots.Slots;
 import com.github.lzenczuk.ps.engine.node.slots.SlotsValidationResult;
 import com.github.lzenczuk.ps.engine.script.ScriptExecutionResult;
 import com.github.lzenczuk.ps.engine.script.ScriptExecutor;
+import com.github.lzenczuk.ps.engine.script.ScriptExecutorManager;
 
 import java.util.Map;
 
@@ -13,31 +14,39 @@ import java.util.Map;
 public class ScriptNode implements Node {
 
     private String script;
-    private ScriptExecutor scriptExecutor;
-
     private Slots slots;
+    private String executorName;
 
-    public ScriptNode(String script, Slots slots, ScriptExecutor scriptExecutor) {
+    public ScriptNode(String script, Slots slots) {
         this.script = script;
-        this.scriptExecutor = scriptExecutor;
         this.slots = slots;
     }
 
+    public ScriptNode(String script, Slots slots, String executorName) {
+        this.script = script;
+        this.slots = slots;
+        this.executorName = executorName;
+    }
+
     @Override
-    public NodeExecutionResult execute(Map<String, Object> ctx, Object input){
+    public NodeExecutionResult execute(Map<String, Object> ctx, Object input, ScriptExecutorManager executorManager){
 
-        ScriptExecutionResult scriptExecutionResult = scriptExecutor.executeScript(script, ctx, input);
+        return executorManager.getExecutor(executorName).map(scriptExecutor -> {
+            ScriptExecutionResult scriptExecutionResult = scriptExecutor.executeScript(script, ctx, input);
 
-        if(scriptExecutionResult.isError()){
-            return new NodeExecutionResult(scriptExecutionResult.getErrorMessage());
-        }
+            if(scriptExecutionResult.isError()){
+                return new NodeExecutionResult(scriptExecutionResult.getErrorMessage());
+            }
 
-        SlotsValidationResult slotsValidationResult = slots.getNextNode(scriptExecutionResult.getCtx(), scriptExecutionResult.getOutPut(), scriptExecutor);
+            SlotsValidationResult slotsValidationResult = slots.getNextNode(scriptExecutionResult.getCtx(), scriptExecutionResult.getOutPut(), scriptExecutor);
 
-        if(slotsValidationResult.isError()){
-            return new NodeExecutionResult(slotsValidationResult.getErrorMessage());
-        }
+            if(slotsValidationResult.isError()){
+                return new NodeExecutionResult(slotsValidationResult.getErrorMessage());
+            }
 
-        return new NodeExecutionResult(scriptExecutionResult.getCtx(), scriptExecutionResult.getOutPut(), slotsValidationResult.getNextNode());
+            return new NodeExecutionResult(scriptExecutionResult.getCtx(), scriptExecutionResult.getOutPut(), slotsValidationResult.getNextNode());
+        }).orElse(new NodeExecutionResult("Script executor: " + executorName + " not found."));
+
+
     }
 }
