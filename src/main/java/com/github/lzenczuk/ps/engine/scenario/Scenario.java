@@ -35,6 +35,6 @@ public class Scenario {
 
         activeNode = result.getNextNode();
 
-        return new ScenarioExecutionResult(ctx, result.getOutPut());
+        return new ScenarioExecutionResult(result.getCtx(), result.getOutPut());
     }
 }

@@ -14,8 +14,11 @@ import java.util.Map;
 public class ScriptNode implements Node {
 
     private String script;
-    private Slots slots;
+    private Slots slots = new Slots();
     private String executorName;
+
+    public ScriptNode() {
+    }
 
     public ScriptNode(String script, Slots slots) {
         this.script = script;
@@ -46,7 +49,17 @@ public class ScriptNode implements Node {
 
             return new NodeExecutionResult(scriptExecutionResult.getCtx(), scriptExecutionResult.getOutPut(), slotsValidationResult.getNextNode());
         }).orElse(new NodeExecutionResult("Script executor: " + executorName + " not found."));
+    }
 
+    public void setExecutorName(String executorName) {
+        this.executorName = executorName;
+    }
 
+    public void setScript(String script) {
+        this.script = script;
+    }
+
+    public void setSlots(Slots slots) {
+        this.slots = slots;
     }
 }

@@ -14,6 +14,9 @@ public class Slot {
     private String script;
     private Node node;
 
+    public Slot() {
+    }
+
     public Slot(String script, Node node) {
         this.node = node;
         this.script = script;
@@ -33,11 +36,16 @@ public class Slot {
         }
     }
 
+    // TODO - is it sens to have getter instead return node as result
     public Node getNode() {
         return node;
     }
 
     public void setNode(Node node) {
         this.node = node;
+    }
+
+    public void setScript(String script) {
+        this.script = script;
     }
 }

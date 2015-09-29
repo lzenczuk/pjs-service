@@ -26,4 +26,30 @@ public class ScenarioExecutionResult {
         this.ctx = null;
         this.output = null;
     }
+
+    public Map<String, Object> getCtx() {
+        return ctx;
+    }
+
+    public boolean isError() {
+        return error;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public Object getOutput() {
+        return output;
+    }
+
+    @Override
+    public String toString() {
+        return "ScenarioExecutionResult{" +
+                "ctx=" + ctx +
+                ", error=" + error +
+                ", errorMessage='" + errorMessage + '\'' +
+                ", output=" + output +
+                '}';
+    }
 }
