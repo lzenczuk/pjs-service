@@ -1,6 +1,5 @@
 package com.github.lzenczuk.jjs;
 
-import com.github.lzenczuk.ps.engine.ScriptExecutor;
 import org.junit.Test;
 
 import javax.script.*;
@@ -8,7 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
 
 /**
  * @author lzenczuk 23/09/2015

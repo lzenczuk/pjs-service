@@ -1,6 +1,11 @@
-package com.github.lzenczuk.ps.engine;
+package com.github.lzenczuk.ps.engine.script.phantomjs;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.lzenczuk.ps.engine.script.ScriptExecutionResult;
+import com.github.lzenczuk.ps.engine.script.ScriptExecutor;
+import com.github.lzenczuk.ps.engine.script.phantomjs.internal.PhantomJsErrorMessage;
 import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.phantomjs.PhantomJSDriverService;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -17,11 +22,16 @@ public class PhantomJSScriptExecutor implements ScriptExecutor {
     private RemoteWebDriver engine;
     private final PhantomJSDriverService service;
 
+    private ObjectMapper mapper;
+
     private String execScript =
             ";ctx=arguments[0];" +
                     "return {out: main(arguments[1], ctx), context: ctx};";
 
     public PhantomJSScriptExecutor() throws IOException {
+
+        mapper = new ObjectMapper();
+
         URL phantomjsExecutable = PhantomJSScriptExecutor.class.getResource("/phantomjs/linux/phantomjs");
 
         service = new PhantomJSDriverService.Builder()
@@ -37,9 +47,23 @@ public class PhantomJSScriptExecutor implements ScriptExecutor {
     @Override
     public ScriptExecutionResult executeScript(String script, Map<String, Object> ctx, Object input) {
 
-        Map<String, Object> result = (Map<String, Object>) engine.executeScript(script+execScript, ctx, input);
+        try {
+            Map<String, Object> result = (Map<String, Object>) engine.executeScript(script + execScript, ctx, input);
 
-        return new ScriptExecutionResult((Map<String, Object>) result.get("context"), result.get("out"));
+            return new ScriptExecutionResult((Map<String, Object>) result.get("context"), result.get("out"));
+        }catch (WebDriverException e){
+
+            return new ScriptExecutionResult(extractErrorMessage(e.getMessage()));
+        }
+    }
+
+    private String extractErrorMessage(String rawErrorMessage) {
+        try {
+            PhantomJsErrorMessage phantomJsErrorMessage = mapper.readValue(rawErrorMessage, PhantomJsErrorMessage.class);
+            return phantomJsErrorMessage.getErrorMessage();
+        } catch (IOException e) {
+            return rawErrorMessage;
+        }
     }
 
     @Override

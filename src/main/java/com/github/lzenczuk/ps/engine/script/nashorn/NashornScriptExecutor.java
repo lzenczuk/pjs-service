@@ -1,4 +1,7 @@
-package com.github.lzenczuk.ps.engine;
+package com.github.lzenczuk.ps.engine.script.nashorn;
+
+import com.github.lzenczuk.ps.engine.script.ScriptExecutionResult;
+import com.github.lzenczuk.ps.engine.script.ScriptExecutor;
 
 import javax.script.Invocable;
 import javax.script.ScriptEngine;
@@ -29,13 +32,9 @@ public class NashornScriptExecutor implements ScriptExecutor {
             Object out = inv.invokeFunction("main", input, internalContextMap);
 
             return new ScriptExecutionResult(internalContextMap, out);
-        } catch (ScriptException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
+        } catch (ScriptException | NoSuchMethodException e) {
+            return new ScriptExecutionResult(e.getMessage());
         }
-
-        return null;
     }
 
     @Override

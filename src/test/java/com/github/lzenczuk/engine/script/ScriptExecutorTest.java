@@ -1,16 +1,14 @@
-package com.github.lzenczuk.engine;
+package com.github.lzenczuk.engine.script;
 
-import com.github.lzenczuk.ps.engine.NashornScriptExecutor;
-import com.github.lzenczuk.ps.engine.PhantomJSScriptExecutor;
-import com.github.lzenczuk.ps.engine.ScriptExecutionResult;
-import com.github.lzenczuk.ps.engine.ScriptExecutor;
+import com.github.lzenczuk.ps.engine.script.nashorn.NashornScriptExecutor;
+import com.github.lzenczuk.ps.engine.script.phantomjs.PhantomJSScriptExecutor;
+import com.github.lzenczuk.ps.engine.script.ScriptExecutionResult;
+import com.github.lzenczuk.ps.engine.script.ScriptExecutor;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -175,6 +173,48 @@ public class ScriptExecutorTest {
 
             scriptExecutor.executeScript(script, ctx, 2);
             assertThat(ctx.get("n"), equalTo(4));
+        }finally {
+            if(scriptExecutor!=null) scriptExecutor.shutDown();
+        }
+    }
+
+    @Test
+    public void scriptWithError() throws IOException {
+
+        String script = "function main(input, ctx){" +
+                "ctx.n=poipoi;" +
+                "}";
+
+        ScriptExecutor scriptExecutor=null;
+
+        try {
+            scriptExecutor = new PhantomJSScriptExecutor();
+
+            HashMap<String, Object> ctx = new HashMap<>();
+            ctx.put("n", 4);
+
+            ScriptExecutionResult result = scriptExecutor.executeScript(script, ctx, 2);
+
+            assertThat(result, is(notNullValue()));
+            assertThat(result.isError(), is(true));
+            assertThat(result.getErrorMessage(), not(isEmptyOrNullString()));
+
+        }finally {
+            if(scriptExecutor!=null) scriptExecutor.shutDown();
+        }
+
+        try {
+            scriptExecutor = new NashornScriptExecutor();
+
+            HashMap<String, Object> ctx = new HashMap<>();
+            ctx.put("n", 4);
+
+            ScriptExecutionResult result = scriptExecutor.executeScript(script, ctx, 2);
+
+            assertThat(result, is(notNullValue()));
+            assertThat(result.isError(), is(true));
+            assertThat(result.getErrorMessage(), not(isEmptyOrNullString()));
+
         }finally {
             if(scriptExecutor!=null) scriptExecutor.shutDown();
         }

@@ -1,4 +1,4 @@
-package com.github.lzenczuk.ps.engine;
+package com.github.lzenczuk.ps.engine.script;
 
 import java.util.Map;
 
