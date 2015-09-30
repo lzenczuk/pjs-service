@@ -1,6 +1,6 @@
 package com.github.lzenczuk.engine.node.slot;
 
-import com.github.lzenczuk.ps.engine.node.Node;
+import com.github.lzenczuk.ps.engine.node.slots.slot.ScriptSlot;
 import com.github.lzenczuk.ps.engine.node.slots.slot.Slot;
 import com.github.lzenczuk.ps.engine.node.slots.Slots;
 import com.github.lzenczuk.ps.engine.node.slots.SlotsValidationResult;
@@ -35,8 +35,8 @@ public class SlotsTest {
 
             scriptExecutor = new PhantomJSScriptExecutor();
 
-            Slot s1 = new Slot(falseScript, "n1");
-            Slot s2 = new Slot(trueScript, "n2");
+            Slot s1 = new ScriptSlot(falseScript, "n1");
+            Slot s2 = new ScriptSlot(trueScript, "n2");
 
             Slots slots = new Slots();
             slots.addSlot(s1);
@@ -89,8 +89,8 @@ public class SlotsTest {
 
             scriptExecutor = new PhantomJSScriptExecutor();
 
-            Slot s1 = new Slot(falseScript, "n1");
-            Slot s2 = new Slot(falseScript, "n2");
+            Slot s1 = new ScriptSlot(falseScript, "n1");
+            Slot s2 = new ScriptSlot(falseScript, "n2");
 
             Slots slots = new Slots();
             slots.addSlot(s1);
@@ -120,8 +120,8 @@ public class SlotsTest {
 
             scriptExecutor = new PhantomJSScriptExecutor();
 
-            Slot s1 = new Slot(errorScript, "n1");
-            Slot s2 = new Slot(errorScript, "n2");
+            Slot s1 = new ScriptSlot(errorScript, "n1");
+            Slot s2 = new ScriptSlot(errorScript, "n2");
 
             Slots slots = new Slots();
             slots.addSlot(s1);

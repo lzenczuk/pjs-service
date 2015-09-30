@@ -1,5 +1,6 @@
 package com.github.lzenczuk.engine.node.slot;
 
+import com.github.lzenczuk.ps.engine.node.slots.slot.ScriptSlot;
 import com.github.lzenczuk.ps.engine.node.slots.slot.Slot;
 import com.github.lzenczuk.ps.engine.node.slots.slot.SlotValidationResult;
 import com.github.lzenczuk.ps.engine.script.phantomjs.PhantomJSScriptExecutor;
@@ -28,7 +29,7 @@ public class SlotTest {
 
             scriptExecutor = new PhantomJSScriptExecutor();
 
-            Slot slot = new Slot(script, null);
+            Slot slot = new ScriptSlot(script, null);
             SlotValidationResult result = slot.validate(Collections.singletonMap("n", 4), "test", scriptExecutor);
 
             assertThat(result, is(notNullValue()));
@@ -52,7 +53,7 @@ public class SlotTest {
 
             scriptExecutor = new PhantomJSScriptExecutor();
 
-            Slot slot = new Slot(script, null);
+            Slot slot = new ScriptSlot(script, null);
             SlotValidationResult result = slot.validate(Collections.singletonMap("n", 4), "test", scriptExecutor);
 
             assertThat(result, is(notNullValue()));
@@ -76,7 +77,7 @@ public class SlotTest {
 
             scriptExecutor = new PhantomJSScriptExecutor();
 
-            Slot slot = new Slot(script, null);
+            Slot slot = new ScriptSlot(script, null);
             SlotValidationResult result = slot.validate(Collections.singletonMap("n", 4), "test", scriptExecutor);
 
             assertThat(result, is(notNullValue()));
@@ -100,7 +101,7 @@ public class SlotTest {
 
             scriptExecutor = new PhantomJSScriptExecutor();
 
-            Slot slot = new Slot(script, null);
+            Slot slot = new ScriptSlot(script, null);
             SlotValidationResult result = slot.validate(Collections.singletonMap("n", 4), "test", scriptExecutor);
 
             assertThat(result, is(notNullValue()));
@@ -125,7 +126,7 @@ public class SlotTest {
 
             scriptExecutor = new PhantomJSScriptExecutor();
 
-            Slot slot = new Slot(script, null);
+            Slot slot = new ScriptSlot(script, null);
             SlotValidationResult result = slot.validate(Collections.singletonMap("n", 4), "test", scriptExecutor);
 
             assertThat(result, is(notNullValue()));

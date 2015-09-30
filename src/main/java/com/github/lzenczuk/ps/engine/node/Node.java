@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * @author lzenczuk 29/09/2015
  */
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "_class")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "class")
 @JsonSubTypes(
         @JsonSubTypes.Type(value = ScriptNode.class, name = "script_node")
 )

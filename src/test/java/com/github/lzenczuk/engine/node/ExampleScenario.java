@@ -2,6 +2,8 @@ package com.github.lzenczuk.engine.node;
 
 import com.github.lzenczuk.ps.engine.node.ScriptNode;
 import com.github.lzenczuk.ps.engine.node.slots.Slots;
+import com.github.lzenczuk.ps.engine.node.slots.slot.AlwaysTrueSlot;
+import com.github.lzenczuk.ps.engine.node.slots.slot.ScriptSlot;
 import com.github.lzenczuk.ps.engine.node.slots.slot.Slot;
 import com.github.lzenczuk.ps.engine.scenario.Scenario;
 
@@ -38,11 +40,11 @@ public class ExampleScenario {
         moreThen50Node.setScript("function main(input, ctx){ return ctx.msg+'more then 50'}");
         scenario.add(moreThen50Node);
 
-        Slot lessThen50Slot = new Slot();
+        ScriptSlot lessThen50Slot = new ScriptSlot();
         lessThen50Slot.setScript("function main(input, ctx){ return input < 50}");
         lessThen50Slot.setNodeName("lessThen50Node");
 
-        Slot moreThen50Slot = new Slot();
+        ScriptSlot moreThen50Slot = new ScriptSlot();
         moreThen50Slot.setScript("function main(input, ctx){ return input >= 50}");
         moreThen50Slot.setNodeName("moreThen50Node");
 
@@ -52,8 +54,7 @@ public class ExampleScenario {
 
         randomNumberNode.setSlots(randomNumberSlots);
 
-        Slot repeatSlot = new Slot();
-        repeatSlot.setScript("function main(input, ctx){ return true}");
+        Slot repeatSlot = new AlwaysTrueSlot();
         repeatSlot.setNodeName("randomNumberNode");
 
         Slots repeatSlots = new Slots();
