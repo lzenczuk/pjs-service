@@ -1,5 +1,6 @@
 package com.github.lzenczuk.ps.engine.scenario;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.lzenczuk.ps.engine.node.Node;
 import com.github.lzenczuk.ps.engine.node.NodeExecutionResult;
 import com.github.lzenczuk.ps.engine.script.ScriptExecutorManager;
@@ -15,14 +16,22 @@ public class Scenario {
 
     private Optional<String> startNodeName;
 
+    @JsonIgnore
     private boolean started = false;
+
+    @JsonIgnore
     private boolean terminated = false;
 
+    @JsonIgnore
     private Optional<String> activeNodeName;
 
+    @JsonIgnore
     private ScriptExecutorManager executorManager = new ScriptExecutorManager();
 
     private Map<String, Node> nodesMap = new HashMap<>();
+
+    public Scenario() {
+    }
 
     public Scenario(Optional<String> startNodeName) {
         this.startNodeName = startNodeName;
