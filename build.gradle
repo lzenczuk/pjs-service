@@ -1,4 +1,5 @@
 apply plugin: 'java'
+apply plugin: 'application'
 
 sourceCompatibility = 1.8
 version = '1.0'
@@ -7,12 +8,17 @@ repositories {
     mavenCentral()
 }
 
+mainClassName = 'com.github.lzenczuk.ps.server.Main'
+
 dependencies {
     compile 'org.seleniumhq.selenium:selenium-java:2.47.1'
-    compile 'com.github.detro.ghostdriver:phantomjsdriver:1.1.0'
+    compile ('com.github.detro.ghostdriver:phantomjsdriver:1.1.0', {
+        exclude(module: 'servlet-api-2.5')
+    })
     compile 'com.fasterxml.jackson.core:jackson-databind:2.6.2'
     compile 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.6.2'
 
+    compile 'com.sparkjava:spark-core:2.3'
 
     testCompile 'commons-io:commons-io:2.4'
     testCompile 'junit:junit:4.11'
