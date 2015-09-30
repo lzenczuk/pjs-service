@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.util.Collections;
+import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -24,21 +25,18 @@ public class SlotsTest {
 
         try {
 
-            String trueScript = "function main(input, ctx){" +
+            java.lang.String trueScript = "function main(input, ctx){" +
                     "return true" +
                     "}";
 
-            String falseScript = "function main(input, ctx){" +
+            java.lang.String falseScript = "function main(input, ctx){" +
                     "return false" +
                     "}";
 
             scriptExecutor = new PhantomJSScriptExecutor();
 
-            Node n1= (ctx, input, sem) -> null;
-            Node n2= (ctx, input, sem) -> null;
-
-            Slot s1 = new Slot(falseScript, n1);
-            Slot s2 = new Slot(trueScript, n2);
+            Slot s1 = new Slot(falseScript, "n1");
+            Slot s2 = new Slot(trueScript, "n2");
 
             Slots slots = new Slots();
             slots.addSlot(s1);
@@ -49,7 +47,9 @@ public class SlotsTest {
             assertThat(result, is(notNullValue()));
 
             assertThat(result.isError(), is(false));
-            assertThat(result.getNextNode(), is(equalTo(n2)));
+            assertThat(result.getNextNode(), is(notNullValue()));
+            assertThat(result.getNextNode().isPresent(), is(true));
+            assertThat(result.getNextNode().get(), is(equalTo("n2")));
 
         }finally {
             if(scriptExecutor!=null) scriptExecutor.shutDown();
@@ -70,9 +70,8 @@ public class SlotsTest {
 
             assertThat(result, is(notNullValue()));
 
-            assertThat(result.isError(), is(true));
-            assertThat(result.getErrorMessage(), not(isEmptyOrNullString()));
-
+            assertThat(result.isError(), is(false));
+            assertThat(result.getNextNode(), is(Optional.empty()));
         }finally {
             if(scriptExecutor!=null) scriptExecutor.shutDown();
         }
@@ -84,17 +83,14 @@ public class SlotsTest {
 
         try {
 
-            String falseScript = "function main(input, ctx){" +
+            java.lang.String falseScript = "function main(input, ctx){" +
                     "return false" +
                     "}";
 
             scriptExecutor = new PhantomJSScriptExecutor();
 
-            Node n1= (ctx, input, sem) -> null;
-            Node n2= (ctx, input, sem) -> null;
-
-            Slot s1 = new Slot(falseScript, n1);
-            Slot s2 = new Slot(falseScript, n2);
+            Slot s1 = new Slot(falseScript, "n1");
+            Slot s2 = new Slot(falseScript, "n2");
 
             Slots slots = new Slots();
             slots.addSlot(s1);
@@ -118,17 +114,14 @@ public class SlotsTest {
 
         try {
 
-            String errorScript = "function main(input, ctx){" +
+            java.lang.String errorScript = "function main(input, ctx){" +
                     "return poipoi" +
                     "}";
 
             scriptExecutor = new PhantomJSScriptExecutor();
 
-            Node n1= (ctx, input, sem) -> null;
-            Node n2= (ctx, input, sem) -> null;
-
-            Slot s1 = new Slot(errorScript, n1);
-            Slot s2 = new Slot(errorScript, n2);
+            Slot s1 = new Slot(errorScript, "n1");
+            Slot s2 = new Slot(errorScript, "n2");
 
             Slots slots = new Slots();
             slots.addSlot(s1);

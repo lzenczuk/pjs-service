@@ -1,6 +1,5 @@
 package com.github.lzenczuk.ps.engine.node.slots.slot;
 
-import com.github.lzenczuk.ps.engine.node.Node;
 import com.github.lzenczuk.ps.engine.script.ScriptExecutionResult;
 import com.github.lzenczuk.ps.engine.script.ScriptExecutor;
 
@@ -11,18 +10,18 @@ import java.util.Map;
  */
 public class Slot {
 
-    private String script;
-    private Node node;
+    private java.lang.String script;
+    private String nodeName;
 
     public Slot() {
     }
 
-    public Slot(String script, Node node) {
-        this.node = node;
+    public Slot(java.lang.String script, String nodeName) {
+        this.nodeName = nodeName;
         this.script = script;
     }
 
-    public SlotValidationResult validate(Map<String, Object> ctx, Object outPut, ScriptExecutor scriptExecutor){
+    public SlotValidationResult validate(Map<java.lang.String, Object> ctx, Object outPut, ScriptExecutor scriptExecutor){
         ScriptExecutionResult scriptExecutionResult = scriptExecutor.executeScript(script, ctx, outPut);
 
         if(scriptExecutionResult.isError()){
@@ -30,22 +29,17 @@ public class Slot {
         }
 
         if(scriptExecutionResult.getOutPut() instanceof Boolean){
-            return new SlotValidationResult((Boolean) scriptExecutionResult.getOutPut());
+            return new SlotValidationResult((Boolean) scriptExecutionResult.getOutPut(), this.nodeName);
         }else{
             return new SlotValidationResult("Validation script return non boolean value");
         }
     }
 
-    // TODO - is it sens to have getter instead return node as result
-    public Node getNode() {
-        return node;
+    public void setNodeName(String nodeName) {
+        this.nodeName = nodeName;
     }
 
-    public void setNode(Node node) {
-        this.node = node;
-    }
-
-    public void setScript(String script) {
+    public void setScript(java.lang.String script) {
         this.script = script;
     }
 }

@@ -11,10 +11,20 @@ public class ScenarioExecutionResult {
 
     private final Map<String, Object> ctx;
     private final Object output;
+    private final boolean terminated;
 
     public ScenarioExecutionResult(Map<String, Object> ctx, Object output) {
         this.output = output;
         this.ctx = ctx;
+        this.terminated = false;
+
+        this.error=false;
+    }
+
+    public ScenarioExecutionResult(Map<String, Object> ctx, Object output, boolean terminated) {
+        this.output = output;
+        this.ctx = ctx;
+        this.terminated = terminated;
 
         this.error=false;
     }
@@ -25,6 +35,7 @@ public class ScenarioExecutionResult {
 
         this.ctx = null;
         this.output = null;
+        this.terminated = false;
     }
 
     public Map<String, Object> getCtx() {
@@ -43,13 +54,18 @@ public class ScenarioExecutionResult {
         return output;
     }
 
+    public boolean isTerminated() {
+        return terminated;
+    }
+
     @Override
     public String toString() {
         return "ScenarioExecutionResult{" +
-                "ctx=" + ctx +
+                "output=" + output +
+                ", ctx=" + ctx +
+                ", terminated=" + terminated +
                 ", error=" + error +
                 ", errorMessage='" + errorMessage + '\'' +
-                ", output=" + output +
                 '}';
     }
 }

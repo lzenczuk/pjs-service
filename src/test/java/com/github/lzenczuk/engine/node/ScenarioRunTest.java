@@ -9,6 +9,10 @@ import org.junit.Test;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.Optional;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 
 /**
  * @author lzenczuk 29/09/2015
@@ -27,17 +31,31 @@ public class ScenarioRunTest {
         Object out = null;
         Map<String, Object> ctx = Collections.emptyMap();
 
+        boolean finished = false;
+
         while(true) {
             ScenarioExecutionResult result = scenario.execute(ctx, out);
             System.out.println(result);
 
-            if(result.isError()) break;
-
             ctx = result.getCtx();
             out = result.getOutput();
+
+            if(result.isError()) {
+                System.out.println("===============> error: "+result.getErrorMessage());
+                break;
+            }
+            if(result.isTerminated()){
+                System.out.println("===============> finished");
+                finished=true;
+                break;
+            }
         }
 
         System.out.println("===============> end");
+
+        assertThat(finished, is(true));
+        assertThat(out, is(instanceOf(String.class)));
+        assertThat((String) out, is(containsString("less then 50")));
 
     }
 
@@ -53,22 +71,28 @@ public class ScenarioRunTest {
      * @return
      */
     private Scenario createScenario() {
-        Scenario scenario;ScriptNode randomNumberNode = new ScriptNode();
+        Scenario scenario = new Scenario(Optional.of("randomNumberNode"));
+
+        ScriptNode randomNumberNode = new ScriptNode("randomNumberNode");
         randomNumberNode.setScript("function main(input, ctx){ ctx.msg='Random number: '; return Math.floor((Math.random()*100))}");
+        scenario.add(randomNumberNode);
 
-        ScriptNode lessThen50Node = new ScriptNode();
+
+        ScriptNode lessThen50Node = new ScriptNode("lessThen50Node");
         lessThen50Node.setScript("function main(input, ctx){ return ctx.msg+'less then 50'}");
+        scenario.add(lessThen50Node);
 
-        ScriptNode moreThen50Node = new ScriptNode();
+        ScriptNode moreThen50Node = new ScriptNode("moreThen50Node");
         moreThen50Node.setScript("function main(input, ctx){ return ctx.msg+'more then 50'}");
+        scenario.add(moreThen50Node);
 
         Slot lessThen50Slot = new Slot();
         lessThen50Slot.setScript("function main(input, ctx){ return input < 50}");
-        lessThen50Slot.setNode(lessThen50Node);
+        lessThen50Slot.setNodeName("lessThen50Node");
 
         Slot moreThen50Slot = new Slot();
         moreThen50Slot.setScript("function main(input, ctx){ return input >= 50}");
-        moreThen50Slot.setNode(moreThen50Node);
+        moreThen50Slot.setNodeName("moreThen50Node");
 
         Slots randomNumberSlots = new Slots();
         randomNumberSlots.addSlot(lessThen50Slot);
@@ -78,14 +102,13 @@ public class ScenarioRunTest {
 
         Slot repeatSlot = new Slot();
         repeatSlot.setScript("function main(input, ctx){ return true}");
-        repeatSlot.setNode(randomNumberNode);
+        repeatSlot.setNodeName("randomNumberNode");
 
         Slots repeatSlots = new Slots();
         repeatSlots.addSlot(repeatSlot);
 
         moreThen50Node.setSlots(repeatSlots);
 
-        scenario = new Scenario(randomNumberNode);
         return scenario;
     }
 }

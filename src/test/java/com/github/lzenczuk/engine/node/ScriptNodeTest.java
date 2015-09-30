@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.util.Collections;
+import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -29,7 +30,7 @@ public class ScriptNodeTest {
 
         try {
 
-            String script = "function main(input, ctx){" +
+            java.lang.String script = "function main(input, ctx){" +
                     "ctx.message = 'hello';" +
                     "return 'input: '+input" +
                     "}";
@@ -40,9 +41,8 @@ public class ScriptNodeTest {
             scriptExecutorManager.addExecutor("ph", scriptExecutor);
 
             Slots slotsMock = mock(Slots.class);
-            Node nextNode = (ctx, input, sem) -> null;
 
-            when(slotsMock.getNextNode(anyMap(), any(), any())).thenReturn(new SlotsValidationResult(nextNode));
+            when(slotsMock.getNextNode(anyMap(), any(), any())).thenReturn(new SlotsValidationResult(Optional.of("nextNode")));
 
             ScriptNode node = new ScriptNode(script, slotsMock, "ph");
 
@@ -57,7 +57,9 @@ public class ScriptNodeTest {
 
             assertThat(result.getOutPut(), is(equalTo("input: test")));
 
-            assertThat(result.getNextNode(), is(equalTo(nextNode)));
+            assertThat(result.getNextNodeName(), is(notNullValue()));
+            assertThat(result.getNextNodeName().isPresent(), is(true));
+            assertThat(result.getNextNodeName().get(), is(equalTo("nextNode")));
 
         }finally {
             if(scriptExecutor!=null) scriptExecutor.shutDown();
@@ -71,7 +73,7 @@ public class ScriptNodeTest {
 
         try {
 
-            String script = "function main(input, ctx){" +
+            java.lang.String script = "function main(input, ctx){" +
                     "ctx.message = 'hello';" +
                     "return 'input: '+poipoi" +
                     "}";
@@ -82,9 +84,8 @@ public class ScriptNodeTest {
             scriptExecutorManager.addExecutor("ph", scriptExecutor);
 
             Slots slotsMock = mock(Slots.class);
-            Node nextNode = (ctx, input, sem) -> null;
 
-            when(slotsMock.getNextNode(anyMap(), any(), any())).thenReturn(new SlotsValidationResult(nextNode));
+            when(slotsMock.getNextNode(anyMap(), any(), any())).thenReturn(new SlotsValidationResult(Optional.of("nextNode")));
 
             ScriptNode node = new ScriptNode(script, slotsMock);
 
@@ -106,7 +107,7 @@ public class ScriptNodeTest {
 
         try {
 
-            String script = "function main(input, ctx){" +
+            java.lang.String script = "function main(input, ctx){" +
                     "ctx.message = 'hello';" +
                     "return 'input: '+input" +
                     "}";

@@ -3,7 +3,6 @@ package com.github.lzenczuk.ps.engine.node;
 import com.github.lzenczuk.ps.engine.node.slots.Slots;
 import com.github.lzenczuk.ps.engine.node.slots.SlotsValidationResult;
 import com.github.lzenczuk.ps.engine.script.ScriptExecutionResult;
-import com.github.lzenczuk.ps.engine.script.ScriptExecutor;
 import com.github.lzenczuk.ps.engine.script.ScriptExecutorManager;
 
 import java.util.Map;
@@ -11,13 +10,17 @@ import java.util.Map;
 /**
  * @author lzenczuk 29/09/2015
  */
-public class ScriptNode implements Node {
+public class ScriptNode extends Node {
 
     private String script;
     private Slots slots = new Slots();
     private String executorName;
 
     public ScriptNode() {
+    }
+
+    public ScriptNode(String name) {
+        this.setName(name);
     }
 
     public ScriptNode(String script, Slots slots) {

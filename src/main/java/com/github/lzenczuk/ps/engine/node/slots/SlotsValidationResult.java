@@ -2,26 +2,28 @@ package com.github.lzenczuk.ps.engine.node.slots;
 
 import com.github.lzenczuk.ps.engine.node.Node;
 
+import java.util.Optional;
+
 /**
  * @author lzenczuk 29/09/2015
  */
 public class SlotsValidationResult {
-    private final Node nextNode;
+    private final Optional<String> nextNode;
     private final boolean error;
-    private String errorMessage = null;
+    private java.lang.String errorMessage = null;
 
-    public SlotsValidationResult(Node nextNode) {
+    public SlotsValidationResult(Optional<String> nextNode) {
         this.nextNode = nextNode;
         this.error=false;
     }
 
-    public SlotsValidationResult(String errorMessage) {
+    public SlotsValidationResult(java.lang.String errorMessage) {
         this.error = true;
         this.errorMessage = errorMessage;
         this.nextNode = null;
     }
 
-    public Node getNextNode() {
+    public Optional<String> getNextNode() {
         return nextNode;
     }
 
@@ -29,7 +31,7 @@ public class SlotsValidationResult {
         return error;
     }
 
-    public String getErrorMessage() {
+    public java.lang.String getErrorMessage() {
         return errorMessage;
     }
 }

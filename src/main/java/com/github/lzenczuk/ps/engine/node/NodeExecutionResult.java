@@ -1,6 +1,7 @@
 package com.github.lzenczuk.ps.engine.node;
 
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * @author lzenczuk 29/09/2015
@@ -9,28 +10,28 @@ public class NodeExecutionResult {
     private final boolean error;
     private String errorMessage = null;
 
-    private final Map<String, Object> ctx;
+    private final Map<java.lang.String, Object> ctx;
     private final Object outPut;
-    private final Node nextNode;
+    private final Optional<String> nextNodeName;
 
-    public NodeExecutionResult(Map<String, Object> ctx, Object outPut, Node nextNode) {
+    public NodeExecutionResult(Map<java.lang.String, Object> ctx, Object outPut, Optional<String> nextNodeName) {
         this.ctx = ctx;
-        this.nextNode = nextNode;
+        this.nextNodeName = nextNodeName;
         this.outPut = outPut;
 
         this.error=false;
     }
 
-    public NodeExecutionResult(String errorMessage) {
+    public NodeExecutionResult(java.lang.String errorMessage) {
         this.errorMessage = errorMessage;
         this.error=true;
 
         this.ctx=null;
         this.outPut=null;
-        this.nextNode=null;
+        this.nextNodeName =null;
     }
 
-    public Map<String, Object> getCtx() {
+    public Map<java.lang.String, Object> getCtx() {
         return ctx;
     }
 
@@ -38,12 +39,12 @@ public class NodeExecutionResult {
         return error;
     }
 
-    public String getErrorMessage() {
+    public java.lang.String getErrorMessage() {
         return errorMessage;
     }
 
-    public Node getNextNode() {
-        return nextNode;
+    public Optional<String> getNextNodeName() {
+        return nextNodeName;
     }
 
     public Object getOutPut() {
