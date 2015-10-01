@@ -74,7 +74,8 @@ crashlytics-build.properties
 hs_err_pid*
 
 # remove public becaus it is automaticly generated from UI
-src/main/resources/ui/public/
+ui/www/
 
 # remove node modules downloaded by npm
-src/main/resources/ui/node_modules/
+ui/node_modules/
+

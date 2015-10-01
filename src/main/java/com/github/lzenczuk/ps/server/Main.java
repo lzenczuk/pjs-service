@@ -18,10 +18,10 @@ public class Main {
 
         ScenarioService scenarioService = new ScenarioService();
 
-        // have to be before routing
-        staticFileLocation("/ui/public");
+        // UI is hosted by nginx
+        //staticFileLocation("/ui/public");
 
-        get("/scenario", (req, res) -> {
+        get("/api/scenario", (req, res) -> {
             Scenario scenario = scenarioService.getScenario();
 
             ObjectMapper mapper = new ObjectMapper();

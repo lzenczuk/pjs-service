@@ -11,7 +11,7 @@ export default class PhsApp extends React.Component {
 
     loadHandler() {
         console.log("load")
-        jQuery.getJSON("/scenario", function(data){
+        jQuery.getJSON("/api/scenario", function(data){
             console.log("-----> "+JSON.stringify(data));
             this.setState({model: data})
         }.bind(this))
