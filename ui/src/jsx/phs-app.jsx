@@ -11,7 +11,9 @@ export default class PhsApp extends React.Component {
         super(props);
         this.state = {model: {}};
 
-        NodeStore.instance().doNothing();
+        NodeStore.instance().addChangeListener(function(){
+            this.setState({model : NodeStore.instance().getScenario()})
+        }.bind(this));
     }
 
     loadHandler() {
