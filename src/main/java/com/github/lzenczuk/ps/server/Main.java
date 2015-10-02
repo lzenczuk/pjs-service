@@ -35,5 +35,17 @@ public class Main {
 
             return scenarioJson;
         });
+
+        post("/api/scenario", (req, res) -> {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+            mapper.enable(SerializationFeature.INDENT_OUTPUT);
+            mapper.registerModule(new Jdk8Module());
+
+            Scenario scenario = mapper.readValue(req.body(), Scenario.class);
+            scenarioService.put(scenario);
+
+            return "Ok";
+        });
     }
 }

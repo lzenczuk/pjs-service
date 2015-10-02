@@ -17,6 +17,7 @@ import java.util.Map;
 public abstract class Slot {
 
     private String nodeName;
+    private String label;
 
     public void setNodeName(String nodeName){
         this.nodeName = nodeName;
@@ -24,6 +25,14 @@ public abstract class Slot {
 
     public String getNodeName() {
         return nodeName;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
     }
 
     public abstract SlotValidationResult validate(Map<String, Object> ctx, Object outPut, ScriptExecutor scriptExecutor);

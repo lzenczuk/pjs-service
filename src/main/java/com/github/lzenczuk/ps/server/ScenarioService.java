@@ -23,6 +23,7 @@ public class ScenarioService {
         randomNumberNode.setScript("function main(input, ctx){ ctx.msg='Random number: '; return Math.floor((Math.random()*100))}");
         randomNumberNode.setX(250);
         randomNumberNode.setY(10);
+        randomNumberNode.setDescription("Generate random number between 0 and 100.");
         scenario.add(randomNumberNode);
 
 
@@ -30,20 +31,24 @@ public class ScenarioService {
         lessThen50Node.setScript("function main(input, ctx){ return ctx.msg+'less then 50'}");
         lessThen50Node.setX(350);
         lessThen50Node.setY(100);
+        lessThen50Node.setDescription("Number is smaller then 50. Terminate scenario.");
         scenario.add(lessThen50Node);
 
         ScriptNode moreThen50Node = new ScriptNode("moreThen50Node");
         moreThen50Node.setScript("function main(input, ctx){ return ctx.msg+'more then 50'}");
         moreThen50Node.setX(50);
         moreThen50Node.setY(100);
+        moreThen50Node.setDescription("Number is bigger then 50. Generate new one.");
         scenario.add(moreThen50Node);
 
         ScriptSlot lessThen50Slot = new ScriptSlot();
         lessThen50Slot.setScript("function main(input, ctx){ return input < 50}");
+        lessThen50Slot.setLabel("<50");
         lessThen50Slot.setNodeName("lessThen50Node");
 
         ScriptSlot moreThen50Slot = new ScriptSlot();
         moreThen50Slot.setScript("function main(input, ctx){ return input >= 50}");
+        moreThen50Slot.setLabel(">=50");
         moreThen50Slot.setNodeName("moreThen50Node");
 
         Slots randomNumberSlots = new Slots();
@@ -69,5 +74,9 @@ public class ScenarioService {
         }
 
         return scenarion;
+    }
+
+    public void put(Scenario scenario) {
+        this.scenarion = scenario;
     }
 }

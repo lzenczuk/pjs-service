@@ -17,7 +17,9 @@ public abstract class Node {
 
     private long x;
     private long y;
+
     private String name;
+    private String description;
 
     public String getName() {
         return name;
@@ -41,6 +43,14 @@ public abstract class Node {
 
     public void setY(long y) {
         this.y = y;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public abstract NodeExecutionResult execute(Map<java.lang.String, Object> ctx, Object input, ScriptExecutorManager executorManager);
