@@ -2,11 +2,16 @@ import React from 'react';
 import jQuery from 'jquery';
 import Scenario from './scenario';
 
+import NodeActions from './node-actions'
+import NodeStore from './node-store'
+
 export default class PhsApp extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {model: {}};
+
+        NodeStore.instance().doNothing();
     }
 
     loadHandler() {
@@ -33,11 +38,18 @@ export default class PhsApp extends React.Component {
         )
     }
 
+    createNodeHandler(){
+        console.log("create node");
+
+        NodeActions.instance().createNode();
+    }
+
     render(){
         return(
             <div className="vertical-horizontal-max">
                     <a href="#" onClick={this.loadHandler.bind(this)}>load</a>
                     <a href="#" onClick={this.saveHandler.bind(this)}>save</a>
+                    <a href="#" onClick={this.createNodeHandler.bind(this)}>add</a>
                     <Scenario model={this.state.model}/>
             </div>
         )
