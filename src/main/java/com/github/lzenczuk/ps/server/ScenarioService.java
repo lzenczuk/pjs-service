@@ -21,15 +21,21 @@ public class ScenarioService {
 
         ScriptNode randomNumberNode = new ScriptNode("randomNumberNode");
         randomNumberNode.setScript("function main(input, ctx){ ctx.msg='Random number: '; return Math.floor((Math.random()*100))}");
+        randomNumberNode.setX(250);
+        randomNumberNode.setY(10);
         scenario.add(randomNumberNode);
 
 
         ScriptNode lessThen50Node = new ScriptNode("lessThen50Node");
         lessThen50Node.setScript("function main(input, ctx){ return ctx.msg+'less then 50'}");
+        lessThen50Node.setX(350);
+        lessThen50Node.setY(100);
         scenario.add(lessThen50Node);
 
         ScriptNode moreThen50Node = new ScriptNode("moreThen50Node");
         moreThen50Node.setScript("function main(input, ctx){ return ctx.msg+'more then 50'}");
+        moreThen50Node.setX(50);
+        moreThen50Node.setY(100);
         scenario.add(moreThen50Node);
 
         ScriptSlot lessThen50Slot = new ScriptSlot();

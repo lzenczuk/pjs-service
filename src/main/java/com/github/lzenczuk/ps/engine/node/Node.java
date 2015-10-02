@@ -15,6 +15,8 @@ import java.util.Map;
 )
 public abstract class Node {
 
+    private long x;
+    private long y;
     private String name;
 
     public String getName() {
@@ -23,6 +25,22 @@ public abstract class Node {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public long getX() {
+        return x;
+    }
+
+    public void setX(long x) {
+        this.x = x;
+    }
+
+    public long getY() {
+        return y;
+    }
+
+    public void setY(long y) {
+        this.y = y;
     }
 
     public abstract NodeExecutionResult execute(Map<java.lang.String, Object> ctx, Object input, ScriptExecutorManager executorManager);
