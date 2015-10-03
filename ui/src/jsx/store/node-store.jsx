@@ -1,5 +1,5 @@
 import EventEmitter from 'events'
-import NodeDispatcher from './node-dispatcher'
+import NodeDispatcher from '../dispatcher/node-dispatcher'
 
 let _instance = null;
 
@@ -39,10 +39,6 @@ export default class NodeStore extends EventEmitter{
                 this.emit('CHANGE');
             }
         )
-    }
-
-    doNothing(){
-        console.log("NodeStore.doNothing");
     }
 
     getScenario(){

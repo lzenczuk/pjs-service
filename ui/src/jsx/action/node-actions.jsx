@@ -1,4 +1,4 @@
-import NodeDispatcher from  './node-dispatcher'
+import NodeDispatcher from  '../dispatcher/node-dispatcher'
 
 let _instance = null;
 

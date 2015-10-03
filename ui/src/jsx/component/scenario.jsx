@@ -2,6 +2,7 @@ import React from 'react';
 import Node from './node'
 
 export default class Scenario extends React.Component {
+
     render(){
 
         var nodes = [];

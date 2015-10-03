@@ -71,7 +71,7 @@ gulp.task('build-html', ['clean-html'], function(){
 });
 
 gulp.task('watch', ['build-js', 'build-css', 'build-html'], function(){
-    gulp.watch('./src/jsx/*.jsx', ['build-js']);
+    gulp.watch('./src/jsx/**/*.jsx', ['build-js']);
     gulp.watch('./src/less/*.less', ['build-css']);
     gulp.watch('./src/html/*.html', ['build-html']);
 });

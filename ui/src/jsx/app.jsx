@@ -1,7 +1,7 @@
 import React from 'react';
 import attachFastClick from 'fastclick';
-import PhsApp from './phs-app';
+import MainView from './component/view/main-view';
 
 attachFastClick(document.body);
 
-React.render(<PhsApp />, document.getElementById('app'));
+React.render(<MainView />, document.getElementById('app'));

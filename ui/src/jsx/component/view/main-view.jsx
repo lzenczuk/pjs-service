@@ -1,11 +1,14 @@
 import React from 'react';
 import jQuery from 'jquery';
-import Scenario from './scenario';
+import Scenario from '../scenario';
 
-import NodeActions from './node-actions'
-import NodeStore from './node-store'
+import NodeActions from '../../action/node-actions'
+import NodeStore from '../../store/node-store'
 
-export default class PhsApp extends React.Component {
+import TopMenu from './top-menu'
+import DndLayer from '../dnd/dnd-layer'
+
+export default class MainView extends React.Component {
 
     constructor(props) {
         super(props);
@@ -46,13 +49,15 @@ export default class PhsApp extends React.Component {
         NodeActions.instance().createNode();
     }
 
-    render(){
-        return(
+    render() {
+        return (
             <div className="vertical-horizontal-max">
-                    <a href="#" onClick={this.loadHandler.bind(this)}>load</a>
-                    <a href="#" onClick={this.saveHandler.bind(this)}>save</a>
-                    <a href="#" onClick={this.createNodeHandler.bind(this)}>add</a>
-                    <Scenario model={this.state.model}/>
+                <DndLayer />
+                <TopMenu />
+                <a href="#" onClick={this.loadHandler.bind(this)}>load</a>
+                <a href="#" onClick={this.saveHandler.bind(this)}>save</a>
+                <a href="#" onClick={this.createNodeHandler.bind(this)}>add</a>
+                <Scenario model={this.state.model}/>
             </div>
         )
     }
