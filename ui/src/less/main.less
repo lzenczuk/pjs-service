@@ -1,0 +1,65 @@
+@main-background-color: #fff;
+@main-text-color: #aaa;
+@main-text-font: 'Open Sans', sans-serif;
+
+@top-bar-height: 50px;
+
+// mixins --------------------------
+
+.max-height {
+  top: 0;
+  bottom: 0;
+}
+
+.max-width {
+  left: 0;
+  right: 0;
+}
+
+.max {
+  .max-height;
+  .max-width;
+}
+
+// ---------------------------------
+
+body {
+  background-color: @main-background-color;
+  color: @main-text-color;
+  font-family: @main-text-font;
+}
+
+// Main app ------------------------
+
+.app {
+  position: absolute;
+  .max;
+}
+
+.app .top-container {
+  position: absolute;
+  top: 0;
+  height: @top-bar-height;
+  .max-width;
+}
+
+.app .bottom-container {
+  margin-top: @top-bar-height;
+  position: absolute;
+  .max
+}
+
+// Top bar -------------------------
+
+.topbar {
+  background-color: #656565;
+  position: absolute;
+  .max
+}
+
+.tmp {
+  position: absolute;
+  top: 0;
+  left:0;
+  background-color: #0000cc;
+}

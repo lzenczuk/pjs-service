@@ -13,8 +13,8 @@ var postcss      = require('gulp-postcss');
 var autoprefixer = require('autoprefixer-core');
 
 var path = {
-    app_jsx:  './src/jsx/app.jsx',
-    app_less: './src/less/app.less',
+    app_jsx:  './src/jsx/main.jsx',
+    app_less: './src/less/main.less',
     dest:     './www/',
     dest_js:  './www/js/',
     dest_css: './www/css/'
@@ -52,7 +52,7 @@ gulp.task('build-js', ['clean-js', 'jshint'], function(){
             extensions: ['.jsx']
         }))
         .pipe(gulpif(argv.prod, uglify()))
-        .pipe(rename('app.js'))
+        .pipe(rename('main.js'))
         .pipe(gulp.dest(path.dest_js))
 });
 
