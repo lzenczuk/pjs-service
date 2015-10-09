@@ -7,11 +7,13 @@
 // mixins --------------------------
 
 .max-height {
+  position: absolute;
   top: 0;
   bottom: 0;
 }
 
 .max-width {
+  position: absolute;
   left: 0;
   right: 0;
 }
@@ -32,29 +34,25 @@ body {
 // Main app ------------------------
 
 .app {
-  position: absolute;
   .max;
 }
 
 .app .top-container {
-  position: absolute;
+  .max-width;
   top: 0;
   height: @top-bar-height;
-  .max-width;
 }
 
 .app .bottom-container {
+  .max;
   margin-top: @top-bar-height;
-  position: absolute;
-  .max
 }
 
 // Top bar -------------------------
 
 .topbar {
+  .max;
   background-color: #656565;
-  position: absolute;
-  .max
 }
 
 .tmp {

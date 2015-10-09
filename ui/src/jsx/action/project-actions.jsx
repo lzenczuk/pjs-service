@@ -1,4 +1,6 @@
-import ActionTypes from './action-types'
+import ActionTypes from './action-types';
+import rest from 'rest';
+import mime from 'rest/interceptor/mime';
 
 export default class ProjectActions{
 
@@ -9,8 +11,11 @@ export default class ProjectActions{
     loadProjects(){
         this.dispatcher.dispatch({actionType: ActionTypes.loadingProjects});
         console.log("loading projects");
-        window.setTimeout(function(){
-            this.dispatcher.dispatch({actionType: ActionTypes.projectsLoaded, projects: ['project 1', 'project 2']})
-        }.bind(this), 5000)
+
+        var client = rest.wrap(mime);
+        client({path: '/api/projects'}).then((response => {
+            console.log(typeof(response.entity));
+            this.dispatcher.dispatch({actionType: ActionTypes.projectsLoaded, projects: response.entity})
+        }).bind(this));
     }
 }

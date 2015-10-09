@@ -17,6 +17,7 @@ public class Main {
     public static void main(String[] args) {
 
         ScenarioService scenarioService = new ScenarioService();
+        ProjectService projectService = new ProjectService();
 
         // UI is hosted by nginx
         //staticFileLocation("/ui/public");
@@ -46,6 +47,22 @@ public class Main {
             scenarioService.put(scenario);
 
             return "Ok";
+        });
+
+        get("/api/projects", (req, res) -> {
+
+            System.out.println("-----------------> get projects");
+
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+            mapper.enable(SerializationFeature.INDENT_OUTPUT);
+            mapper.registerModule(new Jdk8Module());
+
+            String projectsJson = mapper.writeValueAsString(projectService.getAllProjects());
+
+            res.type("application/json");
+
+            return projectsJson;
         });
     }
 }

@@ -71,7 +71,7 @@ class ProjectsList extends React.Component {
             return(<div>loading...</div>)
         }else{
             var pl = this.state.projects.map((p, i) => {
-                return (<li key={i}>{p}</li>)
+                return (<li key={i}>{p.name} <i>{p.description}</i></li>)
             });
 
             return (<ul>{pl}</ul>)

@@ -59,7 +59,7 @@ class ProjectManager extends React.Component {
         console.log("ProjectManager: render");
 
         return (
-            <div>
+            <div className="max">
                 Hello
                 <ProjectList />
             </div>
