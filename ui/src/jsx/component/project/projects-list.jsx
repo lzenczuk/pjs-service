@@ -78,7 +78,11 @@ class ProjectsList extends React.Component {
             return(<div>loading...</div>)
         }else{
             var pl = this.state.projects.map((p, i) => {
-                return (<li key={i}>{p.name} <i>{p.description}</i></li>)
+                var clickHandler = function(){
+                    ctx.projectActions.selectProject(p)
+                };
+
+                return (<li key={i} onClick={clickHandler}>{p.name} <i>{p.description}</i></li>)
             });
 
             return (<ul className="ui-list">{pl}</ul>)

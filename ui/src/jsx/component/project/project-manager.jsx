@@ -1,5 +1,6 @@
 import React from 'react';
 import ProjectList from './projects-list';
+import Project from './project';
 
 export default
 class ProjectManager extends React.Component {
@@ -68,6 +69,7 @@ class ProjectManager extends React.Component {
 
                 <div className="projects-right-panel">
                     <div>
+                        <Project />
                     </div>
                 </div>
             </div>

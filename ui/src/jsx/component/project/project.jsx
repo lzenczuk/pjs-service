@@ -1,12 +1,21 @@
 import React from 'react';
 
-export default
-class Project extends React.Component {
+import ctx from '../../context';
+
+export default class Project extends React.Component {
 
     constructor(props) {
         super(props);
         console.log("Project:componentWillMount}");
         // state and default properties goes here
+
+        this.state = null;
+
+        this.projectStore = ctx.projectStore;
+
+        ctx.projectStore.addChangeListener((() => {
+            this.setState(this.projectStore.projects.selectedProject);
+        }).bind(this));
     }
 
     componentWillMount() {
@@ -57,8 +66,18 @@ class Project extends React.Component {
     render() {
         console.log("Project: render");
 
-        return (
-            <div>Hello</div>
-        )
+        if (this.state == null) {
+            return (
+                <div>Select project</div>
+            )
+        } else {
+            return (
+                <div>
+                    <h1>{this.state.name}</h1>
+
+                    <p>{this.state.description}</p>
+                </div>
+            )
+        }
     }
 }

@@ -20,4 +20,8 @@ export default class ProjectActions{
                 this._dispatcher.dispatch({actionType: ActionTypes.projectsLoadingError, message: message})
             }).bind(this))
     }
+
+    selectProject(project){
+        this._dispatcher.dispatch({actionType: ActionTypes.projectSelected, project: project})
+    }
 }

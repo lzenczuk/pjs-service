@@ -8,23 +8,37 @@ export default class ProjectStore extends EventEmitter {
         super();
         this.dispatcher = dispatcher;
 
-        this._projects = {loading: false, error: false, projects: []};
+        this._projects = {
+            loading: false,
+            error: false,
+            errorMsg: '',
+            projects: [],
+            selectedProject: null
+        };
 
         this.dispatcher.register( action => {
-            console.log("ProjectStore action: "+JSON.stringify(action))
+            console.log("ProjectStore action: "+JSON.stringify(action));
 
             if(action.actionType==ActionTypes.loadingProjects){
                 this._projects.loading=true;
                 this._projects.error=false;
+                this._projects.projects = [];
+                this._projects.selectedProject=null;
                 this.emit('CHANGE');
             }else if(action.actionType==ActionTypes.projectsLoaded){
                 this._projects.loading=false;
                 this._projects.error=false;
                 this._projects.projects = action.projects;
+                this._projects.selectedProject=null;
                 this.emit('CHANGE');
             }else if(action.actionType==ActionTypes.projectsLoadingError){
                 this._projects.loading=false;
                 this._projects.error=true;
+                this._projects.projects = [];
+                this._projects.selectedProject=null;
+                this.emit('CHANGE');
+            }else if(action.actionType==ActionTypes.projectSelected){
+                this._projects.selectedProject = action.project;
                 this.emit('CHANGE');
             }
         })
