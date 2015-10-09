@@ -60,7 +60,6 @@ class ProjectManager extends React.Component {
 
         return (
             <div className="max">
-                Hello
                 <ProjectList />
             </div>
         )

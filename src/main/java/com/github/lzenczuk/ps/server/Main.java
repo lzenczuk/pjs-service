@@ -63,6 +63,8 @@ public class Main {
             res.type("application/json");
 
             return projectsJson;
+            //res.status(401);
+            //return "Unauthorized";
         });
     }
 }

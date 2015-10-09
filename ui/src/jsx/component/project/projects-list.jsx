@@ -67,7 +67,14 @@ class ProjectsList extends React.Component {
     render() {
         console.log("ProjectsList: render");
 
-        if(this.state.loading){
+        if(this.state.error){
+
+            var reload = function(){
+                ctx.projectActions.loadProjects()
+            };
+
+            return(<div>loading error <a href="#" onClick={reload}>reload</a></div>)
+        }else if(this.state.loading){
             return(<div>loading...</div>)
         }else{
             var pl = this.state.projects.map((p, i) => {
