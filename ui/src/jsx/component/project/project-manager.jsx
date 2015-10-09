@@ -60,7 +60,16 @@ class ProjectManager extends React.Component {
 
         return (
             <div className="max">
-                <ProjectList />
+                <div className="projects-left-panel">
+                    <div>
+                        <ProjectList />
+                    </div>
+                </div>
+
+                <div className="projects-right-panel">
+                    <div>
+                    </div>
+                </div>
             </div>
         )
     }

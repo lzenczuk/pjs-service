@@ -4,6 +4,8 @@
 
 @top-bar-height: 50px;
 
+@right-panel-width: 300px;
+
 // mixins --------------------------
 
 .max-height {
@@ -55,9 +57,27 @@ body {
   background-color: #656565;
 }
 
-.tmp {
-  position: absolute;
-  top: 0;
-  left:0;
-  background-color: #0000cc;
+.projects-left-panel{
+  .max-height;
+  width: @right-panel-width;
+  border-right: solid @main-text-color 1px;
 }
+
+.projects-right-panel{
+  .max;
+  margin-left: @right-panel-width;
+}
+
+.ui-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ui-list li {
+  padding-left: 10px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  border-bottom: solid @main-text-color 1px;
+}
+

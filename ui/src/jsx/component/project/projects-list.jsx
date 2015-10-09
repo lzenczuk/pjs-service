@@ -81,7 +81,7 @@ class ProjectsList extends React.Component {
                 return (<li key={i}>{p.name} <i>{p.description}</i></li>)
             });
 
-            return (<ul>{pl}</ul>)
+            return (<ul className="ui-list">{pl}</ul>)
         }
     }
 }
