@@ -3,6 +3,8 @@ import {Dispatcher} from 'flux';
 import ProjectActions from './action/project-actions'
 import ProjectStore from './store/project-store'
 
+import Server from './server'
+
 class Context{
 
     /**
@@ -10,13 +12,10 @@ class Context{
      */
     constructor(){
         this._dispatcher = new Dispatcher();
+        this._server = new Server(this._dispatcher);
 
-        this._projectActions = new ProjectActions(this._dispatcher);
+        this._projectActions = new ProjectActions(this._dispatcher, this._server);
         this._projectStore = new ProjectStore(this._dispatcher);
-    }
-
-    get dispatcher(){
-        return this._dispatcher
     }
 
     get projectActions(){

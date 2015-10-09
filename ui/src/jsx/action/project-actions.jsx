@@ -1,31 +1,23 @@
 import ActionTypes from './action-types';
-import rest from 'rest';
-import mime from 'rest/interceptor/mime';
-import errorCode from 'rest/interceptor/errorCode';
 
 export default class ProjectActions{
 
-    constructor(dispatcher){
-        this.dispatcher = dispatcher
+    constructor(dispatcher, server){
+        this._dispatcher = dispatcher;
+        this._server = server
     }
 
     loadProjects(){
-        this.dispatcher.dispatch({actionType: ActionTypes.loadingProjects});
+        this._dispatcher.dispatch({actionType: ActionTypes.loadingProjects});
         console.log("loading projects");
 
-        var client = rest.wrap(mime).wrap(errorCode);
-        client({path: '/api/projects'}).then(
+        this._server.GET('/api/projects',
             (response => {
-                this.dispatcher.dispatch({actionType: ActionTypes.projectsLoaded, projects: response.entity})
+                this._dispatcher.dispatch({actionType: ActionTypes.projectsLoaded, projects: response})
             }).bind(this),
-            (response => {
-                console.error("------------> error: "+response.status.code);
-                if(response.status.code==401){
-                    this.dispatcher.dispatch({actionType: ActionTypes.errorUnauthorized})
-                }
-
-                this.dispatcher.dispatch({actionType: ActionTypes.projectsLoadingError})
-            })
-        );
+            ((code, message) => {
+                console.error("------------> error: "+code);
+                this._dispatcher.dispatch({actionType: ActionTypes.projectsLoadingError, message: message})
+            }).bind(this))
     }
 }

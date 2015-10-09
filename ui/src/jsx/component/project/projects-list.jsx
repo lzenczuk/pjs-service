@@ -10,7 +10,7 @@ class ProjectsList extends React.Component {
         console.log("ProjectsList:componentWillMount}");
         // state and default properties goes here
 
-        this.state = {loading: false, projects: []};
+        this.state = {loading: false, error: false, projects: []};
 
         this.projectStore = ctx.projectStore;
 
