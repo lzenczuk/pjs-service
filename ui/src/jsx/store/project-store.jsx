@@ -1,6 +1,9 @@
-import EventEmitter from 'events'
+import EventEmitter from 'events';
 
-import ActionTypes from '../action/action-types'
+import ProjectsDO from './do/projects-do';
+import ScenariosDO from './do/scenarios-do';
+
+import ActionTypes from '../action/action-types';
 
 export default class ProjectStore extends EventEmitter {
 
@@ -8,37 +11,37 @@ export default class ProjectStore extends EventEmitter {
         super();
         this.dispatcher = dispatcher;
 
-        this._projects = {
-            loading: false,
-            error: false,
-            errorMsg: '',
-            projects: [],
-            selectedProject: null
-        };
+        this._projects = new ProjectsDO();
+        this._selectedProject = null;
+        this._scenarios = new ScenariosDO();
 
         this.dispatcher.register( action => {
             console.log("ProjectStore action: "+JSON.stringify(action));
 
             if(action.actionType==ActionTypes.loadingProjects){
-                this._projects.loading=true;
-                this._projects.error=false;
-                this._projects.projects = [];
-                this._projects.selectedProject=null;
+                this._projects.loadingProjects();
+                this._selectedProject = null;
+                this._scenarios.reset();
                 this.emit('CHANGE');
             }else if(action.actionType==ActionTypes.projectsLoaded){
-                this._projects.loading=false;
-                this._projects.error=false;
-                this._projects.projects = action.projects;
-                this._projects.selectedProject=null;
+                this._projects.projectsLoaded(action.projects);
+                this._selectedProject = null;
+                this._scenarios.reset();
                 this.emit('CHANGE');
             }else if(action.actionType==ActionTypes.projectsLoadingError){
-                this._projects.loading=false;
-                this._projects.error=true;
-                this._projects.projects = [];
-                this._projects.selectedProject=null;
+                this._projects.loadingProjectsError(action.message);
+                this._selectedProject=null;
+                this._scenarios.reset();
                 this.emit('CHANGE');
             }else if(action.actionType==ActionTypes.projectSelected){
-                this._projects.selectedProject = action.project;
+                this._selectedProject = action.project;
+                this._scenarios.loadingScenarios();
+                this.emit('CHANGE');
+            }else if(action.actionType==ActionTypes.scenariosLoaded){
+                this._scenarios.scenariosLoaded(action.scenarios);
+                this.emit('CHANGE');
+            }else if(action.actionType==ActionTypes.scenariosLoadingError){
+                this._scenarios.loadingScenariosError(action.message);
                 this.emit('CHANGE');
             }
         })
@@ -46,6 +49,14 @@ export default class ProjectStore extends EventEmitter {
 
     get projects(){
         return this._projects
+    }
+
+    get selectedProject(){
+        return this._selectedProject
+    }
+
+    get scenarios(){
+        return this._scenarios
     }
 
     addChangeListener(callback){

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ctx from '../../context';
+import ScenariosList from './scenarios-list';
 
 export default class Project extends React.Component {
 
@@ -8,14 +8,6 @@ export default class Project extends React.Component {
         super(props);
         console.log("Project:componentWillMount}");
         // state and default properties goes here
-
-        this.state = null;
-
-        this.projectStore = ctx.projectStore;
-
-        ctx.projectStore.addChangeListener((() => {
-            this.setState(this.projectStore.projects.selectedProject);
-        }).bind(this));
     }
 
     componentWillMount() {
@@ -61,21 +53,28 @@ export default class Project extends React.Component {
      */
     componentDidUpdate(prevProps, prevState) {
         console.log("Project: componentDidUpdate")
+
+        if(this.state!=null){
+            ctx.scenarioActions.loadScenarios(this.state.name)
+        }
     }
 
     render() {
         console.log("Project: render");
 
-        if (this.state == null) {
+        var project = this.props.project;
+
+        if (project == null) {
             return (
                 <div>Select project</div>
             )
         } else {
             return (
                 <div>
-                    <h1>{this.state.name}</h1>
+                    <h1>{project.name}</h1>
 
-                    <p>{this.state.description}</p>
+                    <p>{project.description}</p>
+                    <ScenariosList scenarios={this.props.scenarios} />
                 </div>
             )
         }

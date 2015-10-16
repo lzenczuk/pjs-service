@@ -2,6 +2,8 @@ import React from 'react';
 import ProjectList from './projects-list';
 import Project from './project';
 
+import ctx from '../../context';
+
 export default
 class ProjectManager extends React.Component {
 
@@ -9,6 +11,22 @@ class ProjectManager extends React.Component {
         super(props);
         console.log("ProjectManager:componentWillMount}");
         // state and default properties goes here
+
+        this.projectStore = ctx.projectStore;
+
+        ctx.projectStore.addChangeListener((() => {
+            this.setState({
+                projects: this.projectStore.projects,
+                selectedProject: this.projectStore.selectedProject,
+                scenarios: this.projectStore.scenarios
+            });
+        }).bind(this));
+
+        this.state = {
+            projects: this.projectStore.projects,
+            selectedProject: this.projectStore.selectedProject,
+            scenarios: this.projectStore.scenarios
+        }
     }
 
     componentWillMount() {
@@ -59,17 +77,21 @@ class ProjectManager extends React.Component {
     render() {
         console.log("ProjectManager: render");
 
+        var onProjectSelect = function(project){
+            ctx.projectActions.selectProject(project)
+        }.bind(this);
+
         return (
             <div className="max">
                 <div className="projects-left-panel">
                     <div>
-                        <ProjectList />
+                        <ProjectList projects={this.state.projects} onSelect={onProjectSelect}/>
                     </div>
                 </div>
 
                 <div className="projects-right-panel">
                     <div>
-                        <Project />
+                        <Project project={this.state.selectedProject} scenarios={this.projectStore.scenarios}/>
                     </div>
                 </div>
             </div>

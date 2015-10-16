@@ -66,5 +66,25 @@ public class Main {
             //res.status(401);
             //return "Unauthorized";
         });
+
+        get("/api/scenarios/:name", (req, res) -> {
+
+            String projectName = req.params(":name");
+
+            System.out.println("-----------------> get scenarios for project " + projectName);
+
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+            mapper.enable(SerializationFeature.INDENT_OUTPUT);
+            mapper.registerModule(new Jdk8Module());
+
+            String scenariosJson = mapper.writeValueAsString(scenarioService.getScenariosByProjectName(projectName));
+
+            res.type("application/json");
+
+            return scenariosJson;
+            //res.status(401);
+            //return "Unauthorized";
+        });
     }
 }

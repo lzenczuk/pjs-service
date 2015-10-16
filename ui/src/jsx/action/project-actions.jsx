@@ -23,5 +23,16 @@ export default class ProjectActions{
 
     selectProject(project){
         this._dispatcher.dispatch({actionType: ActionTypes.projectSelected, project: project})
+
+        console.log("loading scenarios");
+
+        this._server.GET('/api/scenarios/'+project.name,
+            (response => {
+                this._dispatcher.dispatch({actionType: ActionTypes.scenariosLoaded, scenarios: response})
+            }).bind(this),
+            ((code, message) => {
+                console.error("------------> error: "+code);
+                this._dispatcher.dispatch({actionType: ActionTypes.scenariosLoadingError, message: message})
+            }).bind(this))
     }
 }

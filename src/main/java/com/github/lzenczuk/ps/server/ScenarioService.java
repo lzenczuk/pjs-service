@@ -6,8 +6,9 @@ import com.github.lzenczuk.ps.engine.node.slots.slot.AlwaysTrueSlot;
 import com.github.lzenczuk.ps.engine.node.slots.slot.ScriptSlot;
 import com.github.lzenczuk.ps.engine.node.slots.slot.Slot;
 import com.github.lzenczuk.ps.engine.scenario.Scenario;
+import com.github.lzenczuk.ps.server.dto.ScenarioInfoDTO;
 
-import java.util.Optional;
+import java.util.*;
 
 /**
  * @author lzenczuk 30/09/2015
@@ -15,6 +16,27 @@ import java.util.Optional;
 public class ScenarioService {
 
     private Scenario scenarion;
+
+    private Map<String, List<ScenarioInfoDTO>> scenarioInfoDTOMap = new HashMap<>();
+
+    public ScenarioService() {
+        createScenario("Test 1");
+        createScenario("Test 2");
+        createScenario("Test 3");
+        createScenario("Test 4");
+        createScenario("Test 5");
+    }
+
+    private void createScenario(String projectName) {
+        LinkedList<ScenarioInfoDTO> list = new LinkedList<>();
+
+        int ns = new Double(Math.random() * 9).intValue();
+
+        for(int x=0;x<ns;x++){
+            list.add(new ScenarioInfoDTO("Scenario "+x, "Scenario number "+x+" in project "+ projectName));
+        }
+        scenarioInfoDTOMap.put(projectName, list);
+    }
 
     private Scenario createScenario() {
         Scenario scenario = new Scenario(Optional.of("randomNumberNode"));
@@ -78,5 +100,9 @@ public class ScenarioService {
 
     public void put(Scenario scenario) {
         this.scenarion = scenario;
+    }
+
+    public List<ScenarioInfoDTO> getScenariosByProjectName(String projectName){
+        return scenarioInfoDTOMap.getOrDefault(projectName, Collections.emptyList());
     }
 }

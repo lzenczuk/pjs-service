@@ -1,27 +1,26 @@
 import React from 'react';
 
-export default
-class ProjectsList extends React.Component {
+export default class ScenariosList extends React.Component {
 
     constructor(props) {
         super(props);
-        console.log("ProjectsList:componentWillMount}");
+        console.log("ScenariosList:componentWillMount}");
         // state and default properties goes here
     }
 
     componentWillMount() {
-        console.log("ProjectsList: componentWillMount")
+        console.log("ScenariosList: componentWillMount")
     }
 
     componentDidMount() {
-        console.log("ProjectsList: componentDidMount")
+        console.log("ScenariosList: componentDidMount")
     }
 
     /**
      * @param nextProps - object
      */
     componentWillReceiveProps(nextProps) {
-        console.log("ProjectsList: componentWillReceiveProps");
+        console.log("ScenariosList: componentWillReceiveProps");
 
         // if(nextProps.likeCount > this.props.likeCount)...
         // calling setState here not cause additional render, just one
@@ -33,7 +32,7 @@ class ProjectsList extends React.Component {
      * @returns {boolean}
      */
     shouldComponentUpdate(nextProps, nextState) {
-        console.log("ProjectsList: shouldComponentUpdate");
+        console.log("ScenariosList: shouldComponentUpdate");
         return true;
     }
 
@@ -42,7 +41,7 @@ class ProjectsList extends React.Component {
      * @param nextState - object
      */
     componentWillUpdate(nextProps, nextState) {
-        console.log("ProjectsList: componentWillUpdate");
+        console.log("ScenariosList: componentWillUpdate");
         // can't call setState here
     }
 
@@ -51,32 +50,31 @@ class ProjectsList extends React.Component {
      * @param prevState - object
      */
     componentDidUpdate(prevProps, prevState) {
-        console.log("ProjectsList: componentDidUpdate")
+        console.log("ScenariosList: componentDidUpdate")
     }
 
     render() {
-        console.log("ProjectsList: render");
+        console.log("ScenariosList: render");
 
-        var projects = this.props.projects;
+        var scenarios = this.props.scenarios;
+        if(scenarios==null) return;
 
-        if(projects.isError()){
+        if(scenarios.isError()){
 
             var reload = function(){
-                ctx.projectActions.loadProjects()
+                ctx.scenarioActions.loadScenarios()
             };
 
-            return(<div>loading error {projects.errorMessage}<a href="#" onClick={reload}>reload</a></div>)
-        }else if(projects.isLoading()){
+            return(<div>loading error {scenarios.errorMessage}<a href="#" onClick={reload}>reload</a></div>)
+        }else if(scenarios.isLoading()){
             return(<div>loading...</div>)
         }else{
-            var pl = projects.projects.map((p, i) => {
+            var pl = scenarios.scenarios.map((s, i) => {
                 var clickHandler = function(){
-                    if(this.props.onSelect){
-                        this.props.onSelect(p)
-                    }
-                }.bind(this);
+                    ctx.scenarioActions.selectScenario(s)
+                };
 
-                return (<li key={i} onClick={clickHandler}>{p.name} <i>{p.description}</i></li>)
+                return (<li key={i} onClick={clickHandler}>{s.name} <i>{s.description}</i></li>)
             });
 
             return (<ul className="ui-list">{pl}</ul>)
