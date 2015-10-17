@@ -1,5 +1,7 @@
 import React from 'react';
 
+import ctx from '../../context';
+
 export default
 class TopBar extends React.Component {
 
@@ -7,6 +9,8 @@ class TopBar extends React.Component {
         super(props);
         console.log("TopBar:componentWillMount}");
         // state and default properties goes here
+
+        this.projectActions=ctx.projectActions
     }
 
     componentWillMount() {
@@ -52,13 +56,18 @@ class TopBar extends React.Component {
      */
     componentDidUpdate(prevProps, prevState) {
         console.log("TopBar: componentDidUpdate")
+
     }
 
     render() {
         console.log("TopBar: render");
 
+        var click = function(){
+            this.projectActions.loadProjects()
+        }.bind(this);
+
         return (
-            <div className="topbar">Top bar</div>
+            <div className="topbar" onClick={click}>Top bar</div>
         )
     }
 }

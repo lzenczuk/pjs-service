@@ -15,17 +15,19 @@ class ProjectView extends React.Component {
         this.projectActions = ctx.projectActions;
         this.projectStore = ctx.projectStore;
 
-        ctx.projectStore.addChangeListener((() => {
+        this.projectStoreCallback = function(){
             this.setState({
                 projects: this.projectStore.projects,
                 selectedProject: this.projectStore.selectedProject,
                 scenarios: this.projectStore.scenarios
             });
-        }).bind(this));
+        }.bind(this);
+
+        this.projectStore.addChangeListener(this.projectStoreCallback);
     }
 
     componentWillMount() {
-        console.log("ProjectView: componentWillMount")
+        console.log("ProjectView: componentWillMount");
     }
 
     componentDidMount() {
@@ -99,5 +101,10 @@ class ProjectView extends React.Component {
                 </div>
             </div>
         )
+    }
+
+    componentWillUnmount(){
+        console.log("---------> ProjectView: componentWillUnmount");
+        this.projectStore.removeChangeListener(this.projectStoreCallback)
     }
 }

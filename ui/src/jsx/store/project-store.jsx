@@ -62,4 +62,8 @@ export default class ProjectStore extends EventEmitter {
     addChangeListener(callback){
         this.on('CHANGE', callback)
     }
+
+    removeChangeListener(callback){
+        this.removeListener('CHANGE', callback)
+    }
 }
