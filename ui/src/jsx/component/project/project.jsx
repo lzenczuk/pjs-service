@@ -74,7 +74,9 @@ export default class Project extends React.Component {
                     <h1>{project.name}</h1>
 
                     <p>{project.description}</p>
-                    <ScenariosList scenarios={this.props.scenarios} />
+                    <div className="inner-container">
+                        <ScenariosList scenarios={this.props.scenarios} />
+                    </div>
                 </div>
             )
         }
