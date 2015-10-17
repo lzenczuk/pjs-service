@@ -1,6 +1,7 @@
 import React from 'react';
 import TopBar from './app/top-bar'
 import ProjectManager from './project/project-manager'
+import ScenarioView from './scenario/scenario-view'
 
 import ctx from '../context';
 
@@ -10,9 +11,14 @@ export default class App extends React.Component {
         super(props);
         console.log("componentWillMount");
 
-        this.projectActions = ctx.projectActions;
+        this.uiActions = ctx.uiActions;
+        this.uiStore = ctx.uiStore;
 
-        this.state={activeView: 'projects'}
+        this.uiStore.addChangeListener((() => {
+            this.setState(
+                this.uiStore.model
+            );
+        }).bind(this));
     }
 
     componentWillMount() {
@@ -21,7 +27,7 @@ export default class App extends React.Component {
 
     componentDidMount() {
         console.log("componentDidMount");
-        this.projectActions.loadProjects();
+        this.uiActions.initUi();
     }
 
     /**
@@ -62,12 +68,20 @@ export default class App extends React.Component {
     }
 
     render() {
-        console.log("render");
 
-        var content = (<div className="tmp">Test</div>);
+        console.log("App render: "+JSON.stringify(this.state));
 
-        if(this.state.activeView=='projects'){
-            content = (<ProjectManager />)
+        var content = (<div className="tmp">loading...</div>);
+
+        if(this.state!=null && this.state.activeView!=null) {
+
+            if (this.state.activeView == 'projects') {
+                content = (<ProjectManager />)
+            }
+
+            if (this.state.activeView == 'scenario') {
+                content = (<ScenarioView />)
+            }
         }
 
         return (
@@ -86,3 +100,4 @@ export default class App extends React.Component {
         )
     }
 }
+

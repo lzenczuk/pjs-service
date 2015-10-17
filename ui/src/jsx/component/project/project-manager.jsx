@@ -12,6 +12,7 @@ class ProjectManager extends React.Component {
         console.log("ProjectManager:componentWillMount}");
         // state and default properties goes here
 
+        this.projectActions = ctx.projectActions;
         this.projectStore = ctx.projectStore;
 
         ctx.projectStore.addChangeListener((() => {
@@ -21,12 +22,6 @@ class ProjectManager extends React.Component {
                 scenarios: this.projectStore.scenarios
             });
         }).bind(this));
-
-        this.state = {
-            projects: this.projectStore.projects,
-            selectedProject: this.projectStore.selectedProject,
-            scenarios: this.projectStore.scenarios
-        }
     }
 
     componentWillMount() {
@@ -34,7 +29,8 @@ class ProjectManager extends React.Component {
     }
 
     componentDidMount() {
-        console.log("ProjectManager: componentDidMount")
+        console.log("ProjectManager: componentDidMount");
+        this.projectActions.loadProjects()
     }
 
     /**
@@ -76,6 +72,13 @@ class ProjectManager extends React.Component {
 
     render() {
         console.log("ProjectManager: render");
+
+        if(this.state==null){
+            return (
+                <div className="max">loading...</div>
+            )
+        }
+
 
         var onProjectSelect = function(project){
             ctx.projectActions.selectProject(project)

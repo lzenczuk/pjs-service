@@ -5,6 +5,7 @@
 @top-bar-height: 50px;
 
 @right-panel-width: 300px;
+@left-panel-width: 300px;
 
 // mixins --------------------------
 
@@ -87,3 +88,14 @@ body {
   border: solid @main-text-color 1px;
 }
 
+.scenario-left-panel{
+  .max;
+  margin-right: @left-panel-width;
+}
+
+.scenario-right-panel{
+  .max-height;
+  right: 0;
+  width: @left-panel-width;
+  border-left: solid @main-text-color 1px;
+}

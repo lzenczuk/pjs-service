@@ -1,4 +1,7 @@
 export default {
+    // UI ------------------------------
+    initUi: 'INIT_UI',
+
     // PROJECT -------------------------
     loadingProjects: 'LOADING_PROJECTS',
     projectsLoaded: 'PROJECTS_LOADED',

@@ -1,11 +1,15 @@
 import React from 'react';
 
+import ctx from '../../context';
+
 export default class ScenariosList extends React.Component {
 
     constructor(props) {
         super(props);
         console.log("ScenariosList:componentWillMount}");
         // state and default properties goes here
+
+        this.scenarioActions = ctx.scenarioActions
     }
 
     componentWillMount() {
@@ -62,20 +66,20 @@ export default class ScenariosList extends React.Component {
         if(scenarios.isError()){
 
             var reload = function(){
-                ctx.scenarioActions.loadScenarios()
-            };
+                this.scenarioActions.loadScenarios()
+            }.bind(this);
 
             return(<div>loading error {scenarios.errorMessage}<a href="#" onClick={reload}>reload</a></div>)
         }else if(scenarios.isLoading()){
             return(<div>loading...</div>)
         }else{
-            var pl = scenarios.scenarios.map((s, i) => {
+            var pl = scenarios.scenarios.map(((s, i) => {
                 var clickHandler = function(){
-                    ctx.scenarioActions.selectScenario(s)
-                };
+                    this.scenarioActions.selectScenario(s)
+                }.bind(this);
 
                 return (<li key={i} onClick={clickHandler}>{s.name} <i>{s.description}</i></li>)
-            });
+            }).bind(this));
 
             return (<ul className="ui-list">{pl}</ul>)
         }
