@@ -5,11 +5,11 @@ import Project from './project';
 import ctx from '../../context';
 
 export default
-class ProjectManager extends React.Component {
+class ProjectView extends React.Component {
 
     constructor(props) {
         super(props);
-        console.log("ProjectManager:componentWillMount}");
+        console.log("ProjectView:componentWillMount}");
         // state and default properties goes here
 
         this.projectActions = ctx.projectActions;
@@ -25,11 +25,11 @@ class ProjectManager extends React.Component {
     }
 
     componentWillMount() {
-        console.log("ProjectManager: componentWillMount")
+        console.log("ProjectView: componentWillMount")
     }
 
     componentDidMount() {
-        console.log("ProjectManager: componentDidMount");
+        console.log("ProjectView: componentDidMount");
         this.projectActions.loadProjects()
     }
 
@@ -37,7 +37,7 @@ class ProjectManager extends React.Component {
      * @param nextProps - object
      */
     componentWillReceiveProps(nextProps) {
-        console.log("ProjectManager: componentWillReceiveProps");
+        console.log("ProjectView: componentWillReceiveProps");
 
         // if(nextProps.likeCount > this.props.likeCount)...
         // calling setState here not cause additional render, just one
@@ -49,7 +49,7 @@ class ProjectManager extends React.Component {
      * @returns {boolean}
      */
     shouldComponentUpdate(nextProps, nextState) {
-        console.log("ProjectManager: shouldComponentUpdate");
+        console.log("ProjectView: shouldComponentUpdate");
         return true;
     }
 
@@ -58,7 +58,7 @@ class ProjectManager extends React.Component {
      * @param nextState - object
      */
     componentWillUpdate(nextProps, nextState) {
-        console.log("ProjectManager: componentWillUpdate");
+        console.log("ProjectView: componentWillUpdate");
         // can't call setState here
     }
 
@@ -67,11 +67,11 @@ class ProjectManager extends React.Component {
      * @param prevState - object
      */
     componentDidUpdate(prevProps, prevState) {
-        console.log("ProjectManager: componentDidUpdate")
+        console.log("ProjectView: componentDidUpdate")
     }
 
     render() {
-        console.log("ProjectManager: render");
+        console.log("ProjectView: render");
 
         if(this.state==null){
             return (

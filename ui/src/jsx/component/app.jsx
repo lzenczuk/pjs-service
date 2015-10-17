@@ -1,6 +1,6 @@
 import React from 'react';
 import TopBar from './app/top-bar'
-import ProjectManager from './project/project-manager'
+import ProjectView from './project/project-view'
 import ScenarioView from './scenario/scenario-view'
 
 import ctx from '../context';
@@ -76,7 +76,7 @@ export default class App extends React.Component {
         if(this.state!=null && this.state.activeView!=null) {
 
             if (this.state.activeView == 'projects') {
-                content = (<ProjectManager />)
+                content = (<ProjectView />)
             }
 
             if (this.state.activeView == 'scenario') {
