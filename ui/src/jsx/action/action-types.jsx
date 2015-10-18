@@ -12,6 +12,9 @@ export default {
 
     // SCENARIO ------------------------
     scenarioSelected: 'SCENARIO_SELECTED',
+    scenarioLoading: 'SCENARIO_LOADING',
+    scenarioLoadingError: 'SCENARIO_LOADING_ERROR',
+    scenarioLoaded: 'SCENARIO_LOADED',
 
     // ERRORS --------------------------
     errorUnauthorized: 'ERROR_UNAUTHORIZED'

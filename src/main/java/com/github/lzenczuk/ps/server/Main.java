@@ -32,7 +32,7 @@ public class Main {
 
             String scenarioJson = mapper.writeValueAsString(scenario);
 
-            res.type("application/javascript");
+            res.type("application/json");
 
             return scenarioJson;
         });

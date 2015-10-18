@@ -1,5 +1,9 @@
 import React from 'react';
 
+import Scenario from './scenario'
+
+import ctx from '../../context';
+
 export default
 class ScenarioView extends React.Component {
 
@@ -7,6 +11,13 @@ class ScenarioView extends React.Component {
         super(props);
         console.log("ScenarioView:componentWillMount}");
         // state and default properties goes here
+
+        this.scenarioActions = ctx.scenarioActions;
+        this.scenarioStore = ctx.scenarioStore;
+
+        this.scenarioStoreCallback = function(){
+            this.setState(this.scenarioStore.model);
+        }.bind(this);
     }
 
     componentWillMount() {
@@ -14,7 +25,14 @@ class ScenarioView extends React.Component {
     }
 
     componentDidMount() {
-        console.log("ScenarioView: componentDidMount")
+        console.log("ScenarioView: componentDidMount");
+
+        this.scenarioStore.addChangeListener(this.scenarioStoreCallback);
+    }
+
+    componentWillUnmount(){
+        console.log("ScenarioView: componentWillUnmount");
+        this.scenarioStore.removeChangeListener(this.scenarioStoreCallback)
     }
 
     /**
@@ -57,11 +75,21 @@ class ScenarioView extends React.Component {
     render() {
         console.log("ScenarioView: render");
 
+        if(this.state == null || this.state.status == null) return (<div className="max"></div>);
+
+        if(this.state.status.error){
+            return (<div className="max">Error: {this.state.status.errorMsg}</div>)
+        }
+
+        if(this.state.status.loading){
+            return (<div className="max">Loading...</div>)
+        }
+
         return (
             <div className="max">
                 <div className="scenario-left-panel">
                     <div>
-                        Left scenario
+                        <Scenario model={this.state.scenario} />
                     </div>
                 </div>
 

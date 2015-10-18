@@ -8,6 +8,18 @@ export default class ScenarioActions{
     }
 
     selectScenario(scenario){
-        this._dispatcher.dispatch({actionType: ActionTypes.scenarioSelected, scenario: scenario})
+        this._dispatcher.dispatch({actionType: ActionTypes.scenarioLoading});
+        this._dispatcher.dispatch({actionType: ActionTypes.scenarioSelected});
+
+        console.log("loading scenario");
+
+        this._server.GET('/api/scenario',
+            (response => {
+                this._dispatcher.dispatch({actionType: ActionTypes.scenarioLoaded, scenario: response})
+            }).bind(this),
+            ((code, message) => {
+                console.error("------------> error: "+code);
+                this._dispatcher.dispatch({actionType: ActionTypes.scenarioLoadingError, message: message})
+            }).bind(this))
     }
 }
