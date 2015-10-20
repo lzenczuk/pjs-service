@@ -8,30 +8,45 @@ export default class Connection extends React.Component {
 
         var m = this.props.model
 
+        var width = Math.abs(m.srcX-m.desX)
+        var height = Math.abs(m.srcY-m.desY)
+        
         var top = m.srcY;
+        var y1 = 0;
+        var y2 = height;
+
         if(m.srcY>m.desY){
             top = m.desY
+            y1 = height;
+            y2 = 0;
         }
 
         var left = m.srcX;
+        var x1 = 0;
+        var x2 = width;
+
         if(m.srcX>m.desX){
             left = m.desX;
+            x1 = width;
+            x2 = 0;
         }
 
-        var width = Math.abs(m.srcX-m.desX)
-        var height = Math.abs(m.srcY-m.desY)
 
         var style = {
             position: 'absolute',
             top: top+'px',
             left: left+'px',
-            width: width+'px',
-            height: height+'px',
-            border: '1px solid #ff0'
+        }
+
+        var lineStyle = {
+            stroke: 'rgb(255,0,0)',
+            strokeWidth: 2,
         }
 
         return(
-            <div style={style}></div>
+            <svg style={style} width={width} height={height}>
+                <line x1={x1} y1={y1} x2={x2} y2={y2} style={lineStyle} />
+            </svg>
         )
     }
 }
