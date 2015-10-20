@@ -9,8 +9,6 @@ class ProjectView extends React.Component {
 
     constructor(props) {
         super(props);
-        console.log("ProjectView:componentWillMount}");
-        // state and default properties goes here
 
         this.projectActions = ctx.projectActions;
         this.projectStore = ctx.projectStore;
@@ -26,54 +24,11 @@ class ProjectView extends React.Component {
         this.projectStore.addChangeListener(this.projectStoreCallback);
     }
 
-    componentWillMount() {
-        console.log("ProjectView: componentWillMount");
-    }
-
     componentDidMount() {
-        console.log("ProjectView: componentDidMount");
         this.projectActions.loadProjects()
     }
 
-    /**
-     * @param nextProps - object
-     */
-    componentWillReceiveProps(nextProps) {
-        console.log("ProjectView: componentWillReceiveProps");
-
-        // if(nextProps.likeCount > this.props.likeCount)...
-        // calling setState here not cause additional render, just one
-    }
-
-    /**
-     * @param nextProps - object
-     * @param nextState - object
-     * @returns {boolean}
-     */
-    shouldComponentUpdate(nextProps, nextState) {
-        console.log("ProjectView: shouldComponentUpdate");
-        return true;
-    }
-
-    /**
-     * @param nextProps - object
-     * @param nextState - object
-     */
-    componentWillUpdate(nextProps, nextState) {
-        console.log("ProjectView: componentWillUpdate");
-        // can't call setState here
-    }
-
-    /**
-     * @param prevProps - object
-     * @param prevState - object
-     */
-    componentDidUpdate(prevProps, prevState) {
-        console.log("ProjectView: componentDidUpdate")
-    }
-
     render() {
-        console.log("ProjectView: render");
 
         if(this.state==null){
             return (
@@ -104,7 +59,6 @@ class ProjectView extends React.Component {
     }
 
     componentWillUnmount(){
-        console.log("---------> ProjectView: componentWillUnmount");
         this.projectStore.removeChangeListener(this.projectStoreCallback)
     }
 }

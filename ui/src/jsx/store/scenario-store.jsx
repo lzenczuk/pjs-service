@@ -11,7 +11,6 @@ export default class ScenarioStore extends EventEmitter {
         this._reset();
         
         this.dispatcher.register( action => {
-            console.log("ScenarioStore action: "+JSON.stringify(action));
 
             if(action.actionType==ActionTypes.scenarioLoading){
                 this._loading();

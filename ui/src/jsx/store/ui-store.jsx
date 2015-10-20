@@ -16,8 +16,7 @@ export default class UIStore extends EventEmitter {
         this._model = { activeView: null};
 
         this._dispatchToken = this.dispatcher.register( action => {
-            console.log("UiStore action: "+JSON.stringify(action));
-
+        
             if(action.actionType==ActionTypes.initUi){
                 this._model.activeView=this._views.PROJECTS;
                 this.emit('CHANGE');

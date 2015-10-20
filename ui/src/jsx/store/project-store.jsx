@@ -16,7 +16,6 @@ export default class ProjectStore extends EventEmitter {
         this._scenarios = new ScenariosDO();
 
         this.dispatcher.register( action => {
-            console.log("ProjectStore action: "+JSON.stringify(action));
 
             if(action.actionType==ActionTypes.loadingProjects){
                 this._projects.loadingProjects();

@@ -9,8 +9,7 @@ export default class ProjectActions{
 
     loadProjects(){
         this._dispatcher.dispatch({actionType: ActionTypes.loadingProjects});
-        console.log("loading projects");
-
+        
         this._server.GET('/api/projects',
             (response => {
                 this._dispatcher.dispatch({actionType: ActionTypes.projectsLoaded, projects: response})
@@ -23,8 +22,6 @@ export default class ProjectActions{
 
     selectProject(project){
         this._dispatcher.dispatch({actionType: ActionTypes.projectSelected, project: project})
-
-        console.log("loading scenarios");
 
         this._server.GET('/api/scenarios/'+project.name,
             (response => {

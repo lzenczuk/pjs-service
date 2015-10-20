@@ -52,14 +52,14 @@ public class ScenarioService {
         ScriptNode lessThen50Node = new ScriptNode("lessThen50Node");
         lessThen50Node.setScript("function main(input, ctx){ return ctx.msg+'less then 50'}");
         lessThen50Node.setX(350);
-        lessThen50Node.setY(100);
+        lessThen50Node.setY(400);
         lessThen50Node.setDescription("Number is smaller then 50. Terminate scenario.");
         scenario.add(lessThen50Node);
 
         ScriptNode moreThen50Node = new ScriptNode("moreThen50Node");
         moreThen50Node.setScript("function main(input, ctx){ return ctx.msg+'more then 50'}");
         moreThen50Node.setX(50);
-        moreThen50Node.setY(100);
+        moreThen50Node.setY(400);
         moreThen50Node.setDescription("Number is bigger then 50. Generate new one.");
         scenario.add(moreThen50Node);
 

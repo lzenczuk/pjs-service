@@ -11,8 +11,6 @@ export default class ScenarioActions{
         this._dispatcher.dispatch({actionType: ActionTypes.scenarioLoading});
         this._dispatcher.dispatch({actionType: ActionTypes.scenarioSelected});
 
-        console.log("loading scenario");
-
         this._server.GET('/api/scenario',
             (response => {
                 this._dispatcher.dispatch({actionType: ActionTypes.scenarioLoaded, scenario: response})
