@@ -67,7 +67,7 @@ export default class Scenario extends React.Component {
             }else{
                 node.uiWidth=Scenario._slotWidth()*slots.length;
             }            
-        })
+        });
 
         model.connections.forEach(connection => {
             var src = model.nodesMap[connection.src];
@@ -83,7 +83,7 @@ export default class Scenario extends React.Component {
             connection.srcY = sy;
             connection.desX = dx;
             connection.desY = dy;
-        })
+        });
 
         return model;
     }

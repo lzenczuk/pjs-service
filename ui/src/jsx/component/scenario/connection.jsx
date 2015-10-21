@@ -6,46 +6,53 @@ export default class Connection extends React.Component {
 
     render(){
 
-        var m = this.props.model
+        var m = this.props.model;
 
-        var width = Math.abs(m.srcX-m.desX)
-        var height = Math.abs(m.srcY-m.desY)
-        
-        var top = m.srcY;
-        var y1 = 0;
-        var y2 = height;
+        var cy = Math.abs(m.srcY-m.desY)/2;
 
-        if(m.srcY>m.desY){
-            top = m.desY
-            y1 = height;
-            y2 = 0;
-        }
+        var sx = m.srcX;
+        var sy = m.srcY;
 
-        var left = m.srcX;
-        var x1 = 0;
-        var x2 = width;
+        var csx = m.srcX;
+        var csy = m.srcY+cy;
 
-        if(m.srcX>m.desX){
-            left = m.desX;
-            x1 = width;
-            x2 = 0;
-        }
+        var dx = m.desX;
+        var dy = m.desY;
 
+        var cdx = m.desX;
+        var cdy = m.desY-cy;
+
+        var mx=Math.min(sx, csx, dx, cdx);
+        var my=Math.min(sy, csy, dy, cdy);
+
+        var top = my;
+        var left = mx;
+        var width = Math.abs(sx-dx);
+        var height = Math.abs(Math.max(sy, csy, dy, cdy)-Math.min(sy, csy, dy, cdy));
+
+        sx = sx - mx;
+        sy = sy - my;
+        csx = csx - mx;
+        csy = csy - my;
+
+        dx = dx - mx;
+        dy = dy - my;
+        cdx = cdx - mx;
+        cdy = cdy - my;
+
+        var dString = "M"+sx+","+sy+" C"+csx+","+csy+" "+cdx+","+cdy+" "+dx+","+dy
 
         var style = {
             position: 'absolute',
             top: top+'px',
-            left: left+'px',
-        }
-
-        var lineStyle = {
-            stroke: 'rgb(255,0,0)',
-            strokeWidth: 2,
-        }
+            left: left+'px'
+        };
 
         return(
             <svg style={style} width={width} height={height}>
-                <line x1={x1} y1={y1} x2={x2} y2={y2} style={lineStyle} />
+                <g fill="none" stroke="red" stroke-width="10">
+                <path d={dString} />
+                </g>
             </svg>
         )
     }
