@@ -9,12 +9,22 @@ export default class Node extends React.Component {
         this.state = {over: false}
     }
 
-    mouseEnter(event){
-        this.setState({over: true})
-    }
+    _onMouseDown(event){
+        event.preventDefault();
+        event.stopPropagation();
 
-    mouseLeave(event){
-        this.setState({over: false})
+        if(this.props.onMouseDown!=null){
+
+            var rec = event.target.getBoundingClientRect();
+            var node = this.props.model;
+
+            this.props.onMouseDown({
+                dx: node.x-rec.left,
+                dy: node.y-rec.top,
+                cdx: event.clientX-rec.left,
+                cdy: event.clientY-rec.top,
+                name: this.props.model.name})
+        }
     }
 
     render(){
@@ -43,7 +53,7 @@ export default class Node extends React.Component {
         }
 
         return(
-            <div className="box" style={style} onMouseEnter={this.mouseEnter.bind(this)} onMouseLeave={this.mouseLeave.bind(this)}>
+            <div className="box" style={style} onMouseDown={this._onMouseDown.bind(this)}>
                 <div className="title">{this.props.model.name}</div>
                 <div className="script">{this.props.model.description}</div>
                 <div>
