@@ -18,53 +18,36 @@ export default class Scenario extends React.Component {
         super(props);
 
         if(props!=null){
-            var model = this.convertToInternalModel(props.model);
-            this.state = {nodes: model.nodes, nodesMap: model.nodesMap, connections: model.connections, selected: null}
+            this.state = this.updateInternalModel(this.convertPropertiesToInternalModel(props.model));
         }
     }
 
     componentWillReceiveProps(nextProps){
 
         if(nextProps!=null){
-            var model = this.convertToInternalModel(nextProps.model);
+            var model = this.updateInternalModel(this.convertPropertiesToInternalModel(nextProps.model));
             var s = this.state;
             this.setState({nodes: model.nodes, nodesMap: model.nodesMap, connections: model.connections, selected: s.selected})
         }
     }
 
-    convertToInternalModel(model){
+    convertPropertiesToInternalModel(propsModel){
 
         var nodes = [];
         var nameToNodeMap = {};
         var connections = [];
 
-        Object.keys(model.nodesMap).forEach(nodeName => {
-            var node = model.nodesMap[nodeName];
+        Object.keys(propsModel.nodesMap).forEach(nodeName => {
+            var node = propsModel.nodesMap[nodeName];
             var slots = node.slots.slots;
 
             nodes.push(node);
             nameToNodeMap[node.name] = node;
 
-            if(slots.length<=3){
-                node.uiWidth=Scenario._slotWidth()*3;
-            }else{
-                node.uiWidth=Scenario._slotWidth()*slots.length;
-            }
-
             slots.forEach((s, index) => {
-
-                var sx = node.x+index*Scenario._slotWidth()+(Scenario._slotWidth()/2);
-                var sy = node.y+Scenario._nodeHeight();
-
-                connections.push({src: node.name, des: s.nodeName, srcX: sx, srcY: sy, desX: 0, desY: 0})
+                var connection = {src: node.name, des: s.nodeName, srcX: 0, srcY: 0, desX: 0, desY: 0, index: index};
+                connections.push(connection)
             })
-        });
-
-        connections.forEach( c => {
-            var node = nameToNodeMap[c.des];
-
-            c.desX = (node.x+node.uiWidth/2);
-            c.desY = node.y;
         });
 
         return {
@@ -72,6 +55,37 @@ export default class Scenario extends React.Component {
             nodesMap: nameToNodeMap,
             connections: connections
         };
+    }
+
+    updateInternalModel(model){
+        
+        model.nodes.forEach(node => {
+            var slots = node.slots.slots;
+
+            if(slots.length<=3){
+                node.uiWidth=Scenario._slotWidth()*3;
+            }else{
+                node.uiWidth=Scenario._slotWidth()*slots.length;
+            }            
+        })
+
+        model.connections.forEach(connection => {
+            var src = model.nodesMap[connection.src];
+            var des = model.nodesMap[connection.des];
+
+            var sx = src.x+connection.index*Scenario._slotWidth()+(Scenario._slotWidth()/2);
+            var sy = src.y+Scenario._nodeHeight();
+
+            var dx = (des.x+des.uiWidth/2);
+            var dy = des.y;
+
+            connection.srcX = sx;
+            connection.srcY = sy;
+            connection.desX = dx;
+            connection.desY = dy;
+        })
+
+        return model;
     }
 
     render(){
@@ -95,7 +109,7 @@ export default class Scenario extends React.Component {
             node.x=nx;
             node.y=ny;
 
-            this.setState(this.state);
+            this.setState(this.updateInternalModel(this.state));
 
         }.bind(this);
 
