@@ -45,7 +45,7 @@ export default class Scenario extends React.Component {
             nameToNodeMap[node.name] = node;
 
             slots.forEach((s, index) => {
-                var connection = {src: node.name, des: s.nodeName, srcX: 0, srcY: 0, desX: 0, desY: 0, index: index};
+                var connection = {src: node.name, des: s.nodeName, srcX: 0, srcY: 0, desX: 0, desY: 0, index: index, total: slots.length};
                 connections.push(connection)
             })
         });
@@ -58,7 +58,7 @@ export default class Scenario extends React.Component {
     }
 
     updateInternalModel(model){
-        
+
         model.nodes.forEach(node => {
             var slots = node.slots.slots;
 
@@ -74,6 +74,13 @@ export default class Scenario extends React.Component {
             var des = model.nodesMap[connection.des];
 
             var sx = src.x+connection.index*Scenario._slotWidth()+(Scenario._slotWidth()/2);
+
+            if(connection.total==1){
+                sx = (src.x+src.uiWidth/2)    
+            }else if(connection.total==2){
+                sx = src.x+connection.index*(src.uiWidth/2)+((src.uiWidth/2)/2);                
+            }
+
             var sy = src.y+Scenario._nodeHeight();
 
             var dx = (des.x+des.uiWidth/2);
@@ -124,7 +131,7 @@ export default class Scenario extends React.Component {
         }.bind(this);
 
         var nodes = this.state.nodes.map(n => <Node key={n.name} model={n} onMouseDown={mouseDown} />);
-        var connections = this.state.connections.map(c => <Connection key={c.src+c.des} model={c}/>);
+        var connections = this.state.connections.map(c => <Connection key={c.src+c.des+c.index} model={c}/>);
 
         if(this.state.selected){
             return(

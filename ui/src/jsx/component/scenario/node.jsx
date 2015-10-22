@@ -47,9 +47,20 @@ export default class Node extends React.Component {
                 style.width=70*slotsArray.length+"px"
             }
 
-            slots = slotsArray.map((s, i) => {
-                return (<Slot x={i*70} y={70} slot={s}/>)
-            })
+            console.log("-----> "+JSON.stringify(this.props.model));
+
+            if(slotsArray.length==1){
+                slots.push( <Slot x={0} y={70} width={this.props.model.uiWidth} slot={slotsArray[0]}/> )
+            }else if(slotsArray.length==2){
+                var w = this.props.model.uiWidth/2;
+                slots.push( <Slot x={0} y={70} width={w} slot={slotsArray[0]}/> );
+                slots.push( <Slot x={w} y={70} width={w} slot={slotsArray[1]}/> )
+            }else{
+                slots = slotsArray.map((s, i) => {
+                    return (<Slot x={i*70+35} y={70} width={70} slot={s}/>)
+                })
+            }
+
         }
 
         return(

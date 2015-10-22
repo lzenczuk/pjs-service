@@ -10,8 +10,9 @@ export default class Slot extends React.Component {
 
     	var style={
     		top: this.props.y,
-    		left: this.props.x
-    	}
+    		left: this.props.x,
+			width: this.props.width
+    	};
 
     	if(this.props.slot!=null){
     		if(this.props.slot.class=="script_slot"){
