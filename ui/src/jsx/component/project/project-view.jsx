@@ -28,6 +28,10 @@ class ProjectView extends React.Component {
         this.projectActions.loadProjects()
     }
 
+    componentWillUnmount(){
+        this.projectStore.removeChangeListener(this.projectStoreCallback)
+    }
+
     render() {
 
         if(this.state==null){
@@ -56,9 +60,5 @@ class ProjectView extends React.Component {
                 </div>
             </div>
         )
-    }
-
-    componentWillUnmount(){
-        this.projectStore.removeChangeListener(this.projectStoreCallback)
     }
 }

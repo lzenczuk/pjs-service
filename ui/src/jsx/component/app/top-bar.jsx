@@ -8,13 +8,13 @@ class TopBar extends React.Component {
     constructor(props) {
         super(props);
        
-        this.projectActions=ctx.projectActions
+        this.uiActions=ctx.uiActions
     }
 
     render() {
 
         var click = function(){
-            this.projectActions.loadProjects()
+            this.uiActions.goToProjects()
         }.bind(this);
 
         return (

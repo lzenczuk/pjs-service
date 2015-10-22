@@ -10,4 +10,10 @@ export default class UIActions{
     initUi(){
         this._dispatcher.dispatch({actionType: ActionTypes.initUi})
     }
+
+    goToProjects(){
+        this._dispatcher.dispatch({actionType: ActionTypes.goToProjects})
+    }
+
+    //goToProjects
 }
