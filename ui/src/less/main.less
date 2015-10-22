@@ -62,11 +62,15 @@ body {
   .max-height;
   width: @right-panel-width;
   border-right: solid @main-text-color 1px;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .projects-right-panel{
   .max;
   margin-left: @right-panel-width;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .ui-list {
@@ -91,6 +95,8 @@ body {
 .scenario-left-panel{
   .max;
   margin-right: @left-panel-width;
+  overflow-y: auto;
+  overflow-x: auto;
 }
 
 .scenario-right-panel{
@@ -98,6 +104,8 @@ body {
   right: 0;
   width: @left-panel-width;
   border-left: solid @main-text-color 1px;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .box {
