@@ -1,8 +1,6 @@
 import React from 'react';
 
 import ScenariosList from './scenarios-list';
-import VPanel from './vpanel.jsx';
-import Panel from './panel.jsx';
 
 export default class Project extends React.Component {
 
@@ -23,14 +21,6 @@ export default class Project extends React.Component {
             return (
                 <div>
                     <h1>{project.name}</h1>
-
-                    <VPanel>
-                        <Panel height={10}></Panel>
-                        <Panel height={20}></Panel>
-                        <Panel></Panel>
-                        <Panel height={11}></Panel>
-                        <div>boom</div>
-                    </VPanel>
 
                     <p>{project.description}</p>
                     <div className="inner-container">
