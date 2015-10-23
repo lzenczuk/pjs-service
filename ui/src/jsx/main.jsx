@@ -1,9 +1,10 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import attachFastClick from 'fastclick';
 
 import App from './component/app';
 
 attachFastClick(document.body);
 
-React.render(<App />, document.getElementById("app"));
+ReactDOM.render(<App />, document.getElementById("app"));
 
