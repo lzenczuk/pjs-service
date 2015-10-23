@@ -3,9 +3,12 @@ import TopBar from './app/top-bar'
 import ProjectView from './project/project-view'
 import ScenarioView from './scenario/scenario-view'
 
+import HTML5Backend from 'react-dnd-html5-backend';
+import { DragDropContext } from 'react-dnd';
+
 import ctx from '../context';
 
-export default class App extends React.Component {
+class App extends React.Component {
 
     constructor(props) {
         super(props);
@@ -56,3 +59,4 @@ export default class App extends React.Component {
     }
 }
 
+export default DragDropContext(HTML5Backend)(App);

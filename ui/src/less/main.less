@@ -26,6 +26,38 @@
   .max-width;
 }
 
+.top-bar-height {
+  height: @top-bar-height
+}
+
+.top-bar-margin {
+  margin-top: @top-bar-height
+}
+
+.scrollbars {
+  overflow-y: auto;
+  overflow-x: auto;
+}
+
+.no-scrollbars {
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+
+.vertical-scrollbar {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.horizontal-scrollbar {
+  overflow-y: hidden;
+  overflow-x: auto;
+}
+
+.bottom-edge {
+  border-bottom: 1px solid @main-text-color;
+}
+
 // ---------------------------------
 
 body {
@@ -95,8 +127,8 @@ body {
 .scenario-left-panel{
   .max;
   margin-right: @left-panel-width;
-  overflow-y: auto;
-  overflow-x: auto;
+  overflow-y: hidden;
+  overflow-x: hidden;
 }
 
 .scenario-right-panel{

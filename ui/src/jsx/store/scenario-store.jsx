@@ -21,9 +21,31 @@ export default class ScenarioStore extends EventEmitter {
             }else if(action.actionType==ActionTypes.scenarioLoadingError){
                 this._loadingError(action.message);
                 this.emit('CHANGE');
+            }else if(action.actionType==ActionTypes.nodeAdded){
+
+                var name = action.payload.node.name;
+
+                var node = {
+                    "class" : "script_node",
+                    "x" : action.payload.clientX,
+                    "y" : action.payload.clientY,
+                    "name" : name,
+                    "description" : "New node",
+                    "script" : "function main(input, ctx){}",
+                    "slots" : {
+                        "slots" : [ ]
+                    },
+                    "executorName" : null
+                    }
+
+                if(this._model.scenario!=null){
+                    this._model.scenario.nodesMap[name]=node;    
+                }
+
+                this.emit('CHANGE');
             }
         })
-    }
+    }   
 
     _reset(){
         this._model = {

@@ -20,4 +20,8 @@ export default class ScenarioActions{
                 this._dispatcher.dispatch({actionType: ActionTypes.scenarioLoadingError, message: message})
             }).bind(this))
     }
+
+    addNode(clientX, clientY, node){
+        this._dispatcher.dispatch({actionType: ActionTypes.nodeAdded, payload: {clientX: clientX, clientY: clientY, node: node} })
+    }
 }

@@ -2,7 +2,43 @@ import React from 'react';
 import Node from './node'
 import Connection from './connection'
 
-export default class Scenario extends React.Component {
+import ctx from '../../context';
+
+import { DropTarget } from 'react-dnd';
+
+import dndTypes from '../../dnd/dnd-types'
+
+const nodesTarget = {
+    drop(props, monitor, component) {
+    
+    const item = monitor.getItem();
+
+    // You can do something with it
+    //ChessActions.movePiece(item.fromPosition, props.position);
+    console.log("Drop target: "+JSON.stringify(monitor.getClientOffset()));
+
+    var clientPosition = monitor.getClientOffset();
+
+    ctx.scenarioActions.addNode(clientPosition.x, clientPosition.y, { name: item.name })
+
+    return
+  }
+}
+
+function collect(connect, monitor) {
+  return {
+    // Call this function inside render()
+    // to let React DnD handle the drag events:
+    connectDropTarget: connect.dropTarget(),
+    // You can ask the monitor about the current drag state:
+    isOver: monitor.isOver(),
+    isOverCurrent: monitor.isOver({ shallow: true }),
+    canDrop: monitor.canDrop(),
+    itemType: monitor.getItemType()
+  };
+}
+
+class Scenario extends React.Component {
 
     static _slotWidth(){
         // this is related to css - TODO - fix this
@@ -16,6 +52,8 @@ export default class Scenario extends React.Component {
 
     constructor(props){
         super(props);
+
+        this.scenarioActions = ctx.scenarioActions
 
         if(props!=null){
             this.state = this.updateInternalModel(this.convertPropertiesToInternalModel(props.model));
@@ -97,6 +135,8 @@ export default class Scenario extends React.Component {
 
     render(){
 
+        console.log("Scenario: render");
+
         if(this.state==null){
             return ( <div className="max"></div> )
         }
@@ -133,8 +173,10 @@ export default class Scenario extends React.Component {
         var nodes = this.state.nodes.map(n => <Node key={n.name} model={n} onMouseDown={mouseDown} />);
         var connections = this.state.connections.map(c => <Connection key={c.src+c.des+c.index} model={c}/>);
 
+        const { isOver, canDrop, connectDropTarget } = this.props;
+
         if(this.state.selected){
-            return(
+            return connectDropTarget(
                 <div className="max" onMouseMove={mouseMove} onMouseLeave={mouseLeave} onMouseUp={mouseUp}>
                     <div>
                         {connections}
@@ -144,7 +186,7 @@ export default class Scenario extends React.Component {
             )
         }
 
-        return(
+        return connectDropTarget(
             <div className="max">
                 <div>
                     {connections}
@@ -154,3 +196,5 @@ export default class Scenario extends React.Component {
         )
     }
 }
+
+export default DropTarget(dndTypes.newNode, nodesTarget, collect)(Scenario);

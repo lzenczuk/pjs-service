@@ -1,5 +1,7 @@
 import React from 'react';
 
+import NewNodeDndButton from './new-node-dnd-button';
+
 export default
 class ScenarioControlPanel extends React.Component {
 
@@ -7,7 +9,10 @@ class ScenarioControlPanel extends React.Component {
         console.log("ScenarioDndPanel: render");
 
         return (
-            <div>Hello</div>
+            <div>
+            	Hello
+            	<NewNodeDndButton />
+            </div>
         )
     }
 }

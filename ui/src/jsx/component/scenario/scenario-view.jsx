@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Scenario from './scenario'
+import ScenarioControlPanel from './scenario-control-panel'
 
 import ctx from '../../context';
 
@@ -42,7 +43,17 @@ class ScenarioView extends React.Component {
             <div className="max">
                 <div className="scenario-left-panel">
                     <div>
-                        <Scenario model={this.state.scenario} />
+                        <div className="max-width top-bar-height no-scrollbars bottom-edge">
+                            <div>
+                                <ScenarioControlPanel />
+                            </div>
+                        </div>
+                        <div className="max top-bar-margin scrollbars">
+                            <div>
+                                <Scenario model={this.state.scenario} />
+                            </div>
+                        </div>
+                        
                     </div>
                 </div>
 

@@ -17,6 +17,8 @@ export default {
     scenarioLoadingError: 'SCENARIO_LOADING_ERROR',
     scenarioLoaded: 'SCENARIO_LOADED',
 
+    nodeAdded: 'NODE_ADDED',
+
     // ERRORS --------------------------
     errorUnauthorized: 'ERROR_UNAUTHORIZED'
 }
