@@ -25,8 +25,6 @@ function collect(connect, monitor) {
 class NewNodeDndButton extends React.Component {
 
     render() {
-        console.log("NewNodeDndButton: render");
-
         const { connectDragSource } = this.props;
 
         return connectDragSource(

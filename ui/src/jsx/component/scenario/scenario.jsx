@@ -14,10 +14,6 @@ const nodesTarget = {
     
     const item = monitor.getItem();
 
-    // You can do something with it
-    //ChessActions.movePiece(item.fromPosition, props.position);
-    console.log("Drop target: "+JSON.stringify(monitor.getClientOffset()));
-
     var clientPosition = monitor.getClientOffset();
     var elemantPosition = component.getOffsetToClient();
 
@@ -144,8 +140,6 @@ class Scenario extends React.Component {
     }
 
     render(){
-
-        console.log("Scenario: render");
 
         if(this.state==null){
             return ( <div className="max"></div> )
