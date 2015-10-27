@@ -18,12 +18,14 @@ const nodesTarget = {
     console.log("Drop target: "+JSON.stringify(monitor.getClientOffset()));
 
     var clientPosition = monitor.getClientOffset();
+    var elemantPosition = component.getOffsetToClient();
 
-    ctx.scenarioActions.addNode(clientPosition.x, clientPosition.y, { name: item.name })
-
-    return
+    ctx.scenarioActions.addNode(
+        clientPosition.x - elemantPosition.x, 
+        clientPosition.y - elemantPosition.y, 
+        { name: item.name });
   }
-}
+};
 
 function collect(connect, monitor) {
   return {
@@ -52,6 +54,8 @@ class Scenario extends React.Component {
 
     constructor(props){
         super(props);
+
+        this._mainElement = null;
 
         this.scenarioActions = ctx.scenarioActions
 
@@ -133,6 +137,11 @@ class Scenario extends React.Component {
         return model;
     }
 
+    getOffsetToClient(){
+        var clientPosition = this._mainElement.getBoundingClientRect();
+        return {x: clientPosition.left, y: clientPosition.top}
+    }
+
     render(){
 
         console.log("Scenario: render");
@@ -177,7 +186,7 @@ class Scenario extends React.Component {
 
         if(this.state.selected){
             return connectDropTarget(
-                <div className="max" onMouseMove={mouseMove} onMouseLeave={mouseLeave} onMouseUp={mouseUp}>
+                <div className="max" ref={(el) => this._mainElement = el} onMouseMove={mouseMove} onMouseLeave={mouseLeave} onMouseUp={mouseUp}>
                     <div>
                         {connections}
                         {nodes}
@@ -187,7 +196,7 @@ class Scenario extends React.Component {
         }
 
         return connectDropTarget(
-            <div className="max">
+            <div className="max" ref={(el) => this._mainElement = el}>
                 <div>
                     {connections}
                     {nodes}
