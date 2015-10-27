@@ -27,6 +27,18 @@ export default class Node extends React.Component {
         }
     }
 
+    _onMouseDownOnSlot(data){
+
+        console.log("Node: Mouse down on slot"+JSON.stringify(data))
+    
+        if(this.props.onMouseDownOnSlot!=null){
+
+            data.nodeName = this.props.model.name
+
+            this.props.onMouseDownOnSlot(data)
+        }
+    }
+
     render(){
 
         var style = {
@@ -48,14 +60,14 @@ export default class Node extends React.Component {
             }
 
             if(slotsArray.length==1){
-                slots.push( <Slot key={0} x={0} y={70} width={this.props.model.uiWidth} slot={slotsArray[0]}/> )
+                slots.push( <Slot key={0} x={0} y={70} index={0} width={this.props.model.uiWidth} slot={slotsArray[0]} onMouseDown={this._onMouseDownOnSlot.bind(this)}/> )
             }else if(slotsArray.length==2){
                 var w = this.props.model.uiWidth/2;
-                slots.push( <Slot key={0} x={0} y={70} width={w} slot={slotsArray[0]}/> );
-                slots.push( <Slot key={1} x={w} y={70} width={w} slot={slotsArray[1]}/> )
+                slots.push( <Slot key={0} x={0} y={70} index={0} width={w} slot={slotsArray[0]} onMouseDown={this._onMouseDownOnSlot.bind(this)}/> );
+                slots.push( <Slot key={1} x={w} y={70} index={1} width={w} slot={slotsArray[1]} onMouseDown={this._onMouseDownOnSlot.bind(this)}/> )
             }else{
                 slots = slotsArray.map((s, i) => {
-                    return (<Slot key={i} x={i*70+35} y={70} width={70} slot={s}/>)
+                    return (<Slot key={i} x={i*70+35} y={70} index={i} width={70} slot={s} onMouseDown={this._onMouseDownOnSlot.bind(this)}/>)
                 })
             }
 

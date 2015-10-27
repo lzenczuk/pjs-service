@@ -1,12 +1,13 @@
 import React from 'react';
-import Node from './node'
-import Connection from './connection'
+import Node from './node';
+import Connection from './connection';
+import ConnectionLine from './connection-line';
 
 import ctx from '../../context';
 
 import { DropTarget } from 'react-dnd';
 
-import dndTypes from '../../dnd/dnd-types'
+import dndTypes from '../../dnd/dnd-types';
 
 const nodesTarget = {
     drop(props, monitor, component) {
@@ -156,6 +157,10 @@ class Scenario extends React.Component {
             this.setState({nodes: s.nodes, nodesMap: s.nodesMap, connections: s.connections, selected: selected})
         }.bind(this);
 
+        var mouseDownonSlot = function(data){
+            console.log("Scenario: mouse down on slot: "+JSON.stringify(data))
+        }.bind(this);
+
         var mouseMove = function(event){
 
             var nx = this.state.selected.dx+event.clientX-this.state.selected.cdx;
@@ -179,7 +184,8 @@ class Scenario extends React.Component {
             this.setState({nodes: s.nodes, nodesMap: s.nodesMap, connections: s.connections, selected: null})
         }.bind(this);
 
-        var nodes = this.state.nodes.map(n => <Node key={n.name} model={n} onMouseDown={mouseDown} />);
+
+        var nodes = this.state.nodes.map(n => <Node key={n.name} model={n} onMouseDown={mouseDown} onMouseDownOnSlot={mouseDownonSlot}/>);
         var connections = this.state.connections.map(c => <Connection key={c.src+c.des+c.index} model={c}/>);
 
         const { isOver, canDrop, connectDropTarget } = this.props;

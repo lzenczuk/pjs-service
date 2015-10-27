@@ -6,6 +6,22 @@ export default class Slot extends React.Component {
         super(props);
     }
 
+    _onMouseDown(event){
+
+        console.log("Mouse down on slot");
+        
+        event.preventDefault();
+        event.stopPropagation();
+
+        if(this.props.onMouseDown!=null){
+
+            this.props.onMouseDown({
+                cx: event.clientX,
+                cy: event.clientY,
+                slotIndex: this.props.index})
+        }
+    }
+
     render(){
 
     	var style={
@@ -16,11 +32,11 @@ export default class Slot extends React.Component {
 
     	if(this.props.slot!=null){
     		if(this.props.slot.class=="script_slot"){
-    			return (<div className="slot" style={style}><span className="label">{this.props.slot.label}</span></div>)
+    			return (<div className="slot" style={style} onMouseDown={this._onMouseDown.bind(this)}><span className="label">{this.props.slot.label}</span></div>)
     		}
     	}
 
-        return (<div className="slot" style={style}></div>)
+        return (<div className="slot" style={style} onMouseDown={this._onMouseDown.bind(this)}></div>)
     }
 
 }
