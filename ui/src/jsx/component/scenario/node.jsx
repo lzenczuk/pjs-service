@@ -19,6 +19,7 @@ export default class Node extends React.Component {
             var node = this.props.model;
 
             this.props.onMouseDown({
+                type: "NODE_MOUSE_DOWN",
                 dx: node.x-rec.left,
                 dy: node.y-rec.top,
                 cdx: event.clientX-rec.left,
@@ -33,7 +34,7 @@ export default class Node extends React.Component {
     
         if(this.props.onMouseDownOnSlot!=null){
 
-            data.nodeName = this.props.model.name
+            data.nodeName = this.props.model.name;
 
             this.props.onMouseDownOnSlot(data)
         }

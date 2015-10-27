@@ -39,99 +39,14 @@ function collect(connect, monitor) {
 
 class Scenario extends React.Component {
 
-    static _slotWidth(){
-        // this is related to css - TODO - fix this
-        return 70
-    }
-
-    static _nodeHeight(){
-        // this is related to css - TODO - fix this
-        return 75
-    }
-
     constructor(props){
         super(props);
 
-        this._mainElement = null;
-
         this.scenarioActions = ctx.scenarioActions
 
-        if(props!=null){
-            this.state = this.updateInternalModel(this.convertPropertiesToInternalModel(props.model));
-        }
-    }
+        this._mainElement = null;
 
-    componentWillReceiveProps(nextProps){
-
-        if(nextProps!=null){
-            var model = this.updateInternalModel(this.convertPropertiesToInternalModel(nextProps.model));
-            var s = this.state;
-            this.setState({nodes: model.nodes, nodesMap: model.nodesMap, connections: model.connections, selected: s.selected})
-        }
-    }
-
-    convertPropertiesToInternalModel(propsModel){
-
-        var nodes = [];
-        var nameToNodeMap = {};
-        var connections = [];
-
-        Object.keys(propsModel.nodesMap).forEach(nodeName => {
-            var node = propsModel.nodesMap[nodeName];
-            var slots = node.slots.slots;
-
-            nodes.push(node);
-            nameToNodeMap[node.name] = node;
-
-            slots.forEach((s, index) => {
-                var connection = {src: node.name, des: s.nodeName, srcX: 0, srcY: 0, desX: 0, desY: 0, index: index, total: slots.length};
-                connections.push(connection)
-            })
-        });
-
-        return {
-            nodes: nodes,
-            nodesMap: nameToNodeMap,
-            connections: connections
-        };
-    }
-
-    updateInternalModel(model){
-
-        model.nodes.forEach(node => {
-            var slots = node.slots.slots;
-
-            if(slots.length<=3){
-                node.uiWidth=Scenario._slotWidth()*3;
-            }else{
-                node.uiWidth=Scenario._slotWidth()*slots.length;
-            }            
-        });
-
-        model.connections.forEach(connection => {
-            var src = model.nodesMap[connection.src];
-            var des = model.nodesMap[connection.des];
-
-            var sx = src.x+connection.index*Scenario._slotWidth()+(Scenario._slotWidth()/2);
-
-            if(connection.total==1){
-                sx = (src.x+src.uiWidth/2)    
-            }else if(connection.total==2){
-                sx = src.x+connection.index*(src.uiWidth/2)+((src.uiWidth/2)/2);                
-            }
-
-            var sy = src.y+Scenario._nodeHeight();
-
-            var dx = (des.x+des.uiWidth/2);
-            var dy = des.y;
-
-            connection.srcX = sx;
-            connection.srcY = sy;
-            connection.desX = dx;
-            connection.desY = dy;
-        });
-
-        return model;
+        this.state = {};
     }
 
     getOffsetToClient(){
@@ -139,57 +54,83 @@ class Scenario extends React.Component {
         return {x: clientPosition.left, y: clientPosition.top}
     }
 
+    onMouseDownOnNode(data){
+        this.setState(data)
+    }
+
+    onMouseDownOnSlot(data){
+        this.setState(data)
+    }
+
+    onMouseMove(event){
+        if(this.state.type=="NODE_MOUSE_DOWN"){
+            var nx = this.state.dx+event.clientX-this.state.cdx;
+            var ny = this.state.dy+event.clientY-this.state.cdy;
+
+            this.scenarioActions.moveNode(this.state.name, nx, ny);
+        }else if(this.state.type=="SLOT_MOUSE_DOWN"){
+
+            var ep = this.getOffsetToClient();
+
+            var data = {
+                type: this.state.type,
+                sx: this.state.cx - ep.x,
+                sy: this.state.cy - ep.y,
+                dx: event.clientX - ep.x,
+                dy: event.clientY - ep.y
+            };
+
+            this.setState(data)
+        }
+    }
+
+    onMouseUp(event){
+        this.setState({type: "none"})
+    }
+
+    onMouseLeave(event){
+        this.setState({type: "none"})
+    }
+
     render(){
 
-        if(this.state==null){
+        if(this.props.model==null){
             return ( <div className="max"></div> )
         }
 
-        var mouseDown = function(selected){
-
-            var s = this.state;
-            this.setState({nodes: s.nodes, nodesMap: s.nodesMap, connections: s.connections, selected: selected})
-        }.bind(this);
-
-        var mouseDownonSlot = function(data){
-            console.log("Scenario: mouse down on slot: "+JSON.stringify(data))
-        }.bind(this);
-
-        var mouseMove = function(event){
-
-            var nx = this.state.selected.dx+event.clientX-this.state.selected.cdx;
-            var ny = this.state.selected.dy+event.clientY-this.state.selected.cdy;
-
-            var node = this.state.nodesMap[this.state.selected.name]
-            node.x=nx;
-            node.y=ny;
-
-            this.setState(this.updateInternalModel(this.state));
-
-        }.bind(this);
-
-        var mouseLeave = function(){
-            var s = this.state;
-            this.setState({nodes: s.nodes, nodesMap: s.nodesMap, connections: s.connections, selected: null})
-        }.bind(this);
-
-        var mouseUp = function(){
-            var s = this.state;
-            this.setState({nodes: s.nodes, nodesMap: s.nodesMap, connections: s.connections, selected: null})
-        }.bind(this);
-
-
-        var nodes = this.state.nodes.map(n => <Node key={n.name} model={n} onMouseDown={mouseDown} onMouseDownOnSlot={mouseDownonSlot}/>);
-        var connections = this.state.connections.map(c => <Connection key={c.src+c.des+c.index} model={c}/>);
+        var nodes = this.props.model.nodes.map(n => <Node key={n.name} model={n} onMouseDown={this.onMouseDownOnNode.bind(this)} onMouseDownOnSlot={this.onMouseDownOnSlot.bind(this)}/>);
+        var connections = this.props.model.connections.map(c => <Connection key={c.src+c.des+c.index} model={c}/>);
 
         const { isOver, canDrop, connectDropTarget } = this.props;
 
-        if(this.state.selected){
+        if(this.state.type=="NODE_MOUSE_DOWN"){
+
             return connectDropTarget(
-                <div className="max" ref={(el) => this._mainElement = el} onMouseMove={mouseMove} onMouseLeave={mouseLeave} onMouseUp={mouseUp}>
+                <div className="max"
+                     ref={(el) => this._mainElement = el}
+                     onMouseMove={this.onMouseMove.bind(this)}
+                     onMouseLeave={this.onMouseLeave.bind(this)}
+                     onMouseUp={this.onMouseUp.bind(this)}>
                     <div>
                         {connections}
                         {nodes}
+                    </div>
+                </div>
+            )
+        }
+
+        if(this.state.type=="SLOT_MOUSE_DOWN"){
+
+            return connectDropTarget(
+                <div className="max"
+                     ref={(el) => this._mainElement = el}
+                     onMouseMove={this.onMouseMove.bind(this)}
+                     onMouseLeave={this.onMouseLeave.bind(this)}
+                     onMouseUp={this.onMouseUp.bind(this)}>
+                    <div>
+                        {connections}
+                        {nodes}
+                        <ConnectionLine model={this.state} />
                     </div>
                 </div>
             )

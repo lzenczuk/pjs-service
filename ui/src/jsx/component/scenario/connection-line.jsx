@@ -2,31 +2,31 @@ import React from 'react';
 
 export default class ConnectionLine extends React.Component {
 
-    // model: {src: node.name, des: s.nodeName, srcX: node.x+index*70-35, srcY: 75, desX: 0, desY: 0}
+    // model: {src: node.name, des: s.nodeName, srcX: node.x+index*70-35, sy: 75, desX: 0, dy: 0}
 
     render(){
 
         var m = this.props.model
 
-        var width = Math.abs(m.srcX-m.desX)
-        var height = Math.abs(m.srcY-m.desY)
+        var width = Math.abs(m.sx-m.dx)
+        var height = Math.abs(m.sy-m.dy)
         
-        var top = m.srcY;
+        var top = m.sy;
         var y1 = 0;
         var y2 = height;
 
-        if(m.srcY>m.desY){
-            top = m.desY
+        if(m.sy>m.dy){
+            top = m.dy
             y1 = height;
             y2 = 0;
         }
 
-        var left = m.srcX;
+        var left = m.sx;
         var x1 = 0;
         var x2 = width;
 
-        if(m.srcX>m.desX){
-            left = m.desX;
+        if(m.sx>m.dx){
+            left = m.dx;
             x1 = width;
             x2 = 0;
         }

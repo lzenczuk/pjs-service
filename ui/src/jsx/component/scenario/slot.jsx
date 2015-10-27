@@ -16,6 +16,7 @@ export default class Slot extends React.Component {
         if(this.props.onMouseDown!=null){
 
             this.props.onMouseDown({
+                type: "SLOT_MOUSE_DOWN",
                 cx: event.clientX,
                 cy: event.clientY,
                 slotIndex: this.props.index})

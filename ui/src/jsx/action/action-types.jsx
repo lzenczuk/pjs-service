@@ -18,6 +18,7 @@ export default {
     scenarioLoaded: 'SCENARIO_LOADED',
 
     nodeAdded: 'NODE_ADDED',
+    nodeMoved: 'NODE_MOVED',
 
     // ERRORS --------------------------
     errorUnauthorized: 'ERROR_UNAUTHORIZED'
