@@ -23,6 +23,21 @@ export default class Slot extends React.Component {
         }
     }
 
+    _onMouseUp(event){
+
+        console.log("Mouse up on slot");
+
+        event.preventDefault();
+        event.stopPropagation();
+
+        if(this.props.onMouseDown!=null){
+
+            this.props.onMouseDown({
+                type: "SLOT_MOUSE_UP",
+                slotIndex: this.props.index})
+        }
+    }
+
     render(){
 
     	var style={
@@ -33,11 +48,26 @@ export default class Slot extends React.Component {
 
     	if(this.props.slot!=null){
     		if(this.props.slot.class=="script_slot"){
-    			return (<div className="slot" style={style} onMouseDown={this._onMouseDown.bind(this)}><span className="label">{this.props.slot.label}</span></div>)
-    		}
+    			return (<div className="slot" style={style}
+                             onMouseDown={this._onMouseDown.bind(this)}
+                             onMouseUp={this._onMouseUp.bind(this)}
+                    >
+                    <span className="label">{this.props.slot.label}</span>
+                </div>)
+    		}else if(this.props.slot.class=="always_true_slot"){
+                return (<div className="slot" style={style}
+                             onMouseDown={this._onMouseDown.bind(this)}
+                             onMouseUp={this._onMouseUp.bind(this)}
+                    >
+                    <span className="label">true</span>
+                </div>)
+            }
     	}
 
-        return (<div className="slot" style={style} onMouseDown={this._onMouseDown.bind(this)}></div>)
+        return (<div className="slot" style={style}
+                     onMouseDown={this._onMouseDown.bind(this)}
+                     onMouseUp={this._onMouseUp.bind(this)}
+            ></div>)
     }
 
 }

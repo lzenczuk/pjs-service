@@ -58,8 +58,41 @@ class Scenario extends React.Component {
         this.setState(data)
     }
 
+    onMouseUpOnNode(data){
+        if(this.state.type=="SLOT_MOUSE_DOWN"){
+            var srcNodeName = this.state.nodeName;
+            var desNodeName = data.nodeName;
+            var slotIndex = this.state.slotIndex
+
+            this.scenarioActions.addConnection(srcNodeName, slotIndex, desNodeName)
+
+            this.setState({type: "none"})
+        }else{
+            this.setState({type: "none"})
+        }
+    }
+
     onMouseDownOnSlot(data){
-        this.setState(data)
+
+        var ep = this.getOffsetToClient();
+
+        var data2 = {
+            type: data.type,
+            cx: data.cx,
+            cy: data.cy,
+            sx: data.cx - ep.x,
+            sy: data.cy - ep.y,
+            dx: data.cx - ep.x,
+            dy: data.cy - ep.y,
+            nodeName: data.nodeName,
+            slotIndex: data.slotIndex
+        };
+
+        this.setState(data2)
+    }
+
+    onMouseUpOnSlot(data){
+        
     }
 
     onMouseMove(event){
@@ -72,33 +105,41 @@ class Scenario extends React.Component {
 
             var ep = this.getOffsetToClient();
 
-            var data = {
-                type: this.state.type,
-                sx: this.state.cx - ep.x,
-                sy: this.state.cy - ep.y,
-                dx: event.clientX - ep.x,
-                dy: event.clientY - ep.y
-            };
+            // TODO - change to immutable
+            var data = JSON.parse(JSON.stringify(this.state));
+            data.sx = this.state.cx - ep.x;
+            data.sy = this.state.cy - ep.y;
+            data.dx = event.clientX - ep.x;
+            data.dy = event.clientY - ep.y;
 
             this.setState(data)
         }
     }
 
     onMouseUp(event){
+        console.log("==========> onMouseUp")
         this.setState({type: "none"})
     }
 
     onMouseLeave(event){
+        console.log("==========> onMouseLeave")
         this.setState({type: "none"})
     }
 
     render(){
 
+        console.log("render")
+
         if(this.props.model==null){
             return ( <div className="max"></div> )
         }
 
-        var nodes = this.props.model.nodes.map(n => <Node key={n.name} model={n} onMouseDown={this.onMouseDownOnNode.bind(this)} onMouseDownOnSlot={this.onMouseDownOnSlot.bind(this)}/>);
+        var nodes = this.props.model.nodes.map(n =>
+            <Node key={n.name} model={n}
+                  onMouseDown={this.onMouseDownOnNode.bind(this)}
+                  onMouseUp={this.onMouseUpOnNode.bind(this)}
+                  onMouseDownOnSlot={this.onMouseDownOnSlot.bind(this)}/>);
+
         var connections = this.props.model.connections.map(c => <Connection key={c.src+c.des+c.index} model={c}/>);
 
         const { isOver, canDrop, connectDropTarget } = this.props;

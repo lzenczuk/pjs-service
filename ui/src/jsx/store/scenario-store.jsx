@@ -36,7 +36,11 @@ export default class ScenarioStore extends EventEmitter {
                     "description" : "New node",
                     "script" : "function main(input, ctx){}",
                     "slots" : {
-                        "slots" : [ ]
+                        "slots" : [{
+                            class: "always_true_slot",
+                            nodeName: null,
+                            label: null
+                        } ]
                     },
                     "executorName" : null
                     };
@@ -58,6 +62,20 @@ export default class ScenarioStore extends EventEmitter {
                     this._model.scenario.nodesMap[name].y=y;
                 }
 
+                this._updateInternalModel(this._model.scenario);
+
+                this.emit('CHANGE');
+            }else if(action.actionType==ActionTypes.connectionAdded){
+
+                console.log("-------> Connection added")
+
+                var model = this._model.scenario;
+                var srcNode = this._model.scenario.nodesMap[action.payload.srcNodeName];
+                var slot = srcNode.slots.slots[action.payload.slotIndex];
+
+                slot.nodeName = action.payload.desNodeName
+
+                this._rebuildInternalModel(this._model.scenario);
                 this._updateInternalModel(this._model.scenario);
 
                 this.emit('CHANGE');
@@ -110,6 +128,25 @@ export default class ScenarioStore extends EventEmitter {
 
     removeChangeListener(callback){
         this.removeListener('CHANGE', callback)
+    }
+
+    _rebuildInternalModel(model){
+        
+        model.nodesMap = {};
+        model.connections = [];
+
+        model.nodes.forEach(node => {
+            var slots = node.slots.slots;
+
+            model.nodesMap[node.name] = node;
+
+            slots.forEach((s, index) => {
+                if(s.nodeName!=null){
+                    var connection = {src: node.name, des: s.nodeName, srcX: 0, srcY: 0, desX: 0, desY: 0, index: index, total: slots.length};
+                    model.connections.push(connection)
+                }
+            })
+        });
     }
 
     _updateInternalModel(model){

@@ -28,6 +28,18 @@ export default class Node extends React.Component {
         }
     }
 
+    _onMouseUp(event){
+        event.preventDefault();
+        event.stopPropagation();
+
+        if(this.props.onMouseUp!=null){
+
+            this.props.onMouseUp({
+                type: "NODE_MOUSE_UP",
+                nodeName: this.props.model.name})
+        }
+    }
+
     _onMouseDownOnSlot(data){
 
         console.log("Node: Mouse down on slot"+JSON.stringify(data))
@@ -61,7 +73,8 @@ export default class Node extends React.Component {
             }
 
             if(slotsArray.length==1){
-                slots.push( <Slot key={0} x={0} y={70} index={0} width={this.props.model.uiWidth} slot={slotsArray[0]} onMouseDown={this._onMouseDownOnSlot.bind(this)}/> )
+                slots.push(
+                    <Slot key={0} x={0} y={70} index={0} width={this.props.model.uiWidth} slot={slotsArray[0]} onMouseDown={this._onMouseDownOnSlot.bind(this)}/> )
             }else if(slotsArray.length==2){
                 var w = this.props.model.uiWidth/2;
                 slots.push( <Slot key={0} x={0} y={70} index={0} width={w} slot={slotsArray[0]} onMouseDown={this._onMouseDownOnSlot.bind(this)}/> );
@@ -75,7 +88,7 @@ export default class Node extends React.Component {
         }
 
         return(
-            <div className="box" style={style} onMouseDown={this._onMouseDown.bind(this)}>
+            <div className="box" style={style} onMouseDown={this._onMouseDown.bind(this)} onMouseUp={this._onMouseUp.bind(this)}>
                 <div className="title">{this.props.model.name}</div>
                 <div className="script">{this.props.model.description}</div>
                 <div>

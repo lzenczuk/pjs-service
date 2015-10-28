@@ -29,6 +29,11 @@ export default class ScenarioActions{
         this._dispatcher.dispatch({actionType: ActionTypes.nodeMoved, payload: {x: x, y: y, nodeName: nodeName} })
     }
 
+    addConnection(srcNodeName, slotIndex, desNodeName){
+        console.log("------------> dispatch connectionAdded")
+        this._dispatcher.dispatch({actionType: ActionTypes.connectionAdded, payload: {srcNodeName: srcNodeName, desNodeName: desNodeName, slotIndex: slotIndex} })
+    }
+
     _convertServerModelToInternalModel(propsModel){
 
         var nodes = [];
@@ -43,8 +48,10 @@ export default class ScenarioActions{
             nameToNodeMap[node.name] = node;
 
             slots.forEach((s, index) => {
-                var connection = {src: node.name, des: s.nodeName, srcX: 0, srcY: 0, desX: 0, desY: 0, index: index, total: slots.length};
-                connections.push(connection)
+                if(s.nodeName!=null){
+                    var connection = {src: node.name, des: s.nodeName, srcX: 0, srcY: 0, desX: 0, desY: 0, index: index, total: slots.length};
+                    connections.push(connection)
+                }
             })
         });
 

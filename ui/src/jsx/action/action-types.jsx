@@ -19,6 +19,7 @@ export default {
 
     nodeAdded: 'NODE_ADDED',
     nodeMoved: 'NODE_MOVED',
+    connectionAdded: 'CONNECTION_ADDED',
 
     // ERRORS --------------------------
     errorUnauthorized: 'ERROR_UNAUTHORIZED'
