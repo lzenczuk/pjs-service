@@ -5,7 +5,43 @@ import ScenarioGraph from './scenario/scenario-graph';
 
 import ScenarioMouseEvent from './scenario/scenario-mouse-event';
 
-export default class ScenarioViewport extends React.Component {
+import ctx from '../../context';
+
+import { DropTarget } from 'react-dnd';
+
+import dndTypes from '../../dnd/dnd-types';
+
+// ----------------------- dnd
+const nodesTarget = {
+    drop(props, monitor, component) {
+
+        const item = monitor.getItem();
+
+        var offset = component._componentPositionInClientSpace();
+        var clientPosition = monitor.getClientOffset();
+
+        ctx.scenarioActions.addNode(
+            clientPosition.x - offset.x - props.offsetX,
+            clientPosition.y - offset.y - props.offsetY,
+            { name: item.name });
+    }
+};
+
+// ----------------------- dnd
+function collect(connect, monitor) {
+    return {
+        // Call this function inside render()
+        // to let React DnD handle the drag events:
+        connectDropTarget: connect.dropTarget(),
+        // You can ask the monitor about the current drag state:
+        isOver: monitor.isOver(),
+        isOverCurrent: monitor.isOver({ shallow: true }),
+        canDrop: monitor.canDrop(),
+        itemType: monitor.getItemType()
+    };
+}
+
+class ScenarioViewport extends React.Component {
 
     constructor(props) {
         super(props);
@@ -52,7 +88,11 @@ export default class ScenarioViewport extends React.Component {
             left: this.props.offsetX
         };
 
-        return (
+        // ----------------------- dnd
+        const { isOver, canDrop, connectDropTarget } = this.props;
+
+        // ----------------------- dnd
+        return connectDropTarget(
             <div
                 ref={this._updateViewportElement.bind(this)}
                 className="max top-bar-margin no-scrollbars"
@@ -92,3 +132,5 @@ ScenarioViewport.propertyTypes = {
     onMouseEvent: React.PropTypes.func
 };
 
+// ----------------------- dnd
+export default DropTarget(dndTypes.newNode, nodesTarget, collect)(ScenarioViewport);
