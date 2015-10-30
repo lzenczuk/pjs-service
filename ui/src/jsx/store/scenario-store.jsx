@@ -67,16 +67,21 @@ export default class ScenarioStore extends EventEmitter {
                 this.emit('CHANGE');
             }else if(action.actionType==ActionTypes.connectionAdded){
 
-                console.log("-------> Connection added")
+                console.log("-------> Connection added");
 
                 var model = this._model.scenario;
                 var srcNode = this._model.scenario.nodesMap[action.payload.srcNodeName];
                 var slot = srcNode.slots.slots[action.payload.slotIndex];
 
-                slot.nodeName = action.payload.desNodeName
+                slot.nodeName = action.payload.desNodeName;
 
                 this._rebuildInternalModel(this._model.scenario);
                 this._updateInternalModel(this._model.scenario);
+
+                this.emit('CHANGE');
+            }else if(action.actionType==ActionTypes.shiftScenario){
+                this._model.ui.offsetX=action.payload.offsetX;
+                this._model.ui.offsetY=action.payload.offsetY;
 
                 this.emit('CHANGE');
             }
@@ -90,6 +95,10 @@ export default class ScenarioStore extends EventEmitter {
                 loading: false,
                 error: false,
                 errorMsg: ''
+            },
+            ui: {
+                offsetX: 0,
+                offsetY: 0
             }
         };
     }
@@ -99,6 +108,8 @@ export default class ScenarioStore extends EventEmitter {
         this._model.status.loading=true;
         this._model.status.error=false;
         this._model.status.errorMsg='';
+        this._model.ui.offsetX=0;
+        this._model.ui.offsetY=0;
     }
 
     _loadingError(message){
@@ -106,6 +117,8 @@ export default class ScenarioStore extends EventEmitter {
         this._model.status.loading=false;
         this._model.status.error=true;
         this._model.status.errorMsg=message;
+        this._model.ui.offsetX=0;
+        this._model.ui.offsetY=0;
     }
 
     _loaded(scenario){
@@ -116,6 +129,8 @@ export default class ScenarioStore extends EventEmitter {
         this._model.status.loading=false;
         this._model.status.error=false;
         this._model.status.errorMsg='';
+        this._model.ui.offsetX=0;
+        this._model.ui.offsetY=0;
     }
 
     get model(){

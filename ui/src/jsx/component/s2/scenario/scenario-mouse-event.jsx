@@ -23,6 +23,16 @@ export default class ScenarioMouseEvent {
 		)
 	}
 
+    static scenarioMouseDownEvent(clientX, clientY){
+        return new ScenarioMouseEvent(
+            ScenarioMouseEvent.eventType.MOUSE_DOWN,
+            ScenarioMouseEvent.sourceType.SCENARIO,
+            clientX,
+            clientY,
+            Map({})
+        )
+    }
+
 	static slotMouseUpEvent(clientX, clientY, slotIndex, nodeName){
 		return new ScenarioMouseEvent(
 			ScenarioMouseEvent.eventType.MOUSE_UP,
@@ -43,6 +53,16 @@ export default class ScenarioMouseEvent {
 		)
 	}
 
+    static scenarioMouseUpEvent(clientX, clientY){
+        return new ScenarioMouseEvent(
+            ScenarioMouseEvent.eventType.MOUSE_UP,
+            ScenarioMouseEvent.sourceType.SCENARIO,
+            clientX,
+            clientY,
+            Map({})
+        )
+    }
+
 	constructor(eventType, sourceType, clientX, clientY, payload){
 		this.eventType = eventType;
 		this.sourceType = sourceType;
@@ -50,6 +70,10 @@ export default class ScenarioMouseEvent {
 		this.clientY = clientY;
 		this.payload = payload;
 	}
+
+    setPosition(newX, newY){
+        return new ScenarioMouseEvent(this.eventType, this.sourceType, newX, newY, this.payload)
+    }
 
 	isMouseDown(){
 		return this.eventType==ScenarioMouseEvent.eventType.MOUSE_DOWN
@@ -70,6 +94,10 @@ export default class ScenarioMouseEvent {
 	isConnection(){
 		return this.sourceType==ScenarioMouseEvent.sourceType.CONNECTION
 	}
+
+	isScenario(){
+		return this.sourceType==ScenarioMouseEvent.sourceType.SCENARIO
+	}
 }
 
 ScenarioMouseEvent.eventType = {
@@ -80,5 +108,6 @@ ScenarioMouseEvent.eventType = {
 ScenarioMouseEvent.sourceType = {
 	SLOT: "SLOT",
 	NODE: "NODE",
+	SCENARIO: "SCENARIO",
 	CONNECTION: "CONNECTION"
 };

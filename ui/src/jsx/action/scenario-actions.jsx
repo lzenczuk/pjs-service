@@ -29,6 +29,10 @@ export default class ScenarioActions{
         this._dispatcher.dispatch({actionType: ActionTypes.nodeMoved, payload: {x: x, y: y, nodeName: nodeName} })
     }
 
+    shiftScenario(offsetX, offsetY){
+        this._dispatcher.dispatch({actionType: ActionTypes.shiftScenario, payload: {offsetX: offsetX, offsetY: offsetY} })
+    }
+
     addConnection(srcNodeName, slotIndex, desNodeName){
         console.log("------------> dispatch connectionAdded")
         this._dispatcher.dispatch({actionType: ActionTypes.connectionAdded, payload: {srcNodeName: srcNodeName, desNodeName: desNodeName, slotIndex: slotIndex} })

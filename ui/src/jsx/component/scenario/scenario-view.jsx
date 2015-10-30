@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Scenario from './scenario'
+import ScenarioViewport from '../s2/scenario-viewport'
 import ScenarioControlPanel from './scenario-control-panel'
 
 import ctx from '../../context';
@@ -17,6 +17,8 @@ class ScenarioView extends React.Component {
         this.scenarioStoreCallback = function(){
             this.setState(this.scenarioStore.model);
         }.bind(this);
+
+        this.isMoving = false;
     }
 
     componentDidMount() {
@@ -39,6 +41,17 @@ class ScenarioView extends React.Component {
             return (<div className="max">Loading...</div>)
         }
 
+        var mouseDown = function(event){
+            console.log("Event: "+JSON.stringify(event));
+
+            if(event.isMouseDown() && event.isNode()) {
+                this.scenarioActions.shiftScenario(this.state.ui.offsetX+25, this.state.ui.offsetY+25)
+            }else if(event.isMouseDown() && event.isScenario()){
+                this.scenarioActions.shiftScenario(this.state.ui.offsetX-25, this.state.ui.offsetY-25)
+            }
+
+        }.bind(this);
+
         return (
             <div className="max">
                 <div className="scenario-left-panel">
@@ -48,12 +61,13 @@ class ScenarioView extends React.Component {
                                 <ScenarioControlPanel />
                             </div>
                         </div>
-                        <div className="max top-bar-margin scrollbars">
-                            <div>
-                                <Scenario model={this.state.scenario} />
-                            </div>
-                        </div>
-                        
+                        <ScenarioViewport
+                            nodes={this.state.scenario.nodes}
+                            connections={this.state.scenario.connections}
+                            onMouseEvent={mouseDown}
+                            offsetX={this.state.ui.offsetX}
+                            offsetY={this.state.ui.offsetY}
+                        />
                     </div>
                 </div>
 

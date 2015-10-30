@@ -3,23 +3,36 @@ import ScenarioMouseEvent from './scenario-mouse-event'
 
 export default class Slot extends React.Component {
 
-
     _onMouseDown(event){
+        if(this.props.onMouseEvent!=null){
 
-        console.log("Mouse down on slot");
-        
-        event.preventDefault();
-        event.stopPropagation();
+            event.preventDefault();
+            event.stopPropagation();
 
-        if(this.props.onMouseDown!=null){
-            this.props.onMouseDown(ScenarioMouseEvent.slotMouseDownEvent(event.clientX, event.clientY, this.props.index, this.props.nodeName));
+            this.props.onMouseEvent(ScenarioMouseEvent.slotMouseDownEvent(event.clientX, event.clientY, this.props.index, this.props.nodeName));
+        }
+    }
+
+    _onMouseUp(event){
+        if(this.props.onMouseEvent!=null){
+
+            event.preventDefault();
+            event.stopPropagation();
+
+            this.props.onMouseEvent(ScenarioMouseEvent.slotMouseUpEvent(event.clientX, event.clientY, this.props.index, this.props.nodeName));
         }
     }
 
     render(){
 
     	return(
-    		<div className="slot" onMouseDown={this._onMouseDown.bind(this)} >{this.props.label}</div>
+    		<div
+                className="slot"
+                onMouseDown={this._onMouseDown.bind(this)}
+                onMouseUp={this._onMouseUp.bind(this)}
+            >
+                {this.props.label}
+            </div>
     		)
     }
 
@@ -29,5 +42,5 @@ Slot.propertyTypes = {
 	label: React.PropTypes.string.isRequired,
 	index: React.PropTypes.number.isRequired,
     nodeName: React.PropTypes.string.isRequired,
-	onMouseDown: React.PropTypes.func
+	onMouseEvent: React.PropTypes.func
 };
