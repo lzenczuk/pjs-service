@@ -63,16 +63,18 @@ export default class ScenarioMouseEvent {
         )
     }
 
-	constructor(eventType, sourceType, clientX, clientY, payload){
+	constructor(eventType, sourceType, clientX, clientY, payload, x, y){
 		this.eventType = eventType;
 		this.sourceType = sourceType;
 		this.clientX = clientX;
 		this.clientY = clientY;
 		this.payload = payload;
+        this.x = x;
+        this.y = y;
 	}
 
-    setPosition(newX, newY){
-        return new ScenarioMouseEvent(this.eventType, this.sourceType, newX, newY, this.payload)
+    setPosition(x, y){
+        return new ScenarioMouseEvent(this.eventType, this.sourceType, this.clientX, this.clientY, this.payload, x, y)
     }
 
 	isMouseDown(){
