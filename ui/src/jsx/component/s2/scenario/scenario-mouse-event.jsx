@@ -73,6 +73,16 @@ export default class ScenarioMouseEvent {
         )
     }
 
+    static scenarioWheelEvent(deltaX, deltaY){
+        return new ScenarioMouseEvent(
+            ScenarioMouseEvent.eventType.WHEEL,
+            ScenarioMouseEvent.sourceType.NONE,
+            0,
+            0,
+            Map({deltaX: deltaX, deltaY: deltaY})
+        )
+    }
+
 	constructor(eventType, sourceType, clientX, clientY, payload, x, y){
 		this.eventType = eventType;
 		this.sourceType = sourceType;
@@ -99,6 +109,10 @@ export default class ScenarioMouseEvent {
         return this.eventType==ScenarioMouseEvent.eventType.MOUSE_MOVE
     }
 
+    isWheel(){
+        return this.eventType==ScenarioMouseEvent.eventType.WHEEL
+    }
+
 	isSlot(){
 		return this.sourceType==ScenarioMouseEvent.sourceType.SLOT
 	}
@@ -119,7 +133,8 @@ export default class ScenarioMouseEvent {
 ScenarioMouseEvent.eventType = {
 	MOUSE_DOWN: "MOUSE_DOWN",
 	MOUSE_UP: "MOUSE_UP",
-	MOUSE_MOVE: "MOUSE_MOVE"
+	MOUSE_MOVE: "MOUSE_MOVE",
+	WHEEL: "WHEEL"
 };
 
 ScenarioMouseEvent.sourceType = {

@@ -29,8 +29,8 @@ export default class ScenarioActions{
         this._dispatcher.dispatch({actionType: ActionTypes.nodeMoved, payload: {x: x, y: y, nodeName: nodeName} })
     }
 
-    shiftScenario(offsetX, offsetY){
-        this._dispatcher.dispatch({actionType: ActionTypes.shiftScenario, payload: {offsetX: offsetX, offsetY: offsetY} })
+    transformScenario(offsetX, offsetY, scale){
+        this._dispatcher.dispatch({actionType: ActionTypes.transformScenario, payload: {offsetX: offsetX, offsetY: offsetY, scale: scale} })
     }
 
     addConnection(srcNodeName, slotIndex, desNodeName){

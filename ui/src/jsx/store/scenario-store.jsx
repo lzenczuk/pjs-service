@@ -67,8 +67,6 @@ export default class ScenarioStore extends EventEmitter {
                 this.emit('CHANGE');
             }else if(action.actionType==ActionTypes.connectionAdded){
 
-                console.log("-------> Connection added");
-
                 var model = this._model.scenario;
                 var srcNode = this._model.scenario.nodesMap[action.payload.srcNodeName];
                 var slot = srcNode.slots.slots[action.payload.slotIndex];
@@ -79,9 +77,10 @@ export default class ScenarioStore extends EventEmitter {
                 this._updateInternalModel(this._model.scenario);
 
                 this.emit('CHANGE');
-            }else if(action.actionType==ActionTypes.shiftScenario){
+            }else if(action.actionType==ActionTypes.transformScenario){
                 this._model.ui.offsetX=action.payload.offsetX;
                 this._model.ui.offsetY=action.payload.offsetY;
+                this._model.ui.scale=action.payload.scale;
 
                 this.emit('CHANGE');
             }
@@ -98,7 +97,8 @@ export default class ScenarioStore extends EventEmitter {
             },
             ui: {
                 offsetX: 0,
-                offsetY: 0
+                offsetY: 0,
+                scale: 1
             }
         };
     }

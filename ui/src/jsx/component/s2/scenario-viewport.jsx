@@ -20,9 +20,10 @@ const nodesTarget = {
         var offset = component._componentPositionInClientSpace();
         var clientPosition = monitor.getClientOffset();
 
+        // TODO - move to component and use its method
         ctx.scenarioActions.addNode(
-            clientPosition.x - offset.x - props.offsetX,
-            clientPosition.y - offset.y - props.offsetY,
+            (clientPosition.x - offset.x - props.offsetX)/props.scale,
+            (clientPosition.y - offset.y - props.offsetY)/props.scale,
             { name: item.name });
     }
 };
@@ -56,8 +57,8 @@ class ScenarioViewport extends React.Component {
 
             this.props.onMouseEvent(
                 event.setPosition(
-                    event.clientX - offset.x - this.props.offsetX,
-                    event.clientY - offset.y - this.props.offsetY
+                    (event.clientX - offset.x - this.props.offsetX)/this.props.scale,
+                    (event.clientY - offset.y - this.props.offsetY)/this.props.scale
                 ));
         }
     }
@@ -89,12 +90,22 @@ class ScenarioViewport extends React.Component {
         }
     }
 
+    _onWheel(event) {
+        if (this.props.onMouseEvent != null) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            this._mouseEventsProxy(ScenarioMouseEvent.scenarioWheelEvent(event.deltaX, event.deltaY));
+        }
+    }
+
     render() {
 
         let translate = 'translate('+this.props.offsetX+'px, '+this.props.offsetY+'px)';
+        let scale = 'scale('+this.props.scale+', '+this.props.scale+')';
 
         var viewportInternalElementStyle = {
-            transform: translate
+            transform: translate+" "+scale
         };
 
         // ----------------------- dnd
@@ -108,6 +119,7 @@ class ScenarioViewport extends React.Component {
                 onMouseDown={this._onMouseDown.bind(this)}
                 onMouseUp={this._onMouseUp.bind(this)}
                 onMouseMove={this._onMouseMove.bind(this)}
+                onWheel={this._onWheel.bind(this)}
             >
                 <div>
                     <div
@@ -139,6 +151,7 @@ ScenarioViewport.propertyTypes = {
     connections: React.PropTypes.array.isRequired,
     offsetX: React.PropTypes.number.isRequired,
     offsetY: React.PropTypes.number.isRequired,
+    scale: React.PropTypes.number.isRequired,
     onMouseEvent: React.PropTypes.func
 };
 

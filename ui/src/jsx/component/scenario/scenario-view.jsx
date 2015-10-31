@@ -109,7 +109,7 @@ class ScenarioView extends React.Component {
                     this.scenarioMoving.offsetX=newOffsetX;
                     this.scenarioMoving.offsetY=newOffsetY;
 
-                    this.scenarioActions.shiftScenario(newOffsetX, newOffsetY);
+                    this.scenarioActions.transformScenario(newOffsetX, newOffsetY, this.state.ui.scale);
                 }else if(this.nodeMoving){
 
                     var changeX = this.nodeMoving.x-event.x;
@@ -118,6 +118,12 @@ class ScenarioView extends React.Component {
                     var newX = this.nodeMoving.nodeX-changeX;
                     var newY = this.nodeMoving.nodeY-changeY;
                     this.scenarioActions.moveNode(this.nodeMoving.nodeName, newX, newY)
+                }
+            }else if(event.isWheel()){
+                var dy = (event.payload.get('deltaY')/56)*0.05;
+                let newScale = this.state.ui.scale+dy;
+                if(newScale>0.3 && newScale<4) {
+                    this.scenarioActions.transformScenario(this.state.ui.offsetX, this.state.ui.offsetY, newScale);
                 }
             }
         }.bind(this);
@@ -129,6 +135,9 @@ class ScenarioView extends React.Component {
                         <div className="max-width top-bar-height no-scrollbars bottom-edge">
                             <div>
                                 <ScenarioControlPanel />
+                                <span>OffsetX: {this.state.ui.offsetX}</span>
+                                <span>OffsetY: {this.state.ui.offsetY}</span>
+                                <span>Scale: {this.state.ui.scale}</span>
                             </div>
                         </div>
                         <ScenarioViewport
@@ -137,6 +146,7 @@ class ScenarioView extends React.Component {
                             onMouseEvent={mouseDown}
                             offsetX={this.state.ui.offsetX}
                             offsetY={this.state.ui.offsetY}
+                            scale={this.state.ui.scale}
                         />
                     </div>
                 </div>
