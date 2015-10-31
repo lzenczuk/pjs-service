@@ -49,7 +49,6 @@ class ScenarioViewport extends React.Component {
     }
 
     _mouseEventsProxy(event) {
-        console.log("--> Event proxy: " + JSON.stringify(event));
 
         if (this.props.onMouseEvent != null) {
 
@@ -81,11 +80,21 @@ class ScenarioViewport extends React.Component {
         }
     }
 
+    _onMouseMove(event) {
+        if (this.props.onMouseEvent != null) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            this._mouseEventsProxy(ScenarioMouseEvent.scenarioMouseMoveEvent(event.clientX, event.clientY));
+        }
+    }
+
     render() {
 
+        let translate = 'translate('+this.props.offsetX+'px, '+this.props.offsetY+'px)';
+
         var viewportInternalElementStyle = {
-            top: this.props.offsetY,
-            left: this.props.offsetX
+            transform: translate
         };
 
         // ----------------------- dnd
@@ -98,6 +107,7 @@ class ScenarioViewport extends React.Component {
                 className="max top-bar-margin no-scrollbars"
                 onMouseDown={this._onMouseDown.bind(this)}
                 onMouseUp={this._onMouseUp.bind(this)}
+                onMouseMove={this._onMouseMove.bind(this)}
             >
                 <div>
                     <div

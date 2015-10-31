@@ -63,6 +63,16 @@ export default class ScenarioMouseEvent {
         )
     }
 
+    static scenarioMouseMoveEvent(clientX, clientY){
+        return new ScenarioMouseEvent(
+            ScenarioMouseEvent.eventType.MOUSE_MOVE,
+            ScenarioMouseEvent.sourceType.NONE,
+            clientX,
+            clientY,
+            Map({})
+        )
+    }
+
 	constructor(eventType, sourceType, clientX, clientY, payload, x, y){
 		this.eventType = eventType;
 		this.sourceType = sourceType;
@@ -85,6 +95,10 @@ export default class ScenarioMouseEvent {
 		return this.eventType==ScenarioMouseEvent.eventType.MOUSE_UP
 	}
 
+    isMouseMove(){
+        return this.eventType==ScenarioMouseEvent.eventType.MOUSE_MOVE
+    }
+
 	isSlot(){
 		return this.sourceType==ScenarioMouseEvent.sourceType.SLOT
 	}
@@ -104,10 +118,12 @@ export default class ScenarioMouseEvent {
 
 ScenarioMouseEvent.eventType = {
 	MOUSE_DOWN: "MOUSE_DOWN",
-	MOUSE_UP: "MOUSE_UP"
+	MOUSE_UP: "MOUSE_UP",
+	MOUSE_MOVE: "MOUSE_MOVE"
 };
 
 ScenarioMouseEvent.sourceType = {
+	NONE: "NONE",
 	SLOT: "SLOT",
 	NODE: "NODE",
 	SCENARIO: "SCENARIO",

@@ -45,7 +45,7 @@ class ScenarioView extends React.Component {
         var mouseMove = function(event){
 
             if(this.scenarioMoving){
-                console.log("Mouse move");
+                console.log("Scenario moveEvent: ");
 
                 var changeX = this.scenarioMoving.clientX-event.clientX;
                 var changeY = this.scenarioMoving.clientY-event.clientY;
@@ -67,19 +67,18 @@ class ScenarioView extends React.Component {
         }.bind(this);
 
         var mouseDown = function(event){
-            console.log("Event: "+JSON.stringify(event));
 
             if(event.isMouseDown() && event.isScenario()){
                 this.scenarioMoving={
-                    clientX: event.clientX,
-                    clientY: event.clientY,
+                    x: event.x,
+                    y: event.y,
                     offsetX: this.state.ui.offsetX,
                     offsetY: this.state.ui.offsetY
                 }
             }else if(event.isMouseDown() && event.isNode()){
                 this.nodeMoving={
-                    clientX: event.clientX,
-                    clientY: event.clientY,
+                    x: event.x,
+                    y: event.y,
                     nodeX: this.state.scenario.nodesMap[event.payload.get('nodeName')].x,
                     nodeY: this.state.scenario.nodesMap[event.payload.get('nodeName')].y,
                     nodeName: event.payload.get('nodeName')
@@ -87,11 +86,44 @@ class ScenarioView extends React.Component {
             }else if(event.isMouseUp()){
                 this.scenarioMoving=null;
                 this.nodeMoving=null;
+            }else if(event.isMouseMove()){
+                if(this.scenarioMoving){
+
+                    // TODO - this is mind fuck - problem with life cycles
+
+                    //var changeX = this.scenarioMoving.clientX-event.clientX;
+                    //var changeY = this.scenarioMoving.clientY-event.clientY;
+
+                    var changeX2 = this.scenarioMoving.x-event.x;
+                    var changeY2 = this.scenarioMoving.y-event.y;
+
+                    //console.log("Change difference: x: "+(changeX-changeX2)+"; y: "+(changeY-changeY2));
+                    //console.log("Change difference: x: "+changeX2+"; y: "+changeY2);
+
+                    //this.scenarioMoving.x=event.x;
+                    //this.scenarioMoving.y=event.y;
+
+                    var newOffsetX = this.scenarioMoving.offsetX-changeX2;
+                    var newOffsetY = this.scenarioMoving.offsetY-changeY2;
+
+                    this.scenarioMoving.offsetX=newOffsetX;
+                    this.scenarioMoving.offsetY=newOffsetY;
+
+                    this.scenarioActions.shiftScenario(newOffsetX, newOffsetY);
+                }else if(this.nodeMoving){
+
+                    var changeX = this.nodeMoving.x-event.x;
+                    var changeY = this.nodeMoving.y-event.y;
+
+                    var newX = this.nodeMoving.nodeX-changeX;
+                    var newY = this.nodeMoving.nodeY-changeY;
+                    this.scenarioActions.moveNode(this.nodeMoving.nodeName, newX, newY)
+                }
             }
         }.bind(this);
 
         return (
-            <div className="max" onMouseMove={mouseMove}>
+            <div className="max">
                 <div className="scenario-left-panel">
                     <div>
                         <div className="max-width top-bar-height no-scrollbars bottom-edge">
