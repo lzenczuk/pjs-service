@@ -55,13 +55,18 @@ class ScenarioViewport extends React.Component {
 
             var offset = this._componentPositionInClientSpace();
 
+            let x = (event.clientX - offset.x - this.props.offsetX)/this.props.scale;
+            let y = (event.clientY - offset.y - this.props.offsetY)/this.props.scale;
+
             this.props.onMouseEvent(
                 event.setStateBasedParams(
-                    (event.clientX - offset.x - this.props.offsetX)/this.props.scale,
-                    (event.clientY - offset.y - this.props.offsetY)/this.props.scale,
+                    x,
+                    y,
                     this.props.offsetX,
                     this.props.offsetY,
-                    this.props.scale
+                    this.props.scale,
+                    offset.width,
+                    offset.height
                 ));
         }
     }
@@ -145,7 +150,9 @@ class ScenarioViewport extends React.Component {
 
     _componentPositionInClientSpace() {
         var positionInClientSpace = this._viewportElement.getBoundingClientRect();
-        return {x: positionInClientSpace.left, y: positionInClientSpace.top}
+        var width = this._viewportElement.offsetWidth;
+        var height = this._viewportElement.offsetHeight;
+        return {x: positionInClientSpace.left, y: positionInClientSpace.top, width: width, height: height}
     }
 }
 

@@ -83,7 +83,7 @@ export default class ScenarioMouseEvent {
         )
     }
 
-	constructor(eventType, sourceType, clientX, clientY, payload, x, y, offsetX, offsetY, scale){
+	constructor(eventType, sourceType, clientX, clientY, payload, x, y, offsetX, offsetY, scale, width, height){
 		this.eventType = eventType;
 		this.sourceType = sourceType;
 		this.clientX = clientX;
@@ -94,10 +94,24 @@ export default class ScenarioMouseEvent {
 		this.offsetX = offsetX;
 		this.offsetY = offsetY;
 		this.scale = scale;
+		this.width = width;
+		this.height = height;
 	}
 
-    setStateBasedParams(x, y, offsetX, offsetY, scale){
-        return new ScenarioMouseEvent(this.eventType, this.sourceType, this.clientX, this.clientY, this.payload, x, y, offsetX, offsetY, scale)
+    setStateBasedParams(x, y, offsetX, offsetY, scale, width, height){
+        return new ScenarioMouseEvent(
+				this.eventType,
+				this.sourceType,
+				this.clientX,
+				this.clientY,
+				this.payload,
+				x,
+				y,
+				offsetX,
+				offsetY,
+				scale,
+				width,
+				height)
     }
 
 	isMouseDown(){

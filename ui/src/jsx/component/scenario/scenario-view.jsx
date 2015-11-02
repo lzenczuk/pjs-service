@@ -82,10 +82,46 @@ class ScenarioView extends React.Component {
                     this.scenarioActions.moveNode(this.nodeMoving.nodeName, newX, newY)
                 }
             }else if(event.isWheel()){
-                var dy = (event.payload.get('deltaY')/56)*0.05;
-                let newScale = this.state.ui.scale+dy;
+                console.log("event offsetX: "+event.offsetX+" offsetY: "+event.offsetY)
+
+                var scaleDelta = (event.payload.get('deltaY')/56)*0.05;
+
+                let newScale = event.scale+scaleDelta;
+
+                console.log("scale: "+event.scale+" newScale: "+newScale)
+
+                console.log("width: "+event.width+" height: "+event.height)
+
+                let distX = (event.width/2)-event.offsetX;
+                let distY = (event.height/2)-event.offsetY;
+
+                console.log("distX: "+distX+" distY: "+distY)
+
+                let realDistX = distX/event.scale;
+                let realDistY = distY/event.scale;
+
+                console.log("realDistX: "+realDistX+" realDistY: "+realDistY)
+
+                let newDistX = realDistX*newScale;
+                let newDistY = realDistY*newScale;
+
+                console.log("newDistX: "+newDistX+" newDistY: "+newDistY)
+
+                let distXDelta = newDistX-distX;
+                let distYDelta = newDistY-distY;
+
+                console.log("distXDelta: "+distXDelta+" distYDelta: "+distYDelta)
+
+                //let newDistXDelta = distXDelta*event.scale;
+                //let newDistYDelta = distYDelta*event.scale;
+
+                //console.log("newDistXDelta: "+newDistXDelta+" newDistYDelta: "+newDistYDelta)
+
+                let newOffsetX = event.offsetX-distXDelta;
+                let newOffsetY = event.offsetY-distYDelta;
+
                 if(newScale>0.3 && newScale<4) {
-                    this.scenarioActions.transformScenario(this.state.ui.offsetX, this.state.ui.offsetY, newScale);
+                    this.scenarioActions.transformScenario(newOffsetX, newOffsetY, newScale);
                 }
             }
         }.bind(this);
