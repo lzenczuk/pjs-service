@@ -65,11 +65,11 @@ class ScenarioView extends React.Component {
             }else if(event.isMouseMove()){
                 if(this.scenarioMoving){
 
-                    var changeX2 = this.scenarioMoving.clientX-event.clientX;
-                    var changeY2 = this.scenarioMoving.clientY-event.clientY;
+                    var changeX = this.scenarioMoving.clientX-event.clientX;
+                    var changeY = this.scenarioMoving.clientY-event.clientY;
 
-                    var newOffsetX = this.scenarioMoving.offsetX-changeX2;
-                    var newOffsetY = this.scenarioMoving.offsetY-changeY2;
+                    var newOffsetX = this.scenarioMoving.offsetX-changeX;
+                    var newOffsetY = this.scenarioMoving.offsetY-changeY;
 
                     this.scenarioActions.transformScenario(newOffsetX, newOffsetY, event.scale);
                 }else if(this.nodeMoving){
@@ -82,45 +82,25 @@ class ScenarioView extends React.Component {
                     this.scenarioActions.moveNode(this.nodeMoving.nodeName, newX, newY)
                 }
             }else if(event.isWheel()){
-                console.log("event offsetX: "+event.offsetX+" offsetY: "+event.offsetY)
-
                 var scaleDelta = (event.payload.get('deltaY')/56)*0.05;
-
                 let newScale = event.scale+scaleDelta;
-
-                console.log("scale: "+event.scale+" newScale: "+newScale)
-
-                console.log("width: "+event.width+" height: "+event.height)
 
                 let distX = (event.width/2)-event.offsetX;
                 let distY = (event.height/2)-event.offsetY;
 
-                console.log("distX: "+distX+" distY: "+distY)
-
                 let realDistX = distX/event.scale;
                 let realDistY = distY/event.scale;
-
-                console.log("realDistX: "+realDistX+" realDistY: "+realDistY)
 
                 let newDistX = realDistX*newScale;
                 let newDistY = realDistY*newScale;
 
-                console.log("newDistX: "+newDistX+" newDistY: "+newDistY)
-
                 let distXDelta = newDistX-distX;
                 let distYDelta = newDistY-distY;
-
-                console.log("distXDelta: "+distXDelta+" distYDelta: "+distYDelta)
-
-                //let newDistXDelta = distXDelta*event.scale;
-                //let newDistYDelta = distYDelta*event.scale;
-
-                //console.log("newDistXDelta: "+newDistXDelta+" newDistYDelta: "+newDistYDelta)
 
                 let newOffsetX = event.offsetX-distXDelta;
                 let newOffsetY = event.offsetY-distYDelta;
 
-                if(newScale>0.3 && newScale<4) {
+                if(newScale>0.3 && newScale<2) {
                     this.scenarioActions.transformScenario(newOffsetX, newOffsetY, newScale);
                 }
             }
