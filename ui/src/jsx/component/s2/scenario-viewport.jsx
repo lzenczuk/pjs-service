@@ -56,9 +56,12 @@ class ScenarioViewport extends React.Component {
             var offset = this._componentPositionInClientSpace();
 
             this.props.onMouseEvent(
-                event.setPosition(
+                event.setStateBasedParams(
                     (event.clientX - offset.x - this.props.offsetX)/this.props.scale,
-                    (event.clientY - offset.y - this.props.offsetY)/this.props.scale
+                    (event.clientY - offset.y - this.props.offsetY)/this.props.scale,
+                    this.props.offsetX,
+                    this.props.offsetY,
+                    this.props.scale
                 ));
         }
     }
