@@ -26,10 +26,16 @@ export default class Node extends React.Component {
 
     render(){
 
+        var numberOfSlots = 0;
+        if(this.props.slots!=null){
+            numberOfSlots = this.props.slots.length
+        }
+
         var style = {
             top: this.props.y,
             left: this.props.x,
-            width: 210
+            width: 210,
+            height: 57+numberOfSlots*20
         };
 
         var slots = this.props.slots.map((slot, index) =>
@@ -47,8 +53,10 @@ export default class Node extends React.Component {
                  onMouseDown={this._onMouseDown.bind(this)}
                  onMouseUp={this._onMouseUp.bind(this)}
             >
-                <div className="title">{this.props.name}</div>
-                <div className="script">{this.props.description}</div>
+                <div className="content">
+                    <div className="title">{this.props.name}</div>
+                    <div className="script">{this.props.description}</div>
+                </div>
                 <div>
                     {slots}
                 </div>

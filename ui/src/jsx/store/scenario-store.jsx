@@ -166,32 +166,15 @@ export default class ScenarioStore extends EventEmitter {
 
     _updateInternalModel(model){
 
-        model.nodes.forEach(node => {
-            var slots = node.slots.slots;
-
-            if(slots.length<=3){
-                node.uiWidth=_slotWidth*3;
-            }else{
-                node.uiWidth=_slotWidth*slots.length;
-            }
-        });
-
         model.connections.forEach(connection => {
             var src = model.nodesMap[connection.src];
             var des = model.nodesMap[connection.des];
 
-            var sx = src.x+connection.index*_slotWidth+(_slotWidth/2);
+            var sx = src.x+210;
+            var sy = src.y+57+10+connection.index*20;
 
-            if(connection.total==1){
-                sx = (src.x+src.uiWidth/2)
-            }else if(connection.total==2){
-                sx = src.x+connection.index*(src.uiWidth/2)+((src.uiWidth/2)/2);
-            }
-
-            var sy = src.y+_nodeHeight;
-
-            var dx = (des.x+des.uiWidth/2);
-            var dy = des.y;
+            var dx = des.x;
+            var dy = des.y+10;
 
             connection.srcX = sx;
             connection.srcY = sy;

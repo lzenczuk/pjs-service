@@ -31,7 +31,7 @@ export default class Slot extends React.Component {
                 onMouseDown={this._onMouseDown.bind(this)}
                 onMouseUp={this._onMouseUp.bind(this)}
             >
-                {this.props.label}
+                <span className="label">{this.props.label}</span>
             </div>
     		)
     }
