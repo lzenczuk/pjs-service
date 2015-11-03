@@ -2,6 +2,7 @@ import React from 'react';
 import Node from './node';
 import Connection from './connection';
 import ScenarioMouseEvent from './scenario-mouse-event'
+import ConnectionLine from '../connection-line'
 
 export default class ScenarioGraph extends React.Component {
 
@@ -19,10 +20,19 @@ export default class ScenarioGraph extends React.Component {
 
         var connections = this.props.connections.map(c => <Connection key={c.src+c.des+c.index} model={c}/>);
 
+        var connectionLine;
+        if(this.props.connectionLine!=null){
+            console.log("Have connection line");
+            connectionLine = <ConnectionLine model={this.props.connectionLine} />
+        }else{
+            console.log("connection line null");
+        }
+
         return (
         	<div>
         		{connections}
         		{nodes}
+                {connectionLine}
         	</div>)
     }
 }
@@ -30,7 +40,8 @@ export default class ScenarioGraph extends React.Component {
 ScenarioGraph.propertyTypes = {
 	nodes: React.PropTypes.array.isRequired,
 	connections: React.PropTypes.array.isRequired,
-    onMouseEvent: React.PropTypes.func
+    onMouseEvent: React.PropTypes.func,
+    connectionLine: React.PropTypes.object
 };
 
 

@@ -20,6 +20,8 @@ export default {
     nodeAdded: 'NODE_ADDED',
     nodeMoved: 'NODE_MOVED',
     connectionAdded: 'CONNECTION_ADDED',
+    connectionLine: 'CONNECTION_LINE',
+    cleanUi: 'CLEAN_UI',
     transformScenario: 'TRANSFORM_SCENARIO',
     // ERRORS --------------------------
     errorUnauthorized: 'ERROR_UNAUTHORIZED'

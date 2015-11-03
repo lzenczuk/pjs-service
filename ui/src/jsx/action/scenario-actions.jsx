@@ -29,6 +29,10 @@ export default class ScenarioActions{
         this._dispatcher.dispatch({actionType: ActionTypes.nodeMoved, payload: {x: x, y: y, nodeName: nodeName} })
     }
 
+    drawConnectLine(sx, sy, dx, dy){
+        this._dispatcher.dispatch({actionType: ActionTypes.connectionLine, payload: {sx: sx, sy: sy, dx: dx, dy: dy} })
+    }
+
     transformScenario(offsetX, offsetY, scale){
         this._dispatcher.dispatch({actionType: ActionTypes.transformScenario, payload: {offsetX: offsetX, offsetY: offsetY, scale: scale} })
     }
@@ -36,6 +40,10 @@ export default class ScenarioActions{
     addConnection(srcNodeName, slotIndex, desNodeName){
         console.log("------------> dispatch connectionAdded")
         this._dispatcher.dispatch({actionType: ActionTypes.connectionAdded, payload: {srcNodeName: srcNodeName, desNodeName: desNodeName, slotIndex: slotIndex} })
+    }
+
+    cleanUi(){
+        this._dispatcher.dispatch({actionType: ActionTypes.cleanUi, payload: {} })
     }
 
     _convertServerModelToInternalModel(propsModel){

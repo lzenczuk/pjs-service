@@ -77,6 +77,17 @@ export default class ScenarioStore extends EventEmitter {
                 this._updateInternalModel(this._model.scenario);
 
                 this.emit('CHANGE');
+            }else if(action.actionType==ActionTypes.connectionLine){
+
+                this._model.ui.connectionLine = action.payload;
+                JSON.stringify(this._model);
+
+                this.emit('CHANGE');
+            }else if(action.actionType==ActionTypes.cleanUi){
+
+                this._model.ui.connectionLine = null;
+
+                this.emit('CHANGE');
             }else if(action.actionType==ActionTypes.transformScenario){
                 this._model.ui.offsetX=action.payload.offsetX;
                 this._model.ui.offsetY=action.payload.offsetY;

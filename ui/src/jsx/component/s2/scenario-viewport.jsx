@@ -134,6 +134,7 @@ class ScenarioViewport extends React.Component {
                         <ScenarioGraph
                             nodes={this.props.nodes}
                             connections={this.props.connections}
+                            connectionLine={this.props.connectionLine}
                             onMouseEvent={this._mouseEventsProxy.bind(this)}
                         />
                     </div>
@@ -159,7 +160,8 @@ ScenarioViewport.propertyTypes = {
     offsetX: React.PropTypes.number.isRequired,
     offsetY: React.PropTypes.number.isRequired,
     scale: React.PropTypes.number.isRequired,
-    onMouseEvent: React.PropTypes.func
+    onMouseEvent: React.PropTypes.func,
+    connectionLine: React.PropTypes.object
 };
 
 // ----------------------- dnd

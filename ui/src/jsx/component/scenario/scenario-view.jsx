@@ -59,9 +59,26 @@ class ScenarioView extends React.Component {
                     nodeY: this.state.scenario.nodesMap[event.payload.get('nodeName')].y,
                     nodeName: event.payload.get('nodeName')
                 }
+            }else if(event.isMouseDown() && event.isSlot()){
+                console.log("Event: "+JSON.stringify(event))
+
+                this.connectionLineMoving = {
+                    x: event.x,
+                    y: event.y,
+                    index: event.payload.get('slotIndex'),
+                    nodeName: event.payload.get('nodeName')
+                }
             }else if(event.isMouseUp()){
+                console.log("-----------------> Up event: "+JSON.stringify(event));
+                this.scenarioActions.cleanUi();
+
+                if(this.connectionLineMoving && event.isNode()){
+                    this.scenarioActions.addConnection(this.connectionLineMoving.nodeName, this.connectionLineMoving.index, event.payload.get('nodeName'))
+                }
+
                 this.scenarioMoving=null;
                 this.nodeMoving=null;
+                this.connectionLineMoving=null;
             }else if(event.isMouseMove()){
                 if(this.scenarioMoving){
 
@@ -80,6 +97,9 @@ class ScenarioView extends React.Component {
                     var newX = this.nodeMoving.nodeX-changeX;
                     var newY = this.nodeMoving.nodeY-changeY;
                     this.scenarioActions.moveNode(this.nodeMoving.nodeName, newX, newY)
+                }else if(this.connectionLineMoving){
+                    console.log("drawing line: "+this.connectionLineMoving.x+"; "+this.connectionLineMoving.y+"; "+event.x+"; "+event.y);
+                    this.scenarioActions.drawConnectLine(this.connectionLineMoving.x, this.connectionLineMoving.y, event.x-10, event.y-10)
                 }
             }else if(event.isWheel()){
                 var scaleDelta = (event.payload.get('deltaY')/56)*0.05;
@@ -113,9 +133,6 @@ class ScenarioView extends React.Component {
                         <div className="max-width top-bar-height no-scrollbars bottom-edge">
                             <div>
                                 <ScenarioControlPanel />
-                                <span>OffsetX: {this.state.ui.offsetX}</span>
-                                <span>OffsetY: {this.state.ui.offsetY}</span>
-                                <span>Scale: {this.state.ui.scale}</span>
                             </div>
                         </div>
                         <ScenarioViewport
@@ -125,6 +142,7 @@ class ScenarioView extends React.Component {
                             offsetX={this.state.ui.offsetX}
                             offsetY={this.state.ui.offsetY}
                             scale={this.state.ui.scale}
+                            connectionLine={this.state.ui.connectionLine}
                         />
                     </div>
                 </div>
