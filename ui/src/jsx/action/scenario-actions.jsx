@@ -1,4 +1,5 @@
 import ActionTypes from './action-types';
+import ScenarioModel from '../model/scenario-model'
 
 export default class ScenarioActions{
 
@@ -45,6 +46,10 @@ export default class ScenarioActions{
     }
 
     _convertServerModelToInternalModel(propsModel){
+
+        console.log("Creatign model");
+        let nm = ScenarioModel.fromServerModel(propsModel);
+        console.log("New model: "+nm);
 
         var nodes = [];
         var nameToNodeMap = {};
