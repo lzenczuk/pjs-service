@@ -15,7 +15,6 @@ export default class ProjectActions{
                 this._dispatcher.dispatch({actionType: ActionTypes.projectsLoaded, projects: response})
             }).bind(this),
             ((code, message) => {
-                console.error("------------> error: "+code);
                 this._dispatcher.dispatch({actionType: ActionTypes.projectsLoadingError, message: message})
             }).bind(this))
     }
@@ -28,7 +27,6 @@ export default class ProjectActions{
                 this._dispatcher.dispatch({actionType: ActionTypes.scenariosLoaded, scenarios: response})
             }).bind(this),
             ((code, message) => {
-                console.error("------------> error: "+code);
                 this._dispatcher.dispatch({actionType: ActionTypes.scenariosLoadingError, message: message})
             }).bind(this))
     }

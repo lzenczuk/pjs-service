@@ -16,7 +16,6 @@ export default class ScenarioActions{
                 this._dispatcher.dispatch({actionType: ActionTypes.scenarioLoaded, scenario: this._convertServerModelToInternalModel(response)})
             }).bind(this),
             ((code, message) => {
-                console.error("------------> error: "+code);
                 this._dispatcher.dispatch({actionType: ActionTypes.scenarioLoadingError, message: message})
             }).bind(this))
     }
@@ -38,7 +37,6 @@ export default class ScenarioActions{
     }
 
     addConnection(srcNodeName, slotIndex, desNodeName){
-        console.log("------------> dispatch connectionAdded")
         this._dispatcher.dispatch({actionType: ActionTypes.connectionAdded, payload: {srcNodeName: srcNodeName, desNodeName: desNodeName, slotIndex: slotIndex} })
     }
 

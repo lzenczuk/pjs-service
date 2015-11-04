@@ -22,10 +22,7 @@ export default class ScenarioGraph extends React.Component {
 
         var connectionLine;
         if(this.props.connectionLine!=null){
-            console.log("Have connection line");
             connectionLine = <ConnectionLine model={this.props.connectionLine} />
-        }else{
-            console.log("connection line null");
         }
 
         return (

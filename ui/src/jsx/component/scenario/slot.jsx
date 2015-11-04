@@ -8,8 +8,6 @@ export default class Slot extends React.Component {
 
     _onMouseDown(event){
 
-        console.log("Mouse down on slot");
-        
         event.preventDefault();
         event.stopPropagation();
 
@@ -24,8 +22,6 @@ export default class Slot extends React.Component {
     }
 
     _onMouseUp(event){
-
-        console.log("Mouse up on slot");
 
         event.preventDefault();
         event.stopPropagation();

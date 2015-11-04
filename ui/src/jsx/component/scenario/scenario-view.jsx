@@ -60,7 +60,6 @@ class ScenarioView extends React.Component {
                     nodeName: event.payload.get('nodeName')
                 }
             }else if(event.isMouseDown() && event.isSlot()){
-                console.log("Event: "+JSON.stringify(event));
 
                 this.connectionLineMoving = {
                     x: event.x,
@@ -69,7 +68,6 @@ class ScenarioView extends React.Component {
                     nodeName: event.payload.get('nodeName')
                 }
             }else if(event.isMouseUp()){
-                console.log("-----------------> Up event: "+JSON.stringify(event));
                 this.scenarioActions.cleanUi();
 
                 if(this.connectionLineMoving && (event.isNode()||event.isSlot())){
@@ -98,7 +96,6 @@ class ScenarioView extends React.Component {
                     var newY = this.nodeMoving.nodeY-changeY;
                     this.scenarioActions.moveNode(this.nodeMoving.nodeName, newX, newY)
                 }else if(this.connectionLineMoving){
-                    console.log("drawing line: "+this.connectionLineMoving.x+"; "+this.connectionLineMoving.y+"; "+event.x+"; "+event.y);
                     this.scenarioActions.drawConnectLine(this.connectionLineMoving.x, this.connectionLineMoving.y, event.x, event.y)
                 }
             }else if(event.isWheel()){
