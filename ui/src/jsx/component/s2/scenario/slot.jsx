@@ -26,12 +26,14 @@ export default class Slot extends React.Component {
     render(){
 
     	return(
-    		<div
-                className="slot"
-                onMouseDown={this._onMouseDown.bind(this)}
-                onMouseUp={this._onMouseUp.bind(this)}
-            >
-                <span className="label">{this.props.label}</span>
+    		<div className="slot" >
+                <span
+                    className="label"
+                    onMouseDown={this._onMouseDown.bind(this)}
+                    onMouseUp={this._onMouseUp.bind(this)}
+                >
+                    {this.props.label}
+                </span>
             </div>
     		)
     }

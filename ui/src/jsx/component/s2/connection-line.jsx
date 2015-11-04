@@ -36,12 +36,13 @@ export default class ConnectionLine extends React.Component {
             position: 'absolute',
             top: top+'px',
             left: left+'px',
-        }
+            pointerEvents: 'none'
+        };
 
         var lineStyle = {
             stroke: 'rgb(255,0,0)',
-            strokeWidth: 2,
-        }
+            strokeWidth: 2
+        };
 
         return(
             <svg style={style} width={width} height={height}>

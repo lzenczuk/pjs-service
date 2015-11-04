@@ -8,7 +8,7 @@ export default class Connection extends React.Component {
 
         var m = this.props.model;
 
-        var cx = Math.abs(m.srcX - m.desX) / 2;
+        var cx = Math.max((Math.abs(m.srcX - m.desX) / 2), 30);
 
         var sx = m.srcX;
         var sy = m.srcY;
