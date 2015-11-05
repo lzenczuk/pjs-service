@@ -3,6 +3,8 @@ import React from 'react';
 import ScenarioViewport from '../s2/scenario-viewport'
 import ScenarioControlPanel from './scenario-control-panel'
 
+import ScenarioMouseEvent from '../s2/scenario/scenario-mouse-event';
+
 import ctx from '../../context';
 
 export default
@@ -32,11 +34,14 @@ class ScenarioView extends React.Component {
      * @private
      */
     _onEvent(event){
-        if(event.isMouseDown()) this._onMouseDownEvent(event);
-        else if(event.isMouseMove()) this._onMouseMoveEvent(event);
-        else if(event.isMouseUp()) this._onMouseUpEvent(event);
-        else if(event.isWheel()) this._onWheelEvent(event);
-        else if(event.isSize()) this._onSizeEvent(event);
+
+        switch(event.eventType){
+            case ScenarioMouseEvent.eventType.MOUSE_DOWN: this._onMouseDownEvent(event); break;
+            case ScenarioMouseEvent.eventType.MOUSE_MOVE: this._onMouseMoveEvent(event); break;
+            case ScenarioMouseEvent.eventType.MOUSE_UP: this._onMouseUpEvent(event); break;
+            case ScenarioMouseEvent.eventType.WHEEL: this._onWheelEvent(event); break;
+            case ScenarioMouseEvent.eventType.SIZE: this._onSizeEvent(event); break;
+        }
     }
 
     /**
@@ -45,21 +50,31 @@ class ScenarioView extends React.Component {
      */
     _onMouseDownEvent(event){
 
-        if(event.isScenario()){
-            this.scenarioActions.setActiveUiEvent(event, {})
-        }else if(event.isNode()){
-            let nodeMovingPayload = {
-                nodeX: this.state.scenario.nodesMap[event.payload.get('nodeName')].x,
-                nodeY: this.state.scenario.nodesMap[event.payload.get('nodeName')].y,
-                nodeName: event.payload.get('nodeName')
-            };
-            this.scenarioActions.setActiveUiEvent(event, nodeMovingPayload)
-        }else if(event.isSlot()){
-            let connectionLineMoving = {
-                index: event.payload.get('slotIndex'),
-                nodeName: event.payload.get('nodeName')
-            };
-            this.scenarioActions.setActiveUiEvent(event, connectionLineMoving)
+        var payload;
+
+        switch (event.sourceType){
+            case ScenarioMouseEvent.sourceType.SCENARIO: {
+                payload = {};
+            } break;
+
+            case ScenarioMouseEvent.sourceType.NODE: {
+                payload = {
+                    nodeX: this.state.scenario.nodesMap[event.payload.get('nodeName')].x,
+                    nodeY: this.state.scenario.nodesMap[event.payload.get('nodeName')].y,
+                    nodeName: event.payload.get('nodeName')
+                };
+            } break;
+
+            case ScenarioMouseEvent.sourceType.SLOT: {
+                payload = {
+                    index: event.payload.get('slotIndex'),
+                    nodeName: event.payload.get('nodeName')
+                };
+            }
+        }
+
+        if(payload){
+            this.scenarioActions.setActiveUiEvent(event, payload)
         }
     }
 
