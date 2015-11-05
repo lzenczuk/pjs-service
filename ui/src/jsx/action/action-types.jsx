@@ -23,6 +23,7 @@ export default {
     connectionLine: 'CONNECTION_LINE',
     cleanUi: 'CLEAN_UI',
     transformScenario: 'TRANSFORM_SCENARIO',
+    nodesResized: 'NODES_RESIZED',
     // ERRORS --------------------------
     errorUnauthorized: 'ERROR_UNAUTHORIZED'
 }

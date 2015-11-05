@@ -83,6 +83,16 @@ export default class ScenarioMouseEvent {
         )
     }
 
+	static scenarioSizeEvent(changes){
+		return new ScenarioMouseEvent(
+				ScenarioMouseEvent.eventType.SIZE,
+				ScenarioMouseEvent.sourceType.NONE,
+				0,
+				0,
+				changes
+		)
+	}
+
 	constructor(eventType, sourceType, clientX, clientY, payload, x, y, offsetX, offsetY, scale, width, height){
 		this.eventType = eventType;
 		this.sourceType = sourceType;
@@ -130,6 +140,10 @@ export default class ScenarioMouseEvent {
         return this.eventType==ScenarioMouseEvent.eventType.WHEEL
     }
 
+	isSize(){
+        return this.eventType==ScenarioMouseEvent.eventType.SIZE
+    }
+
 	isSlot(){
 		return this.sourceType==ScenarioMouseEvent.sourceType.SLOT
 	}
@@ -151,7 +165,8 @@ ScenarioMouseEvent.eventType = {
 	MOUSE_DOWN: "MOUSE_DOWN",
 	MOUSE_UP: "MOUSE_UP",
 	MOUSE_MOVE: "MOUSE_MOVE",
-	WHEEL: "WHEEL"
+	WHEEL: "WHEEL",
+	SIZE: "SIZE"
 };
 
 ScenarioMouseEvent.sourceType = {

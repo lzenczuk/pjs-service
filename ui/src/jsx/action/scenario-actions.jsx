@@ -1,5 +1,4 @@
 import ActionTypes from './action-types';
-import ScenarioModel from '../model/scenario-model'
 
 export default class ScenarioActions{
 
@@ -37,6 +36,10 @@ export default class ScenarioActions{
         this._dispatcher.dispatch({actionType: ActionTypes.transformScenario, payload: {offsetX: offsetX, offsetY: offsetY, scale: scale} })
     }
 
+    resizeNodes(changes){
+        this._dispatcher.dispatch({actionType: ActionTypes.nodesResized, payload: {changes: changes} })
+    }
+
     addConnection(srcNodeName, slotIndex, desNodeName){
         this._dispatcher.dispatch({actionType: ActionTypes.connectionAdded, payload: {srcNodeName: srcNodeName, desNodeName: desNodeName, slotIndex: slotIndex} })
     }
@@ -46,10 +49,6 @@ export default class ScenarioActions{
     }
 
     _convertServerModelToInternalModel(propsModel){
-
-        console.log("Creatign model");
-        let nm = ScenarioModel.fromServerModel(propsModel);
-        console.log("New model: "+nm);
 
         var nodes = [];
         var nameToNodeMap = {};

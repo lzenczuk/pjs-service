@@ -17,6 +17,9 @@ public abstract class Node {
 
     private long x;
     private long y;
+    private Long width;
+    private Long height;
+    private Long contentHeight;
 
     private String name;
     private String description;
@@ -43,6 +46,30 @@ public abstract class Node {
 
     public void setY(long y) {
         this.y = y;
+    }
+
+    public Long getHeight() {
+        return height;
+    }
+
+    public void setHeight(Long height) {
+        this.height = height;
+    }
+
+    public Long getWidth() {
+        return width;
+    }
+
+    public void setWidth(Long width) {
+        this.width = width;
+    }
+
+    public Long getContentHeight() {
+        return contentHeight;
+    }
+
+    public void setContentHeight(Long contentHeight) {
+        this.contentHeight = contentHeight;
     }
 
     public String getDescription() {

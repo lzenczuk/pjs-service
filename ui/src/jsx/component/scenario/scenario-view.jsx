@@ -120,6 +120,10 @@ class ScenarioView extends React.Component {
                 if(newScale>0.3 && newScale<2) {
                     this.scenarioActions.transformScenario(newOffsetX, newOffsetY, newScale);
                 }
+            }else{
+                if(event.isSize()){
+                    this.scenarioActions.resizeNodes(event.payload);
+                }
             }
         }.bind(this);
 

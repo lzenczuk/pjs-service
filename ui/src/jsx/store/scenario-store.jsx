@@ -2,9 +2,6 @@ import EventEmitter from 'events'
 
 import ActionTypes from '../action/action-types'
 
-const _slotWidth = 70;
-const _nodeHeight = 75;
-
 export default class ScenarioStore extends EventEmitter {
 
     constructor(dispatcher){
@@ -67,7 +64,6 @@ export default class ScenarioStore extends EventEmitter {
                 this.emit('CHANGE');
             }else if(action.actionType==ActionTypes.connectionAdded){
 
-                var model = this._model.scenario;
                 var srcNode = this._model.scenario.nodesMap[action.payload.srcNodeName];
                 var slot = srcNode.slots.slots[action.payload.slotIndex];
 
@@ -92,6 +88,22 @@ export default class ScenarioStore extends EventEmitter {
                 this._model.ui.offsetX=action.payload.offsetX;
                 this._model.ui.offsetY=action.payload.offsetY;
                 this._model.ui.scale=action.payload.scale;
+
+                this.emit('CHANGE');
+            }else if(action.actionType==ActionTypes.nodesResized){
+                var changes = action.payload.changes;
+
+                if(changes){
+                    changes.forEach((change => {
+                        let node = this._model.scenario.nodesMap[change.nodeName];
+
+                        node.width=change.width;
+                        node.height=change.height;
+                        node.contentHeight=change.contentHeight;
+                    }).bind(this))
+                }
+
+                this._updateInternalModel(this._model.scenario);
 
                 this.emit('CHANGE');
             }
@@ -181,8 +193,8 @@ export default class ScenarioStore extends EventEmitter {
             var src = model.nodesMap[connection.src];
             var des = model.nodesMap[connection.des];
 
-            var sx = src.x+210;
-            var sy = src.y+57+10+connection.index*20;
+            var sx = src.x+src.width;
+            var sy = src.y+src.contentHeight+10+connection.index*20;
 
             var dx = des.x;
             var dy = des.y+10;

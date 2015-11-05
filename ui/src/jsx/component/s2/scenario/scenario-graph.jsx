@@ -10,10 +10,14 @@ export default class ScenarioGraph extends React.Component {
 
         var nodes = this.props.nodes.map(node =>
             <Node key={node.name}
+                  ref={node.name}
                   name={node.name}
                   description={node.description}
                   x={node.x}
                   y={node.y}
+                  width={node.width}
+                  height={node.height}
+                  contentHeight={node.contentHeight}
                   slots={node.slots.slots}
                   onMouseEvent={this.props.onMouseEvent}
             />);
@@ -31,6 +35,42 @@ export default class ScenarioGraph extends React.Component {
         		{nodes}
                 {connectionLine}
         	</div>)
+    }
+
+    checkSize(){
+        return Object.keys(this.refs)
+            .map(refName => this.refs[refName])
+            .filter(el => el.checkIsElementSizeCorrect)
+            .map(node => node.checkIsElementSizeCorrect())
+            .filter(e => e!=null);
+
+
+    }
+
+    componentDidMount(){
+        // we need timer because we in dispatcher loop
+        if(this.props.onMouseEvent!=null){
+            window.setTimeout(function(){
+                let changes = this.checkSize();
+                if(changes!=null && changes.length!=0){
+                    this.props.onMouseEvent(ScenarioMouseEvent.scenarioSizeEvent(changes))
+                }
+            }.bind(this), 0)
+
+        }
+    }
+
+    componentDidUpdate(){
+        // we need timer because we in dispatcher loop
+        if(this.props.onMouseEvent!=null){
+            window.setTimeout(function(){
+                let changes = this.checkSize();
+                if(changes!=null && changes.length!=0){
+                    this.props.onMouseEvent(ScenarioMouseEvent.scenarioSizeEvent(changes))
+                }
+            }.bind(this), 0)
+
+        }
     }
 }
 
