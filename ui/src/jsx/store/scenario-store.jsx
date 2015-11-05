@@ -66,7 +66,8 @@ export default class ScenarioStore extends EventEmitter {
             }else if(action.actionType==ActionTypes.cleanUi){
 
                 this._model.ui.connectionLine = null;
-                this._model.ui.activeEvent = null;
+                this._model.ui.state.activeEvent = null;
+                this._model.ui.state.payload = null;
 
                 this.emit('CHANGE');
             }else if(action.actionType==ActionTypes.transformScenario){
@@ -92,7 +93,8 @@ export default class ScenarioStore extends EventEmitter {
 
                 this.emit('CHANGE');
             }else if(action.actionType==ActionTypes.activeUiEventChanged){
-                this._model.ui.activeEvent = action.payload.event;
+                this._model.ui.state.activeEvent = action.payload.event;
+                this._model.ui.state.payload = action.payload.payload;
 
                 this.emit('CHANGE');
             }
@@ -113,7 +115,10 @@ export default class ScenarioStore extends EventEmitter {
                 offsetY: 0,
                 scale: 1,
                 selectedNodeName: null,
-                activeEvent: null
+                state: {
+                    activeEvent: null,
+                    payload: null
+                }
             }
         };
     }
@@ -147,7 +152,10 @@ export default class ScenarioStore extends EventEmitter {
         this._model.ui.offsetX=0;
         this._model.ui.offsetY=0;
         this._model.ui.selectedNodeName=null;
-        this._model.ui.activeEvent = null
+        this._model.ui.activeEvent = {
+            activeEvent: null,
+                payload: null
+        }
     }
 
     get model(){

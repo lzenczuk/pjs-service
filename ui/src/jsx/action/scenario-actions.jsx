@@ -48,8 +48,8 @@ export default class ScenarioActions{
         this._dispatcher.dispatch({actionType: ActionTypes.cleanUi, payload: {} })
     }
 
-    setActiveUiEvent(event){
-        this._dispatcher.dispatch({actionType: ActionTypes.activeUiEventChanged, payload: {event: event} })
+    setActiveUiEvent(event, payload){
+        this._dispatcher.dispatch({actionType: ActionTypes.activeUiEventChanged, payload: {event: event, payload: payload} })
     }
 
 

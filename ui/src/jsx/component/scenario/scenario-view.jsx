@@ -17,8 +17,6 @@ class ScenarioView extends React.Component {
         this.scenarioStoreCallback = function(){
             this.setState(this.scenarioStore.model);
         }.bind(this);
-
-        this.nodeMoving = null;
     }
 
     componentDidMount() {
@@ -41,41 +39,33 @@ class ScenarioView extends React.Component {
             return (<div className="max">Loading...</div>)
         }
 
-        console.log("Active event: "+JSON.stringify(this.state.ui.activeEvent));
-
         var mouseDown = function(event){
 
-            let activeEvent = this.state.ui.activeEvent;
+            let activeEvent = this.state.ui.state.activeEvent;
+            let payload = this.state.ui.state.payload;
 
             if(event.isMouseDown() && event.isScenario()){
-                this.scenarioActions.setActiveUiEvent(event)
+                this.scenarioActions.setActiveUiEvent(event, {})
             }else if(event.isMouseDown() && event.isNode()){
-                this.nodeMoving={
-                    x: event.x,
-                    y: event.y,
+                let nodeMovingPayload = {
                     nodeX: this.state.scenario.nodesMap[event.payload.get('nodeName')].x,
                     nodeY: this.state.scenario.nodesMap[event.payload.get('nodeName')].y,
                     nodeName: event.payload.get('nodeName')
-                }
-                this.scenarioActions.setActiveUiEvent(event)
+                };
+                this.scenarioActions.setActiveUiEvent(event, nodeMovingPayload)
             }else if(event.isMouseDown() && event.isSlot()){
-
-                this.connectionLineMoving = {
-                    x: event.x,
-                    y: event.y,
+                let connectionLineMoving = {
                     index: event.payload.get('slotIndex'),
                     nodeName: event.payload.get('nodeName')
-                }
-                this.scenarioActions.setActiveUiEvent(event)
+                };
+                this.scenarioActions.setActiveUiEvent(event, connectionLineMoving)
             }else if(event.isMouseUp()){
                 this.scenarioActions.cleanUi();
 
-                if(this.connectionLineMoving && (event.isNode()||event.isSlot())){
-                    this.scenarioActions.addConnection(this.connectionLineMoving.nodeName, this.connectionLineMoving.index, event.payload.get('nodeName'))
+                if(activeEvent && activeEvent.isMouseDown() && activeEvent.isSlot() && (event.isNode()||event.isSlot())){
+                    this.scenarioActions.addConnection(payload.nodeName, payload.index, event.payload.get('nodeName'))
                 }
 
-                this.nodeMoving=null;
-                this.connectionLineMoving=null;
             }else if(event.isMouseMove()){
 
                 if(activeEvent && activeEvent.isMouseDown() && activeEvent.isScenario()){
@@ -87,16 +77,16 @@ class ScenarioView extends React.Component {
                     var newOffsetY = activeEvent.offsetY-changeY;
 
                     this.scenarioActions.transformScenario(newOffsetX, newOffsetY, event.scale);
-                }else if(this.nodeMoving){
+                }else if(activeEvent && activeEvent.isMouseDown() && activeEvent.isNode()){
 
-                    var changeX = this.nodeMoving.x-event.x;
-                    var changeY = this.nodeMoving.y-event.y;
+                    var changeX = activeEvent.x-event.x;
+                    var changeY = activeEvent.y-event.y;
 
-                    var newX = this.nodeMoving.nodeX-changeX;
-                    var newY = this.nodeMoving.nodeY-changeY;
-                    this.scenarioActions.moveNode(this.nodeMoving.nodeName, newX, newY)
-                }else if(this.connectionLineMoving){
-                    this.scenarioActions.drawConnectLine(this.connectionLineMoving.x, this.connectionLineMoving.y, event.x, event.y)
+                    var newX = payload.nodeX-changeX;
+                    var newY = payload.nodeY-changeY;
+                    this.scenarioActions.moveNode(payload.nodeName, newX, newY)
+                }else if(activeEvent && activeEvent.isMouseDown() && activeEvent.isSlot()){
+                    this.scenarioActions.drawConnectLine(activeEvent.x, activeEvent.y, event.x, event.y)
                 }
             }else if(event.isWheel()){
                 var scaleDelta = (event.payload.get('deltaY')/56)*0.05;
