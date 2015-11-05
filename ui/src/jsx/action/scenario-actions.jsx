@@ -48,6 +48,11 @@ export default class ScenarioActions{
         this._dispatcher.dispatch({actionType: ActionTypes.cleanUi, payload: {} })
     }
 
+    setActiveUiEvent(event){
+        this._dispatcher.dispatch({actionType: ActionTypes.activeUiEventChanged, payload: {event: event} })
+    }
+
+
     _convertServerModelToInternalModel(propsModel){
 
         var nodes = [];

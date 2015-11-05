@@ -22,6 +22,7 @@ export default {
     connectionAdded: 'CONNECTION_ADDED',
     connectionLine: 'CONNECTION_LINE',
     cleanUi: 'CLEAN_UI',
+    activeUiEventChanged: 'ACTIVE_UI_EVENT_CHANGED',
     transformScenario: 'TRANSFORM_SCENARIO',
     nodesResized: 'NODES_RESIZED',
     // ERRORS --------------------------

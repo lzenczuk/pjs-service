@@ -66,6 +66,7 @@ export default class ScenarioStore extends EventEmitter {
             }else if(action.actionType==ActionTypes.cleanUi){
 
                 this._model.ui.connectionLine = null;
+                this._model.ui.activeEvent = null;
 
                 this.emit('CHANGE');
             }else if(action.actionType==ActionTypes.transformScenario){
@@ -90,7 +91,12 @@ export default class ScenarioStore extends EventEmitter {
                 this._updateInternalModel(this._model.scenario);
 
                 this.emit('CHANGE');
+            }else if(action.actionType==ActionTypes.activeUiEventChanged){
+                this._model.ui.activeEvent = action.payload.event;
+
+                this.emit('CHANGE');
             }
+
         })
     }   
 
@@ -106,7 +112,8 @@ export default class ScenarioStore extends EventEmitter {
                 offsetX: 0,
                 offsetY: 0,
                 scale: 1,
-                selectedNodeName: null
+                selectedNodeName: null,
+                activeEvent: null
             }
         };
     }
@@ -139,7 +146,8 @@ export default class ScenarioStore extends EventEmitter {
         this._model.status.errorMsg='';
         this._model.ui.offsetX=0;
         this._model.ui.offsetY=0;
-        this._model.ui.selectedNodeName=null
+        this._model.ui.selectedNodeName=null;
+        this._model.ui.activeEvent = null
     }
 
     get model(){

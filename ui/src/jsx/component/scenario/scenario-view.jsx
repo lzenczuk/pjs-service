@@ -18,7 +18,6 @@ class ScenarioView extends React.Component {
             this.setState(this.scenarioStore.model);
         }.bind(this);
 
-        this.scenarioMoving = null;
         this.nodeMoving = null;
     }
 
@@ -42,15 +41,14 @@ class ScenarioView extends React.Component {
             return (<div className="max">Loading...</div>)
         }
 
+        console.log("Active event: "+JSON.stringify(this.state.ui.activeEvent));
+
         var mouseDown = function(event){
 
+            let activeEvent = this.state.ui.activeEvent;
+
             if(event.isMouseDown() && event.isScenario()){
-                this.scenarioMoving={
-                    clientX: event.clientX,
-                    clientY: event.clientY,
-                    offsetX: event.offsetX,
-                    offsetY: event.offsetY
-                }
+                this.scenarioActions.setActiveUiEvent(event)
             }else if(event.isMouseDown() && event.isNode()){
                 this.nodeMoving={
                     x: event.x,
@@ -59,6 +57,7 @@ class ScenarioView extends React.Component {
                     nodeY: this.state.scenario.nodesMap[event.payload.get('nodeName')].y,
                     nodeName: event.payload.get('nodeName')
                 }
+                this.scenarioActions.setActiveUiEvent(event)
             }else if(event.isMouseDown() && event.isSlot()){
 
                 this.connectionLineMoving = {
@@ -67,6 +66,7 @@ class ScenarioView extends React.Component {
                     index: event.payload.get('slotIndex'),
                     nodeName: event.payload.get('nodeName')
                 }
+                this.scenarioActions.setActiveUiEvent(event)
             }else if(event.isMouseUp()){
                 this.scenarioActions.cleanUi();
 
@@ -74,17 +74,17 @@ class ScenarioView extends React.Component {
                     this.scenarioActions.addConnection(this.connectionLineMoving.nodeName, this.connectionLineMoving.index, event.payload.get('nodeName'))
                 }
 
-                this.scenarioMoving=null;
                 this.nodeMoving=null;
                 this.connectionLineMoving=null;
             }else if(event.isMouseMove()){
-                if(this.scenarioMoving){
 
-                    var changeX = this.scenarioMoving.clientX-event.clientX;
-                    var changeY = this.scenarioMoving.clientY-event.clientY;
+                if(activeEvent && activeEvent.isMouseDown() && activeEvent.isScenario()){
 
-                    var newOffsetX = this.scenarioMoving.offsetX-changeX;
-                    var newOffsetY = this.scenarioMoving.offsetY-changeY;
+                    var changeX = activeEvent.clientX-event.clientX;
+                    var changeY = activeEvent.clientY-event.clientY;
+
+                    var newOffsetX = activeEvent.offsetX-changeX;
+                    var newOffsetY = activeEvent.offsetY-changeY;
 
                     this.scenarioActions.transformScenario(newOffsetX, newOffsetY, event.scale);
                 }else if(this.nodeMoving){
