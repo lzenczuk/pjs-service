@@ -20,8 +20,8 @@ export default class ScenarioActions{
             }).bind(this))
     }
 
-    addNode(clientX, clientY, node){
-        this._dispatcher.dispatch({actionType: ActionTypes.nodeAdded, payload: {clientX: clientX, clientY: clientY, node: node} })
+    addNode(node){
+        this._dispatcher.dispatch({actionType: ActionTypes.nodeAdded, payload: {node: node} })
     }
 
     moveNode(nodeName, x, y){

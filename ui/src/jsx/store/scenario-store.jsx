@@ -23,24 +23,8 @@ export default class ScenarioStore extends EventEmitter {
                 this.emit('CHANGE');
             }else if(action.actionType==ActionTypes.nodeAdded){
 
-                var name = action.payload.node.name;
-
-                var node = {
-                    "class" : "script_node",
-                    "x" : action.payload.clientX,
-                    "y" : action.payload.clientY,
-                    "name" : name,
-                    "description" : "New node",
-                    "script" : "function main(input, ctx){}",
-                    "slots" : {
-                        "slots" : [{
-                            class: "always_true_slot",
-                            nodeName: null,
-                            label: null
-                        } ]
-                    },
-                    "executorName" : null
-                    };
+                var node = action.payload.node;
+                var name = node.name;
 
                 if(this._model.scenario!=null){
                     this._model.scenario.nodesMap[name]=node;
@@ -121,7 +105,8 @@ export default class ScenarioStore extends EventEmitter {
             ui: {
                 offsetX: 0,
                 offsetY: 0,
-                scale: 1
+                scale: 1,
+                selectedNodeName: null
             }
         };
     }
@@ -154,6 +139,7 @@ export default class ScenarioStore extends EventEmitter {
         this._model.status.errorMsg='';
         this._model.ui.offsetX=0;
         this._model.ui.offsetY=0;
+        this._model.ui.selectedNodeName=null
     }
 
     get model(){

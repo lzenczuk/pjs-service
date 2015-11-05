@@ -20,11 +20,25 @@ const nodesTarget = {
         var offset = component._componentPositionInClientSpace();
         var clientPosition = monitor.getClientOffset();
 
+        var node = {
+            "class" : "script_node",
+            "x" : (clientPosition.x - offset.x - props.offsetX)/props.scale,
+            "y" : (clientPosition.y - offset.y - props.offsetY)/props.scale,
+            "name" : item.name,
+            "description" : "New node",
+            "script" : "function main(input, ctx){}",
+            "slots" : {
+                "slots" : [{
+                    class: "always_true_slot",
+                    nodeName: null,
+                    label: null
+                } ]
+            },
+            "executorName" : null
+        };
+
         // TODO - move to component and use its method
-        ctx.scenarioActions.addNode(
-            (clientPosition.x - offset.x - props.offsetX)/props.scale,
-            (clientPosition.y - offset.y - props.offsetY)/props.scale,
-            { name: item.name });
+        ctx.scenarioActions.addNode(node);
     }
 };
 
