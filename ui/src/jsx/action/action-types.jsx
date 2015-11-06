@@ -25,6 +25,8 @@ export default {
     activeUiEventChanged: 'ACTIVE_UI_EVENT_CHANGED',
     transformScenario: 'TRANSFORM_SCENARIO',
     nodesResized: 'NODES_RESIZED',
+
+    nodesSelected: 'NODES_SELECTED',
     // ERRORS --------------------------
     errorUnauthorized: 'ERROR_UNAUTHORIZED'
 }

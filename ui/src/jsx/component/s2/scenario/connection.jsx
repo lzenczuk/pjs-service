@@ -1,4 +1,5 @@
 import React from 'react';
+import ScenarioMouseEvent from './scenario-mouse-event'
 
 export default class Connection extends React.Component {
 
@@ -8,7 +9,35 @@ export default class Connection extends React.Component {
         this.state = {over: false}
     }
 
-    // model: {src: node.name, des: s.nodeName, srcX: node.x+index*70-35, srcY: 75, desX: 0, desY: 0}
+    _onMouseDown(event){
+        if(this.props.onMouseEvent!=null){
+            event.preventDefault();
+            event.stopPropagation();
+
+            this.props.onMouseEvent(ScenarioMouseEvent.connectionMouseDownEvent(
+                event.clientX,
+                event.clientY,
+                this.props.model.src,
+                this.props.model.index,
+                this.props.model.des
+            ));
+        }
+    }
+
+    _onMouseUp(event){
+        if(this.props.onMouseEvent!=null){
+            event.preventDefault();
+            event.stopPropagation();
+
+            this.props.onMouseEvent(ScenarioMouseEvent.connectionMouseUpEvent(
+                event.clientX,
+                event.clientY,
+                this.props.model.src,
+                this.props.model.index,
+                this.props.model.des
+            ));
+        }
+    }
 
     render() {
 
@@ -77,9 +106,32 @@ export default class Connection extends React.Component {
 
         return (
             <svg style={style} width={width} height={height}>
-                <path d={dString} style={pte} stroke={stroke} strokeWidth="3" fill="none" onMouseOver={over} onMouseOut={out}/>
+                <path
+                    d={dString}
+                    style={pte}
+                    stroke={stroke}
+                    strokeWidth="3"
+                    fill="none"
+                    onMouseOver={over}
+                    onMouseOut={out}
+                    onMouseDown={this._onMouseDown.bind(this)}
+                    onMouseUp={this._onMouseUp.bind(this)}
+                />
             </svg>
         )
 
     }
 }
+
+/*
+ src: React.PropTypes.string.isRequired,
+ index: React.PropTypes.number.isRequired,
+ des: React.PropTypes.string.isRequired,
+ srcX: React.PropTypes.number.isRequired,
+ srcY: React.PropTypes.number.isRequired,
+ desX: React.PropTypes.number.isRequired,
+ desY: React.PropTypes.number.isRequired,
+ */
+Connection.propertyTypes = {
+    onMouseEvent: React.PropTypes.func
+};

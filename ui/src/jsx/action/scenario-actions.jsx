@@ -52,6 +52,9 @@ export default class ScenarioActions{
         this._dispatcher.dispatch({actionType: ActionTypes.activeUiEventChanged, payload: {event: event, payload: payload} })
     }
 
+    selectNodes(nodeNames){
+        this._dispatcher.dispatch({actionType: ActionTypes.nodesSelected, payload: {nodeNames: nodeNames} })
+    }
 
     _convertServerModelToInternalModel(propsModel){
 

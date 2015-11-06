@@ -65,6 +65,10 @@ class ScenarioView extends React.Component {
                 };
             } break;
 
+            case ScenarioMouseEvent.sourceType.CONNECTION: {
+                payload = {};
+            } break;
+
             case ScenarioMouseEvent.sourceType.SLOT: {
                 payload = {
                     index: event.payload.get('slotIndex'),
@@ -115,10 +119,12 @@ class ScenarioView extends React.Component {
         if(activeEvent && activeEvent.isMouseDown()) {
             if (activeEvent.isSlot() && (event.isNode() || event.isSlot())) {
                 this.scenarioActions.addConnection(payload.nodeName, payload.index, event.payload.get('nodeName'))
-            }else if(activeEvent.isNode && event.isNode() && activeEvent.x==event.x && activeEvent.y==event.y){
-                console.log("click node: "+payload.nodeName)
-            }else if(activeEvent.isScenario && activeEvent.clientX==event.clientX && activeEvent.clientY==event.clientY){
-                console.log("click scenario ")
+            }else if(activeEvent.isNode() && event.isNode() && activeEvent.x==event.x && activeEvent.y==event.y){
+                this.scenarioActions.selectNodes([payload.nodeName]);
+            }else if(activeEvent.isScenario() && activeEvent.clientX==event.clientX && activeEvent.clientY==event.clientY){
+                this.scenarioActions.selectNodes([]);
+            }else if(activeEvent.isConnection() && activeEvent.x==event.x && activeEvent.y==event.y){
+                this.scenarioActions.selectNodes([]);
             }
         }
     }
@@ -174,6 +180,7 @@ class ScenarioView extends React.Component {
                         </div>
                         <ScenarioViewport
                             nodes={this.state.scenario.nodes}
+                            selectedNodes={this.state.ui.selectedNodeName}
                             connections={this.state.scenario.connections}
                             onMouseEvent={this._onEvent.bind(this)}
                             offsetX={this.state.ui.offsetX}

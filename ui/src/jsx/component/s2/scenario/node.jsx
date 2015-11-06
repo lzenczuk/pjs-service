@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 import ScenarioMouseEvent from './scenario-mouse-event'
 
 import Slot from './slot'
@@ -69,8 +70,13 @@ export default class Node extends React.Component {
             />
         );
 
+        var cn = classNames({
+            box: true,
+            'selected-node': this.props.selected
+        });
+
         return(
-            <div className="box"
+            <div className={cn}
                  style={style}
                  onMouseDown={this._onMouseDown.bind(this)}
                  onMouseUp={this._onMouseUp.bind(this)}
@@ -90,6 +96,7 @@ export default class Node extends React.Component {
 Node.propertyTypes = {
 	name: React.PropTypes.string.isRequired,
 	description: React.PropTypes.string.isRequired,
+    selected: React.PropTypes.boolean,
 	x: React.PropTypes.number.isRequired,
 	y: React.PropTypes.number.isRequired,
 	width: React.PropTypes.number.isRequired,

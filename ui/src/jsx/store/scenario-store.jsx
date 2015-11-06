@@ -97,6 +97,11 @@ export default class ScenarioStore extends EventEmitter {
                 this._model.ui.state.payload = action.payload.payload;
 
                 this.emit('CHANGE');
+            }else if(action.actionType==ActionTypes.nodesSelected){
+                this._model.ui.selectedNodeName = {};
+                action.payload.nodeNames.forEach(name => this._model.ui.selectedNodeName[name]=true);
+
+                this.emit('CHANGE');
             }
 
         })
@@ -114,7 +119,7 @@ export default class ScenarioStore extends EventEmitter {
                 offsetX: 0,
                 offsetY: 0,
                 scale: 1,
-                selectedNodeName: null,
+                selectedNodeName: {},
                 state: {
                     activeEvent: null,
                     payload: null
@@ -151,7 +156,7 @@ export default class ScenarioStore extends EventEmitter {
         this._model.status.errorMsg='';
         this._model.ui.offsetX=0;
         this._model.ui.offsetY=0;
-        this._model.ui.selectedNodeName=null;
+        this._model.ui.selectedNodeName = {};
         this._model.ui.activeEvent = {
             activeEvent: null,
                 payload: null

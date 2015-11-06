@@ -33,6 +33,16 @@ export default class ScenarioMouseEvent {
         )
     }
 
+	static connectionMouseDownEvent(clientX, clientY, srcNodeName, desNodeName){
+		return new ScenarioMouseEvent(
+				ScenarioMouseEvent.eventType.MOUSE_DOWN,
+				ScenarioMouseEvent.sourceType.CONNECTION,
+				clientX,
+				clientY,
+				Map({srcNodeName: srcNodeName, desNodeName: desNodeName})
+		)
+	}
+
 	static slotMouseUpEvent(clientX, clientY, slotIndex, nodeName){
 		return new ScenarioMouseEvent(
 			ScenarioMouseEvent.eventType.MOUSE_UP,
@@ -42,6 +52,17 @@ export default class ScenarioMouseEvent {
 			Map({slotIndex: slotIndex, nodeName: nodeName})
 		)
 	}
+
+	static connectionMouseUpEvent(clientX, clientY, srcNodeName, desNodeName){
+		return new ScenarioMouseEvent(
+			ScenarioMouseEvent.eventType.MOUSE_UP,
+			ScenarioMouseEvent.sourceType.SLOT,
+			clientX,
+			clientY,
+			Map({srcNodeName: srcNodeName, desNodeName: desNodeName})
+		)
+	}
+
 
 	static nodeMouseUpEvent(clientX, clientY, nodeName){
 		return new ScenarioMouseEvent(

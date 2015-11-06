@@ -8,10 +8,12 @@ export default class ScenarioGraph extends React.Component {
 
     render(){
 
-        var nodes = this.props.nodes.map(node =>
-            <Node key={node.name}
+
+        var nodes = this.props.nodes.map(node => {
+            return (<Node key={node.name}
                   ref={node.name}
                   name={node.name}
+                  selected={this.props.selectedNodes[node.name]}
                   description={node.description}
                   x={node.x}
                   y={node.y}
@@ -20,9 +22,10 @@ export default class ScenarioGraph extends React.Component {
                   contentHeight={node.contentHeight}
                   slots={node.slots.slots}
                   onMouseEvent={this.props.onMouseEvent}
-            />);
+            />)
+        });
 
-        var connections = this.props.connections.map(c => <Connection key={c.src+c.des+c.index} model={c}/>);
+        var connections = this.props.connections.map(c => <Connection key={c.src+c.des+c.index} model={c} onMouseEvent={this.props.onMouseEvent}/>);
 
         var connectionLine;
         if(this.props.connectionLine!=null){
@@ -77,6 +80,7 @@ export default class ScenarioGraph extends React.Component {
 ScenarioGraph.propertyTypes = {
 	nodes: React.PropTypes.array.isRequired,
 	connections: React.PropTypes.array.isRequired,
+    selectedNodes: React.PropTypes.array.isRequired,
     onMouseEvent: React.PropTypes.func,
     connectionLine: React.PropTypes.object
 };
