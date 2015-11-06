@@ -2,6 +2,12 @@ import React from 'react';
 
 export default class Connection extends React.Component {
 
+    constructor(props){
+        super(props);
+
+        this.state = {over: false}
+    }
+
     // model: {src: node.name, des: s.nodeName, srcX: node.x+index*70-35, srcY: 75, desX: 0, desY: 0}
 
     render() {
@@ -45,17 +51,33 @@ export default class Connection extends React.Component {
         var style = {
             position: 'absolute',
             top: top + 'px',
-            left: left + 'px'
+            left: left + 'px',
+            pointerEvents: "none"
         };
 
         var pte = {
-            pointerEvents: "all"
+            pointerEvents: "visibleStroke"
         };
+
+
+        var stroke = "grey";
+
+        if(this.state.over){
+            stroke = "red";
+        }
+
+        var over = function(event){
+            this.setState({over: true})
+        }.bind(this);
+
+        var out = function(event){
+            this.setState({over: false})
+        }.bind(this);
 
 
         return (
             <svg style={style} width={width} height={height}>
-                <path d={dString} style={pte} stroke="grey" strokeWidth="3" fill="none"/>
+                <path d={dString} style={pte} stroke={stroke} strokeWidth="3" fill="none" onMouseOver={over} onMouseOut={out}/>
             </svg>
         )
 
