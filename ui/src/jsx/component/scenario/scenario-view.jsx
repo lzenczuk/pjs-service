@@ -112,8 +112,14 @@ class ScenarioView extends React.Component {
 
         this.scenarioActions.cleanUi();
 
-        if(activeEvent && activeEvent.isMouseDown() && activeEvent.isSlot() && (event.isNode()||event.isSlot())){
-            this.scenarioActions.addConnection(payload.nodeName, payload.index, event.payload.get('nodeName'))
+        if(activeEvent && activeEvent.isMouseDown()) {
+            if (activeEvent.isSlot() && (event.isNode() || event.isSlot())) {
+                this.scenarioActions.addConnection(payload.nodeName, payload.index, event.payload.get('nodeName'))
+            }else if(activeEvent.isNode && event.isNode() && activeEvent.x==event.x && activeEvent.y==event.y){
+                console.log("click node: "+payload.nodeName)
+            }else if(activeEvent.isScenario && activeEvent.clientX==event.clientX && activeEvent.clientY==event.clientY){
+                console.log("click scenario ")
+            }
         }
     }
 
