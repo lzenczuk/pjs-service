@@ -14,13 +14,19 @@ export default class Connection extends React.Component {
             event.preventDefault();
             event.stopPropagation();
 
-            this.props.onMouseEvent(ScenarioMouseEvent.connectionMouseDownEvent(
+            console.log("Connection mode: "+JSON.stringify(this.props.model));
+
+            let connectionMouseDownEvent = ScenarioMouseEvent.connectionMouseDownEvent(
                 event.clientX,
                 event.clientY,
                 this.props.model.src,
-                this.props.model.index,
-                this.props.model.des
-            ));
+                this.props.model.des,
+                this.props.model.connectionId
+            );
+
+            console.log("------------------> Connection mdn: "+JSON.stringify(connectionMouseDownEvent));
+
+            this.props.onMouseEvent(connectionMouseDownEvent);
         }
     }
 
@@ -33,8 +39,8 @@ export default class Connection extends React.Component {
                 event.clientX,
                 event.clientY,
                 this.props.model.src,
-                this.props.model.index,
-                this.props.model.des
+                this.props.model.des,
+                this.props.model.connectionId
             ));
         }
     }
@@ -90,8 +96,14 @@ export default class Connection extends React.Component {
 
 
         var stroke = "grey";
+        var strokeWidth = "3";
 
         if(this.state.over){
+            stroke = "black";
+        }
+
+        if(this.props.selected){
+            strokeWidth = '3';
             stroke = "red";
         }
 
@@ -110,7 +122,7 @@ export default class Connection extends React.Component {
                     d={dString}
                     style={pte}
                     stroke={stroke}
-                    strokeWidth="3"
+                    strokeWidth={strokeWidth}
                     fill="none"
                     onMouseOver={over}
                     onMouseOut={out}

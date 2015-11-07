@@ -26,7 +26,7 @@ export default {
     transformScenario: 'TRANSFORM_SCENARIO',
     nodesResized: 'NODES_RESIZED',
 
-    nodesSelected: 'NODES_SELECTED',
+    elementsSelected: 'ELEMENT_SELECTED',
     // ERRORS --------------------------
     errorUnauthorized: 'ERROR_UNAUTHORIZED'
 }

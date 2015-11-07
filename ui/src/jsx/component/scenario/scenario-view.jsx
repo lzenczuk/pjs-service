@@ -118,13 +118,24 @@ class ScenarioView extends React.Component {
 
         if(activeEvent && activeEvent.isMouseDown()) {
             if (activeEvent.isSlot() && (event.isNode() || event.isSlot())) {
+
                 this.scenarioActions.addConnection(payload.nodeName, payload.index, event.payload.get('nodeName'))
+
             }else if(activeEvent.isNode() && event.isNode() && activeEvent.x==event.x && activeEvent.y==event.y){
-                this.scenarioActions.selectNodes([payload.nodeName]);
+
+                console.log("Scenario view event: "+JSON.stringify(event))
+
+                this.scenarioActions.selectElements([{type: 'NODE', name: event.payload.get('nodeName')}]);
+
             }else if(activeEvent.isScenario() && activeEvent.clientX==event.clientX && activeEvent.clientY==event.clientY){
-                this.scenarioActions.selectNodes([]);
+
+                this.scenarioActions.selectElements([]);
+
             }else if(activeEvent.isConnection() && activeEvent.x==event.x && activeEvent.y==event.y){
-                this.scenarioActions.selectNodes([]);
+
+                console.log("Scenario view event: "+JSON.stringify(event))
+
+                this.scenarioActions.selectElements([{type: 'CONNECTION', name: event.payload.get('connectionId')}]);
             }
         }
     }
@@ -169,6 +180,8 @@ class ScenarioView extends React.Component {
             return (<div className="max">Loading...</div>)
         }
 
+        console.log("---------------> selected connection: "+this.state.ui.selectedConnection)
+
         return (
             <div className="max">
                 <div className="scenario-left-panel">
@@ -181,6 +194,7 @@ class ScenarioView extends React.Component {
                         <ScenarioViewport
                             nodes={this.state.scenario.nodes}
                             selectedNodes={this.state.ui.selectedNodeName}
+                            selectedConnection={this.state.ui.selectedConnection}
                             connections={this.state.scenario.connections}
                             onMouseEvent={this._onEvent.bind(this)}
                             offsetX={this.state.ui.offsetX}

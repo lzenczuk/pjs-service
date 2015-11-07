@@ -99,7 +99,17 @@ export default class ScenarioStore extends EventEmitter {
                 this.emit('CHANGE');
             }else if(action.actionType==ActionTypes.nodesSelected){
                 this._model.ui.selectedNodeName = {};
-                action.payload.nodeNames.forEach(name => this._model.ui.selectedNodeName[name]=true);
+                this._model.ui.selectedConnection = '';
+                action.payload.elements.forEach(element => {
+
+                    console.log("selected: "+JSON.stringify(element));
+
+                    if(element.type=='NODE'){
+                        this._model.ui.selectedNodeName[element.name]=true
+                    }else if(element.type=='CONNECTION'){
+                        this._model.ui.selectedConnection = element.name
+                    }
+                });
 
                 this.emit('CHANGE');
             }
@@ -186,8 +196,18 @@ export default class ScenarioStore extends EventEmitter {
             model.nodesMap[node.name] = node;
 
             slots.forEach((s, index) => {
+                var connection = {
+                    connectionId: node.name+'_'+s.nodeName+'_'+index,
+                    src: node.name,
+                    des: s.nodeName,
+                    srcX: 0,
+                    srcY: 0,
+                    desX: 0,
+                    desY: 0,
+                    index: index,
+                    total: slots.length
+                };
                 if(s.nodeName!=null){
-                    var connection = {src: node.name, des: s.nodeName, srcX: 0, srcY: 0, desX: 0, desY: 0, index: index, total: slots.length};
                     model.connections.push(connection)
                 }
             })

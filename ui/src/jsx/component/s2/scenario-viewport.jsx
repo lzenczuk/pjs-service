@@ -118,6 +118,15 @@ class ScenarioViewport extends React.Component {
         }
     }
 
+    _onKeyPress(event) {
+        if (this.props.onMouseEvent != null) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            this._mouseEventsProxy(ScenarioMouseEvent.keyPressEvent(event.keyCode));
+        }
+    }
+
     render() {
 
         let translate = 'translate('+this.props.offsetX+'px, '+this.props.offsetY+'px)';
@@ -138,6 +147,7 @@ class ScenarioViewport extends React.Component {
                 onMouseDown={this._onMouseDown.bind(this)}
                 onMouseUp={this._onMouseUp.bind(this)}
                 onMouseMove={this._onMouseMove.bind(this)}
+                onKeyPress={this._onKeyPress.bind(this)}
                 onWheel={this._onWheel.bind(this)}
             >
                 <div>
@@ -149,6 +159,7 @@ class ScenarioViewport extends React.Component {
                             nodes={this.props.nodes}
                             connections={this.props.connections}
                             selectedNodes = {this.props.selectedNodes}
+                            selectedConnection = {this.props.selectedConnection}
                             connectionLine={this.props.connectionLine}
                             onMouseEvent={this._mouseEventsProxy.bind(this)}
                         />
@@ -173,6 +184,7 @@ ScenarioViewport.propertyTypes = {
     nodes: React.PropTypes.array.isRequired,
     connections: React.PropTypes.array.isRequired,
     selectedNodes: React.PropTypes.array.isRequired,
+    selectedConnection: React.PropTypes.string,
     offsetX: React.PropTypes.number.isRequired,
     offsetY: React.PropTypes.number.isRequired,
     scale: React.PropTypes.number.isRequired,

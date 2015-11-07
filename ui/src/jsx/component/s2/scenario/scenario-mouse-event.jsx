@@ -33,13 +33,13 @@ export default class ScenarioMouseEvent {
         )
     }
 
-	static connectionMouseDownEvent(clientX, clientY, srcNodeName, desNodeName){
+	static connectionMouseDownEvent(clientX, clientY, srcNodeName, desNodeName, connectionId){
 		return new ScenarioMouseEvent(
 				ScenarioMouseEvent.eventType.MOUSE_DOWN,
 				ScenarioMouseEvent.sourceType.CONNECTION,
 				clientX,
 				clientY,
-				Map({srcNodeName: srcNodeName, desNodeName: desNodeName})
+				Map({srcNodeName: srcNodeName, desNodeName: desNodeName, connectionId: connectionId})
 		)
 	}
 
@@ -53,13 +53,13 @@ export default class ScenarioMouseEvent {
 		)
 	}
 
-	static connectionMouseUpEvent(clientX, clientY, srcNodeName, desNodeName){
+	static connectionMouseUpEvent(clientX, clientY, srcNodeName, desNodeName, connectionId){
 		return new ScenarioMouseEvent(
 			ScenarioMouseEvent.eventType.MOUSE_UP,
 			ScenarioMouseEvent.sourceType.SLOT,
 			clientX,
 			clientY,
-			Map({srcNodeName: srcNodeName, desNodeName: desNodeName})
+			Map({srcNodeName: srcNodeName, desNodeName: desNodeName, connectionId: connectionId})
 		)
 	}
 
@@ -114,6 +114,16 @@ export default class ScenarioMouseEvent {
 		)
 	}
 
+	static keyPressEvent(key){
+		return new ScenarioMouseEvent(
+				ScenarioMouseEvent.eventType.KEY,
+				ScenarioMouseEvent.sourceType.NONE,
+				0,
+				0,
+				key
+		)
+	}
+
 	constructor(eventType, sourceType, clientX, clientY, payload, x, y, offsetX, offsetY, scale, width, height){
 		this.eventType = eventType;
 		this.sourceType = sourceType;
@@ -165,6 +175,10 @@ export default class ScenarioMouseEvent {
         return this.eventType==ScenarioMouseEvent.eventType.SIZE
     }
 
+	isKey(){
+		return this.eventType==ScenarioMouseEvent.eventType.KEY
+	}
+
 	isSlot(){
 		return this.sourceType==ScenarioMouseEvent.sourceType.SLOT
 	}
@@ -187,7 +201,8 @@ ScenarioMouseEvent.eventType = {
 	MOUSE_UP: "MOUSE_UP",
 	MOUSE_MOVE: "MOUSE_MOVE",
 	WHEEL: "WHEEL",
-	SIZE: "SIZE"
+	SIZE: "SIZE",
+	KEY: "KEY"
 };
 
 ScenarioMouseEvent.sourceType = {

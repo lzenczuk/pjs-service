@@ -52,8 +52,8 @@ export default class ScenarioActions{
         this._dispatcher.dispatch({actionType: ActionTypes.activeUiEventChanged, payload: {event: event, payload: payload} })
     }
 
-    selectNodes(nodeNames){
-        this._dispatcher.dispatch({actionType: ActionTypes.nodesSelected, payload: {nodeNames: nodeNames} })
+    selectElements(elements){
+        this._dispatcher.dispatch({actionType: ActionTypes.nodesSelected, payload: {elements: elements} })
     }
 
     _convertServerModelToInternalModel(propsModel){
@@ -71,7 +71,17 @@ export default class ScenarioActions{
 
             slots.forEach((s, index) => {
                 if(s.nodeName!=null){
-                    var connection = {src: node.name, des: s.nodeName, srcX: 0, srcY: 0, desX: 0, desY: 0, index: index, total: slots.length};
+                    var connection = {
+                        connectionId: node.name+'_'+s.nodeName+'_'+index,
+                        src: node.name,
+                        des: s.nodeName,
+                        srcX: 0,
+                        srcY: 0,
+                        desX: 0,
+                        desY: 0,
+                        index: index,
+                        total: slots.length
+                    };
                     connections.push(connection)
                 }
             })
