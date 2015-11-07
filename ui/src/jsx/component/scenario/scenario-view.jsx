@@ -41,6 +41,7 @@ class ScenarioView extends React.Component {
             case ScenarioMouseEvent.eventType.MOUSE_UP: this._onMouseUpEvent(event); break;
             case ScenarioMouseEvent.eventType.WHEEL: this._onWheelEvent(event); break;
             case ScenarioMouseEvent.eventType.SIZE: this._onSizeEvent(event); break;
+            case ScenarioMouseEvent.eventType.KEY: this._onKeyEvent(event); break;
         }
     }
 
@@ -74,7 +75,7 @@ class ScenarioView extends React.Component {
                     index: event.payload.get('slotIndex'),
                     nodeName: event.payload.get('nodeName')
                 };
-            }
+            } break;
         }
 
         if(payload){
@@ -123,8 +124,6 @@ class ScenarioView extends React.Component {
 
             }else if(activeEvent.isNode() && event.isNode() && activeEvent.x==event.x && activeEvent.y==event.y){
 
-                console.log("Scenario view event: "+JSON.stringify(event))
-
                 this.scenarioActions.selectElements([{type: 'NODE', name: event.payload.get('nodeName')}]);
 
             }else if(activeEvent.isScenario() && activeEvent.clientX==event.clientX && activeEvent.clientY==event.clientY){
@@ -132,8 +131,6 @@ class ScenarioView extends React.Component {
                 this.scenarioActions.selectElements([]);
 
             }else if(activeEvent.isConnection() && activeEvent.x==event.x && activeEvent.y==event.y){
-
-                console.log("Scenario view event: "+JSON.stringify(event))
 
                 this.scenarioActions.selectElements([{type: 'CONNECTION', name: event.payload.get('connectionId')}]);
             }
@@ -168,6 +165,14 @@ class ScenarioView extends React.Component {
         this.scenarioActions.resizeNodes(event.payload);
     }
 
+    _onKeyEvent(event){
+
+        // del or backspace
+        if(event.payload==46 || event.payload==8){
+            this.scenarioActions.deleteSelectedElements()
+        }
+    }
+
     render() {
 
         if(this.state == null || this.state.status == null) return (<div className="max"></div>);
@@ -179,8 +184,6 @@ class ScenarioView extends React.Component {
         if(this.state.status.loading){
             return (<div className="max">Loading...</div>)
         }
-
-        console.log("---------------> selected connection: "+this.state.ui.selectedConnection)
 
         return (
             <div className="max">

@@ -14,8 +14,6 @@ export default class Connection extends React.Component {
             event.preventDefault();
             event.stopPropagation();
 
-            console.log("Connection mode: "+JSON.stringify(this.props.model));
-
             let connectionMouseDownEvent = ScenarioMouseEvent.connectionMouseDownEvent(
                 event.clientX,
                 event.clientY,
@@ -23,8 +21,6 @@ export default class Connection extends React.Component {
                 this.props.model.des,
                 this.props.model.connectionId
             );
-
-            console.log("------------------> Connection mdn: "+JSON.stringify(connectionMouseDownEvent));
 
             this.props.onMouseEvent(connectionMouseDownEvent);
         }

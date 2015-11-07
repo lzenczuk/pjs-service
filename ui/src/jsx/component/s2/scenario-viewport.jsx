@@ -65,6 +65,10 @@ class ScenarioViewport extends React.Component {
 
     _mouseEventsProxy(event) {
 
+        if(this._keyInterceptorElement){
+            this._keyInterceptorElement.focus()
+        }
+
         if (this.props.onMouseEvent != null) {
 
             var offset = this._componentPositionInClientSpace();
@@ -83,6 +87,7 @@ class ScenarioViewport extends React.Component {
     }
 
     _onMouseDown(event) {
+
         if (this.props.onMouseEvent != null) {
             event.preventDefault();
             event.stopPropagation();
@@ -118,7 +123,8 @@ class ScenarioViewport extends React.Component {
         }
     }
 
-    _onKeyPress(event) {
+    _onKeyUp(event) {
+
         if (this.props.onMouseEvent != null) {
             event.preventDefault();
             event.stopPropagation();
@@ -140,6 +146,8 @@ class ScenarioViewport extends React.Component {
         const { isOver, canDrop, connectDropTarget } = this.props;
 
         // ----------------------- dnd
+
+        // tabindex is required to allow focus on div
         return connectDropTarget(
             <div
                 ref={this._updateViewportElement.bind(this)}
@@ -147,9 +155,13 @@ class ScenarioViewport extends React.Component {
                 onMouseDown={this._onMouseDown.bind(this)}
                 onMouseUp={this._onMouseUp.bind(this)}
                 onMouseMove={this._onMouseMove.bind(this)}
-                onKeyPress={this._onKeyPress.bind(this)}
                 onWheel={this._onWheel.bind(this)}
             >
+                <input
+                    className="key-interceptor"
+                    ref={this._updateKeyInterceptorElement.bind(this)}
+                    onKeyUp={this._onKeyUp.bind(this)}
+                />
                 <div>
                     <div
                         className="absolute-position"
@@ -170,6 +182,10 @@ class ScenarioViewport extends React.Component {
 
     _updateViewportElement(el){
         this._viewportElement = el;
+    }
+
+    _updateKeyInterceptorElement(el){
+        this._keyInterceptorElement = el;
     }
 
     _componentPositionInClientSpace() {

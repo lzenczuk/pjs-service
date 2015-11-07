@@ -53,7 +53,11 @@ export default class ScenarioActions{
     }
 
     selectElements(elements){
-        this._dispatcher.dispatch({actionType: ActionTypes.nodesSelected, payload: {elements: elements} })
+        this._dispatcher.dispatch({actionType: ActionTypes.elementsSelected, payload: {elements: elements} })
+    }
+
+    deleteSelectedElements(){
+        this._dispatcher.dispatch({actionType: ActionTypes.selectedElementsDeleted, payload: {} })
     }
 
     _convertServerModelToInternalModel(propsModel){

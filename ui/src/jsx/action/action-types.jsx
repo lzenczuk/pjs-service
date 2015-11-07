@@ -19,14 +19,18 @@ export default {
 
     nodeAdded: 'NODE_ADDED',
     nodeMoved: 'NODE_MOVED',
+
     connectionAdded: 'CONNECTION_ADDED',
+
     connectionLine: 'CONNECTION_LINE',
+
     cleanUi: 'CLEAN_UI',
     activeUiEventChanged: 'ACTIVE_UI_EVENT_CHANGED',
     transformScenario: 'TRANSFORM_SCENARIO',
     nodesResized: 'NODES_RESIZED',
 
-    elementsSelected: 'ELEMENT_SELECTED',
+    elementsSelected: 'ELEMENTS_SELECTED',
+    selectedElementsDeleted: 'SELECTED_ELEMENTS_DELETED',
     // ERRORS --------------------------
     errorUnauthorized: 'ERROR_UNAUTHORIZED'
 }
