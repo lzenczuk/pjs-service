@@ -1,25 +1,35 @@
-import AlwaysTrueSlot from './slot/always-true-slot';
-import ScriptSlot from './slot/script-slot';
 import ConnectionModel from './connection-model';
 
 export default class SlotModel{
-
-    static fromServerModel(smodel) {
-        switch(smodel.serverClass){
-            case 'always_true_slot': return AlwaysTrueSlot.fromServerModel(smodel);
-            case 'script_slot': return ScriptSlot.fromServerModel(smodel);
-            default: throw "Can't create slot. Unknown serverClass: "+smodel.serverClass
-        }
-    }
 
     constructor(nodeName, label){
         this.nodeName = nodeName;
         this.label = label
     }
 
-    // TODO - implement this
-    createConnectionModel(){
-        //return new ConnectionModel()
+    /**
+     * @returns {ConnectionModel} return model or null when slot is not connected
+     */
+    getConnectionModel(){
+        if(this.nodeName) {
+            let connectionModel = new ConnectionModel(null, this.nodeName, 0, 0, 0, 0, null);
+            return connectionModel
+        }
+
+        return null
     }
 
+    connectToNode(nodeName){
+        this.nodeName = nodeName
+    }
+
+    removeConnection(){
+        this.nodeName = null
+    }
+
+    removeConnectionToNode(nodeName){
+        if(this.nodeName==nodeName){
+            this.nodeName = null
+        }
+    }
 }

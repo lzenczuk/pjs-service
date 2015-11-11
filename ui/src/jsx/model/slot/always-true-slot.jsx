@@ -1,13 +1,6 @@
-import Slot from '../slot-model';
+import SlotModel from '../slot-model';
 
-export default class AlwaysTrueSlot extends Slot{
-
-    static fromServerModel(smodel) {
-        return new AlwaysTrueSlot(
-            smodel.nodeName,
-            smodel.label
-        )
-    }
+export default class AlwaysTrueSlot extends SlotModel{
 
     constructor(nodeName, label){
         super(nodeName, label)

@@ -1,11 +1,9 @@
 import React from 'react';
-
 import ConnectionLine from './connection-line';
 import ScenarioGraph from './scenario/scenario-graph';
-
 import ScenarioMouseEvent from './scenario/scenario-mouse-event';
-
 import ctx from '../../context';
+import ServerModel from '../../model/server-model';
 
 import { DropTarget } from 'react-dnd';
 
@@ -21,7 +19,7 @@ const nodesTarget = {
         var clientPosition = monitor.getClientOffset();
 
         var node = {
-            "class" : "script_node",
+            "serverClass" : "script_node",
             "x" : (clientPosition.x - offset.x - props.offsetX)/props.scale,
             "y" : (clientPosition.y - offset.y - props.offsetY)/props.scale,
             "name" : item.name,
@@ -29,7 +27,7 @@ const nodesTarget = {
             "script" : "function main(input, ctx){}",
             "slots" : {
                 "slots" : [{
-                    class: "always_true_slot",
+                    serverClass: "always_true_slot",
                     nodeName: null,
                     label: null
                 } ]
@@ -38,7 +36,7 @@ const nodesTarget = {
         };
 
         // TODO - move to component and use its method
-        ctx.scenarioActions.addNode(node);
+        ctx.scenarioActions.addNode(ServerModel.nodeFromServerModel(node));
     }
 };
 

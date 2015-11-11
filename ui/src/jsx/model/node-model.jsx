@@ -1,13 +1,4 @@
-import ScriptNodeModel from './node/script-node-model';
-
 export default class NodeModel {
-
-    static fromServerModel(smodel) {
-        switch(smodel.serverClass){
-            case 'script_node': return ScriptNodeModel.fromServerModel(smodel);
-            default: throw "Can't create node. Unknown serverClass: "+smodel.serverClass
-        }
-    }
 
     constructor(name, description, x, y, width, height, contentHeight) {
         this.name = name;
@@ -19,4 +10,30 @@ export default class NodeModel {
         this.contentHeight = contentHeight
     }
 
+    /**
+     * @returns {Array<ConnectionModel>}
+     */
+    getConnectionModels(){
+
+        return []
+    }
+
+    connectToNode(nodeName, index){
+        throw "NodeModel:connectToNode - NodeModel not support slots"
+    }
+
+    removeConnectionById(slotIndex){
+        throw "NodeModel:removeConnection - NodeModel not support slots"
+    }
+
+    removeConnectionsToNode(nodeName){
+        throw "NodeModel:removeConnectionsToNode - NodeModel not support slots"
+    }
+
+    resize(width, height, contentHeight){
+        this.width = width;
+        this.height = height;
+        this.contentHeight = contentHeight;
+
+    }
 }

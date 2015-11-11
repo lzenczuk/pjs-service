@@ -1,156 +1,92 @@
-import EventEmitter from 'events'
+import EventEmitter from 'events';
+import ActionTypes from '../action/action-types';
+import ServerModel from '../model/server-model';
 
-import ActionTypes from '../action/action-types'
 
 export default class ScenarioStore extends EventEmitter {
 
-    constructor(dispatcher){
+    constructor(dispatcher) {
         super();
         this.dispatcher = dispatcher;
 
         this._reset();
-        
-        this.dispatcher.register( action => {
 
-            if(action.actionType==ActionTypes.scenarioLoading){
+        this.dispatcher.register(action => {
+
+            if (action.actionType == ActionTypes.scenarioLoading) {
+
                 this._loading();
                 this.emit('CHANGE');
-            }else if(action.actionType==ActionTypes.scenarioLoaded){
+            } else if (action.actionType == ActionTypes.scenarioLoaded) {
+
                 this._loaded(action.scenario);
                 this.emit('CHANGE');
-            }else if(action.actionType==ActionTypes.scenarioLoadingError){
+            } else if (action.actionType == ActionTypes.scenarioLoadingError) {
+
                 this._loadingError(action.message);
                 this.emit('CHANGE');
-            }else if(action.actionType==ActionTypes.nodeAdded){
-
-                var node = action.payload.node;
-                var name = node.name;
-
-                if(this._model.scenario!=null){
-                    this._model.scenario.nodesMap[name]=node;
-                    this._model.scenario.nodes.push(node)
-                }
-
+            } else if (action.actionType == ActionTypes.nodeAdded) {
+                this._model.scenario.addNode(action.payload.node);
                 this.emit('CHANGE');
-            }else if(action.actionType==ActionTypes.nodeMoved){
-
-                var name = action.payload.nodeName;
-                var x = action.payload.x;
-                var y = action.payload.y;
-
-                if(this._model.scenario!=null){
-                    this._model.scenario.nodesMap[name].x=x;
-                    this._model.scenario.nodesMap[name].y=y;
-                }
-
-                this._updateInternalModel(this._model.scenario);
-
+            } else if (action.actionType == ActionTypes.nodeMoved) {
+                this._model.scenario.moveNodeTo(action.payload.nodeName, action.payload.x, action.payload.y);
                 this.emit('CHANGE');
-            }else if(action.actionType==ActionTypes.connectionAdded){
-
-                var srcNode = this._model.scenario.nodesMap[action.payload.srcNodeName];
-                var slot = srcNode.slots.slots[action.payload.slotIndex];
-
-                slot.nodeName = action.payload.desNodeName;
-
-                this._rebuildInternalModel(this._model.scenario);
-                this._updateInternalModel(this._model.scenario);
-
+            } else if (action.actionType == ActionTypes.connectionAdded) {
+                this._model.scenario.connectNodes(action.payload.srcNodeName, action.payload.slotIndex, action.payload.desNodeName);
                 this.emit('CHANGE');
-            }else if(action.actionType==ActionTypes.connectionLine){
-
+            } else if (action.actionType == ActionTypes.connectionLine) {
                 this._model.ui.connectionLine = action.payload;
-                JSON.stringify(this._model);
-
                 this.emit('CHANGE');
-            }else if(action.actionType==ActionTypes.cleanUi){
-
+            } else if (action.actionType == ActionTypes.cleanUi) {
                 this._model.ui.connectionLine = null;
                 this._model.ui.state.activeEvent = null;
                 this._model.ui.state.payload = null;
+                this.emit('CHANGE');
+            } else if (action.actionType == ActionTypes.transformScenario) {
+                this._model.ui.offsetX = action.payload.offsetX;
+                this._model.ui.offsetY = action.payload.offsetY;
+                this._model.ui.scale = action.payload.scale;
 
                 this.emit('CHANGE');
-            }else if(action.actionType==ActionTypes.transformScenario){
-                this._model.ui.offsetX=action.payload.offsetX;
-                this._model.ui.offsetY=action.payload.offsetY;
-                this._model.ui.scale=action.payload.scale;
-
+            } else if (action.actionType == ActionTypes.nodesResized) {
+                action.payload.changes.forEach((change => {
+                    console.log("Resize node: "+JSON.stringify(change));
+                    this._model.scenario.resizeNode(change.nodeName, change.width, change.height, change.contentHeight)
+                }).bind(this));
                 this.emit('CHANGE');
-            }else if(action.actionType==ActionTypes.nodesResized){
-                var changes = action.payload.changes;
-
-                if(changes){
-                    changes.forEach((change => {
-                        let node = this._model.scenario.nodesMap[change.nodeName];
-
-                        node.width=change.width;
-                        node.height=change.height;
-                        node.contentHeight=change.contentHeight;
-                    }).bind(this))
-                }
-
-                this._updateInternalModel(this._model.scenario);
-
-                this.emit('CHANGE');
-            }else if(action.actionType==ActionTypes.activeUiEventChanged){
+            } else if (action.actionType == ActionTypes.activeUiEventChanged) {
                 this._model.ui.state.activeEvent = action.payload.event;
                 this._model.ui.state.payload = action.payload.payload;
 
                 this.emit('CHANGE');
-            }else if(action.actionType==ActionTypes.elementsSelected){
+            } else if (action.actionType == ActionTypes.elementsSelected) {
                 this._model.ui.selectedNodeName = {};
                 this._model.ui.selectedConnection = '';
                 action.payload.elements.forEach(element => {
 
-                    if(element.type=='NODE'){
-                        this._model.ui.selectedNodeName[element.name]=true
-                    }else if(element.type=='CONNECTION'){
+                    if (element.type == 'NODE') {
+                        this._model.ui.selectedNodeName[element.name] = true
+                    } else if (element.type == 'CONNECTION') {
                         this._model.ui.selectedConnection = element.name
                     }
                 });
 
                 this.emit('CHANGE');
-            }else if(action.actionType==ActionTypes.selectedElementsDeleted){
+            } else if (action.actionType == ActionTypes.selectedElementsDeleted) {
 
-                if(this._model.ui.selectedConnection!='') {
+                if (this._model.ui.selectedConnection != '') {
                     var connectionId = this._model.ui.selectedConnection;
-
-                    this._model.scenario.connections.forEach(connection => {
-                        if (connection.connectionId == connectionId) {
-                            var nodeName = connection.src;
-                            var node = this._model.scenario.nodesMap[nodeName];
-                            node.slots.slots[connection.index].nodeName = null;
-                        }
-                    });
+                    this._model.scenario.removeConnectionById(connectionId);
                 }
 
-                this._model.scenario.nodes = this._model.scenario.nodes.filter(node => {
-
-                    if(this._model.ui.selectedNodeName[node.name]){
-                        return false;
-                    }
-
-                    return true;
-                });
-
-                this._model.scenario.nodes.forEach(node => {
-                    node.slots.slots.forEach(slot => {
-                        if(this._model.ui.selectedNodeName[slot.nodeName]){
-                            slot.nodeName = null;
-                        }
-                    })
-                });
-
-                this._rebuildInternalModel(this._model.scenario);
-                this._updateInternalModel(this._model.scenario);
-
+                Object.keys(this._model.ui.selectedNodeName).forEach(nodeName => this._model.scenario.removeNode(nodeName));
                 this.emit('CHANGE');
             }
 
         })
-    }   
+    }
 
-    _reset(){
+    _reset() {
         this._model = {
             scenario: null,
             status: {
@@ -172,56 +108,59 @@ export default class ScenarioStore extends EventEmitter {
         };
     }
 
-    _loading(){
-        this._model.scenario=null;
-        this._model.status.loading=true;
-        this._model.status.error=false;
-        this._model.status.errorMsg='';
-        this._model.ui.offsetX=0;
-        this._model.ui.offsetY=0;
+    _loading() {
+        this._model.scenario = null;
+        this._model.status.loading = true;
+        this._model.status.error = false;
+        this._model.status.errorMsg = '';
+        this._model.ui.offsetX = 0;
+        this._model.ui.offsetY = 0;
     }
 
-    _loadingError(message){
-        this._model.scenario=null;
-        this._model.status.loading=false;
-        this._model.status.error=true;
-        this._model.status.errorMsg=message;
-        this._model.ui.offsetX=0;
-        this._model.ui.offsetY=0;
+    _loadingError(message) {
+        this._model.scenario = null;
+        this._model.status.loading = false;
+        this._model.status.error = true;
+        this._model.status.errorMsg = message;
+        this._model.ui.offsetX = 0;
+        this._model.ui.offsetY = 0;
     }
 
-    _loaded(scenario){
-        this._model.scenario=scenario;
+    _loaded(scenario) {
 
-        this._updateInternalModel(this._model.scenario);
+        console.log("Loaded");
 
-        this._model.status.loading=false;
-        this._model.status.error=false;
-        this._model.status.errorMsg='';
-        this._model.ui.offsetX=0;
-        this._model.ui.offsetY=0;
+        this._model.scenario = ServerModel.scenarioFromServerModel(scenario);
+
+        console.log("Loaded ---->");
+
+        this._model.status.loading = false;
+        this._model.status.error = false;
+        this._model.status.errorMsg = '';
+        this._model.ui.offsetX = 0;
+        this._model.ui.offsetY = 0;
         this._model.ui.selectedNodeName = {};
         this._model.ui.selectedConnection = '';
         this._model.ui.activeEvent = {
             activeEvent: null,
-                payload: null
+            payload: null
         }
     }
 
-    get model(){
+    get model() {
         return this._model
     }
 
-    addChangeListener(callback){
+    addChangeListener(callback) {
         this.on('CHANGE', callback)
     }
 
-    removeChangeListener(callback){
+    removeChangeListener(callback) {
         this.removeListener('CHANGE', callback)
     }
 
-    _rebuildInternalModel(model){
-        
+    _rebuildInternalModel(model) {
+
         model.nodesMap = {};
         model.connections = [];
 
@@ -252,17 +191,17 @@ export default class ScenarioStore extends EventEmitter {
         });
     }
 
-    _updateInternalModel(model){
+    _updateInternalModel(model) {
 
         model.connections.forEach(connection => {
             var src = model.nodesMap[connection.src];
             var des = model.nodesMap[connection.des];
 
-            var sx = src.x+src.width;
-            var sy = src.y+src.contentHeight+10+connection.index*20;
+            var sx = src.x + src.width;
+            var sy = src.y + src.contentHeight + 10 + connection.index * 20;
 
             var dx = des.x;
-            var dy = des.y+10;
+            var dy = des.y + 10;
 
             connection.srcX = sx;
             connection.srcY = sy;

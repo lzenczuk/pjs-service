@@ -1,7 +1,7 @@
 export default class ConnectionModel {
 
-    constructor(connectionId, src, des, srcX, srcY, desX, desY, index) {
-        this.connectionId = connectionId;
+    constructor(src, des, srcX, srcY, desX, desY, index) {
+
         this.src = src;
         this.des = des;
         this.srcX = srcX;
@@ -9,5 +9,9 @@ export default class ConnectionModel {
         this.desX = desX;
         this.desY = desY;
         this.index = index
+    }
+
+    get connectionId(){
+        return this.src+'_'+this.des+'_'+this.index
     }
 }

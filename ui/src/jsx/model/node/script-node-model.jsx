@@ -1,31 +1,48 @@
 import NodeModel from '../node-model';
-import SlotsModel from '../slots-model';
 
 export default class ScriptNodeModel extends NodeModel {
 
-    static fromServerModel(smodel) {
-
-        let slots = SlotsModel.fromServerModel(smodel.slots);
-
-        return new ScriptNodeModel(
-            smodel.name,
-            smodel.description,
-            smodel.x,
-            smodel.y,
-            smodel.width,
-            smodel.height,
-            smodel.contentHeight,
-            smodel.script,
-            slots,
-            smodel.executorName
-        )
-    }
-
+    /**
+     * @param name
+     * @param description
+     * @param x
+     * @param y
+     * @param width
+     * @param height
+     * @param contentHeight
+     * @param script
+     * @param {SlotsModel} slots
+     * @param executorName
+     */
     constructor(name, description, x, y, width, height, contentHeight, script, slots, executorName) {
         super(name, description, x, y, width, height, contentHeight);
 
         this.script = script;
         this.slots = slots;
         this.executorName = executorName
+    }
+
+    /**
+     * @returns {Array<ConnectionModel>}
+     */
+    getConnectionModels(){
+
+        return this.slots.getConnectionModels().map(connection => {
+            connection.src = this.name;
+
+            return connection
+        })
+    }
+
+    connectToNode(nodeName, index){
+        this.slots.connectToNode(nodeName, index)
+    }
+
+    removeConnectionById(slotIndex){
+        this.slots.removeConnectionById(slotIndex)
+    }
+
+    removeConnectionsToNode(nodeName){
+        this.slots.removeConnectionsToNode(nodeName)
     }
 }
