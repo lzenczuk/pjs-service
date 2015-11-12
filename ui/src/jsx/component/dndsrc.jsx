@@ -71,7 +71,7 @@ class DndSrc extends React.Component {
         let style = {
             position: 'absolute',
             top: 10,
-            left: 10,
+            left: 400,
             width: 200,
             height: 200,
             backgroundColor: 'red'

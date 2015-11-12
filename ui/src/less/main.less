@@ -87,97 +87,54 @@ body {
   margin-top: @top-bar-height;
 }
 
-// Top bar -------------------------
-
-.topbar {
-  .max;
-  background-color: #656565;
+.note {
+  background-color: white;
+  padding: 5px;
+  color: dimgray;
+  font-size: small;
+  border-bottom: solid 1px dimgray;
 }
 
-.projects-left-panel{
-  .max-height;
-  width: @right-panel-width;
-  border-right: solid @main-text-color 1px;
-  overflow-y: auto;
-  overflow-x: hidden;
+.title {
+  font-weight: bold;
+  font-size: medium;
 }
 
-.projects-right-panel{
-  .max;
-  margin-left: @right-panel-width;
-  overflow-y: auto;
-  overflow-x: hidden;
+.red-note {
+  .note;
+  border-top: solid red 3px;
 }
 
-.ui-list {
-  list-style-type: none;
+.green-note {
+  .note;
+  border-top: solid greenyellow 3px;
+}
+
+.blue-note {
+  .note;
+  border-top: solid cornflowerblue 3px;
+}
+
+.spacer-note {
+  .note;
+  padding-top: 20px;
+  margin: 5px;
+  border: dashed dimgray 1px;
+  background-color: lightgray;
+}
+
+.notes-list {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 250px;
+  border: 1px dotted dimgray;
+  padding-bottom: 20px;
+}
+
+.placeholder {
+  border: 0;
   padding: 0;
   margin: 0;
 }
 
-.ui-list li {
-  padding-left: 10px;
-  padding-bottom: 10px;
-  padding-top: 10px;
-  border-bottom: solid @main-text-color 1px;
-}
-
-.inner-container {
-  margin-left: @top-bar-height;
-  margin-right: @top-bar-height;
-  border: solid @main-text-color 1px;
-}
-
-.scenario-left-panel{
-  .max;
-  margin-right: @left-panel-width;
-  overflow-y: hidden;
-  overflow-x: hidden;
-}
-
-.scenario-right-panel{
-  .max-height;
-  right: 0;
-  width: @left-panel-width;
-  border-left: solid @main-text-color 1px;
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-
-.box {
-  position: absolute;
-  background-color: #aaa;
-  color: #fff;
-  border: solid #aaa 1px;
-}
-
-.slots {
-  margin-top: 5px;
-  margin-bottom: 5px;
-  padding-left: 0px;
-}
-
-.slot {
-  text-align: right;
-  margin-bottom: 2px;
-}
-
-.slot .label {
-  background-color: #f00;
-  padding: 4px;
-  border-radius: 10px;
-  font-size: 10px;
-}
-
-.content {
-  margin: 5px;
-}
-
-.selected-node {
-  border: solid red 1px;
-}
-
-.key-interceptor {
-  position: absolute;
-  top: -200px;
-}
