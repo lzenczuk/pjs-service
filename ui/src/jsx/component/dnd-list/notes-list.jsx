@@ -23,25 +23,25 @@ export default class NotesList extends React.Component {
             if (note.type == "TEXT_NOTE") {
                 return (
                     <NotePlaceholder key={index} index={index} onEvent={this.onEvent.bind(this)}>
-                        <RedNote title={note.title} text={note.text}/>
+                        <RedNote id={note.id} title={note.title} text={note.text} onEvent={this.props.onEvent}/>
                     </NotePlaceholder>
                 )
             } else if (note.type == "NUMBER_NOTE") {
                 return (
                     <NotePlaceholder key={index} index={index} onEvent={this.onEvent.bind(this)}>
-                        <BlueNote title={note.title} number={note.number}/>
+                        <BlueNote id={note.id} title={note.title} number={note.number} onEvent={this.props.onEvent}/>
                     </NotePlaceholder>
                 )
             } else if (note.type == "DATE_NOTE") {
                 return (
                     <NotePlaceholder key={index} index={index} onEvent={this.onEvent.bind(this)}>
-                        <GreenNote title={note.title} date={note.date.toString()}/>
+                        <GreenNote id={note.id} title={note.title} date={note.date.toString()} onEvent={this.props.onEvent}/>
                     </NotePlaceholder>
                 )
             } else if (note.type == "SPACER_NOTE") {
                 return (
                     <NotePlaceholder key={index} index={index} onEvent={this.onEvent.bind(this)}>
-                        <SpacerNote/>
+                        <SpacerNote id={note.id}/>
                     </NotePlaceholder>
                 )
             }

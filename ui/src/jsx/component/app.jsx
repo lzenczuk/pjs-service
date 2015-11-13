@@ -31,8 +31,8 @@ class App extends React.Component {
     }
 
     onEvent(ev){
-        console.log("app on event: "+ev.index);
-        this.setState({notes: this.state.notes.filter((n, index) => index!=ev.index)})
+        console.log("app on event: "+ev.id);
+        this.setState({notes: this.state.notes.filter((note) => note.id!=ev.id)})
     }
 
     render() {
@@ -40,7 +40,6 @@ class App extends React.Component {
         return (
             <div className="app">
                 <NotesList notes={this.state.notes} onEvent={this.onEvent.bind(this)}/>
-                <DndSrc />
             </div>
         )
     }
