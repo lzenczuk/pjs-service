@@ -1,23 +1,42 @@
 import React from 'react';
+import { DropTarget } from 'react-dnd';
 
-export default class NotePlaceholder extends React.Component {
+const nodeSource = {
 
-    onClick(event){
+    drop(props, monitor, component) {
+        console.log("NotePlaceholder:drop");
+    },
 
-        event.stopPropagation();
-        event.preventDefault();
+    hover(props, monitor, component){
+        console.log("NotePlaceholder:hover");
 
-        if(this.props.onEvent){
-            this.props.onEvent({index: this.props.index})
-        }
+        const item = {type: 'note_over', index: props.index };
+
+        setTimeout(function(){
+            props.onEvent(item)
+        }.bind(this), 0);
     }
+};
+
+function collect(connect, monitor) {
+
+    console.log("NotePlaceholder:collect");
+
+    return {
+        connectDropTarget: connect.dropTarget()
+    };
+}
+
+class NotePlaceholder extends React.Component {
 
     render() {
 
-        return (
-            <div className="placeholder" onClick={this.onClick.bind(this)}>
+        return this.props.connectDropTarget(
+            <div className="placeholder">
                 {this.props.children}
             </div>
         )
     }
 }
+
+export default DropTarget("note_dnd", nodeSource, collect)(NotePlaceholder);

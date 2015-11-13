@@ -22,7 +22,6 @@ class App extends React.Component {
                 {id: 23, type: "TEXT_NOTE", title: "Meeting", text: "At home in saturday"},
                 {id: 11, type: "NUMBER_NOTE", title: "Counter", number: 12},
                 {id: 2, type: "TEXT_NOTE", title: "Shopping", text: "Buy onion"},
-                {id: 9999, type: "SPACER_NOTE"},
                 {id: 45, type: "DATE_NOTE", title: "Visit", date: new Date()},
                 {id: 18, type: "NUMBER_NOTE", title: "Days to Christmas", number: 34},
                 {id: 36, type: "TEXT_NOTE", title: "Game", text: "Witcher 3"}
@@ -31,8 +30,19 @@ class App extends React.Component {
     }
 
     onEvent(ev){
-        console.log("app on event: "+ev.id);
-        this.setState({notes: this.state.notes.filter((note) => note.id!=ev.id)})
+        if(ev.type=='note_dragged'){
+            console.log("app on event: "+ev.id);
+
+            this.setState({notes: this.state.notes.map((note) => {
+                if(note.id==ev.id){
+                    return {id: 9999, type: "SPACER_NOTE"}
+                }else{
+                    return note
+                }
+            })})
+        }else if(ev.type=='note_over'){
+            console.log("Over: "+ev.index)
+        }
     }
 
     render() {

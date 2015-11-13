@@ -5,7 +5,7 @@ const nodeSource = {
 
     beginDrag(props, monitor, component) {
 
-        const item = { id: props.id };
+        const item = {type: 'note_dragged', id: props.id };
 
         setTimeout(function(){
             props.onEvent(item)
