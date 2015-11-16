@@ -60,6 +60,12 @@ export default class ScenarioModel {
         this._rebuildConnections()
     }
 
+    transformScenario(offsetX, offsetY, scale){
+        this.offsetX = offsetX;
+        this.offsetY = offsetY;
+        this.scale = scale;
+    }
+
     _rebuildNodesMap(){
         this.nodesMap = {};
         this.nodes.forEach(node => this.nodesMap[node.name] = node)

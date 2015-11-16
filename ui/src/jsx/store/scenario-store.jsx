@@ -43,10 +43,7 @@ export default class ScenarioStore extends EventEmitter {
                 this._model.ui.state.payload = null;
                 this.emit('CHANGE');
             } else if (action.actionType == ActionTypes.transformScenario) {
-                this._model.ui.offsetX = action.payload.offsetX;
-                this._model.ui.offsetY = action.payload.offsetY;
-                this._model.ui.scale = action.payload.scale;
-
+                this._model.scenario.transformScenario(action.payload.offsetX, action.payload.offsetY, action.payload.scale);
                 this.emit('CHANGE');
             } else if (action.actionType == ActionTypes.nodesResized) {
                 action.payload.changes.forEach((change => {
