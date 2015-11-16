@@ -10,8 +10,6 @@ export default class ServerModel {
 
     static scenarioFromServerModel(smodel){
 
-        console.log("==========> smodel")
-
         let nodes = [];
         let nodesMap = {};
 

@@ -59,44 +59,4 @@ export default class ScenarioActions{
     deleteSelectedElements(){
         this._dispatcher.dispatch({actionType: ActionTypes.selectedElementsDeleted, payload: {} })
     }
-
-    _convertServerModelToInternalModel(propsModel){
-
-        var nodes = [];
-        var nameToNodeMap = {};
-        var connections = [];
-
-        Object.keys(propsModel.nodesMap).forEach(nodeName => {
-            var node = propsModel.nodesMap[nodeName];
-            var slots = node.slots.slots;
-
-            nodes.push(node);
-            nameToNodeMap[node.name] = node;
-
-            slots.forEach((s, index) => {
-                if(s.nodeName!=null){
-                    var connection = {
-                        connectionId: node.name+'_'+s.nodeName+'_'+index,
-                        src: node.name,
-                        des: s.nodeName,
-                        srcX: 0,
-                        srcY: 0,
-                        desX: 0,
-                        desY: 0,
-                        index: index,
-                        total: slots.length
-                    };
-                    connections.push(connection)
-                }
-            })
-        });
-
-        return {
-            nodes: nodes,
-            nodesMap: nameToNodeMap,
-            connections: connections
-        };
-    }
-
-
 }

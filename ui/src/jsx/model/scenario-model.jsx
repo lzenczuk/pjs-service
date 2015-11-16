@@ -20,8 +20,6 @@ export default class ScenarioModel {
 
         this._rebuildNodesMap();
         this._rebuildConnections()
-
-        console.log("========> new scenario: "+JSON.stringify(this))
     }
 
     /**
