@@ -30,6 +30,10 @@ public class Scenario {
 
     private Map<String, Node> nodesMap = new HashMap<>();
 
+    private long offsetX = 0;
+    private long offsetY = 0;
+    private long scale = 1;
+
     public Scenario() {
     }
 

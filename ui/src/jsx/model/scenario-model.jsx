@@ -7,14 +7,21 @@ export default class ScenarioModel {
      * @param {Object} nodesMap
      * @param {Array<Connection>} connections
      */
-    constructor(nodes){
+    constructor(nodes, offsetX, offsetY, scale){
         this.nodes = nodes;
+
+        this.offsetX = offsetX;
+        this.offsetY = offsetY;
+        this.scale = scale;
+
         this.nodesMap = {};
         this.connections = [];
         this.connectionsMap = {};
 
         this._rebuildNodesMap();
         this._rebuildConnections()
+
+        console.log("========> new scenario: "+JSON.stringify(this))
     }
 
     /**

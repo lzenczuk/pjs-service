@@ -10,6 +10,8 @@ export default class ServerModel {
 
     static scenarioFromServerModel(smodel){
 
+        console.log("==========> smodel")
+
         let nodes = [];
         let nodesMap = {};
 
@@ -21,7 +23,7 @@ export default class ServerModel {
                 nodesMap[nodeModel.name] = nodeModel;
             });
 
-        return new ScenarioModel(nodes)
+        return new ScenarioModel(nodes, smodel.offsetX, smodel.offsetY, smodel.scale)
 
     }
 

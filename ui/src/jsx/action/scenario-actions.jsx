@@ -13,7 +13,7 @@ export default class ScenarioActions{
 
         this._server.GET('/api/scenario',
             (response => {
-                this._dispatcher.dispatch({actionType: ActionTypes.scenarioLoaded, scenario: this._convertServerModelToInternalModel(response)})
+                this._dispatcher.dispatch({actionType: ActionTypes.scenarioLoaded, scenario: response})
             }).bind(this),
             ((code, message) => {
                 this._dispatcher.dispatch({actionType: ActionTypes.scenarioLoadingError, message: message})
