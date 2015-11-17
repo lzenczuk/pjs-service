@@ -1,6 +1,6 @@
 import React from 'react';
-import ConnectionLine from './connection-line';
 import ScenarioGraph from './scenario-graph/scenario-graph';
+import ScenarioEditor from './scenario-editor/scenario-editor';
 import ScenarioEvent from './scenario-event';
 import ctx from '../../context';
 import ServerModel from '../../model/server-model';
@@ -166,6 +166,16 @@ class ScenarioViewport extends React.Component {
                         style={viewportInternalElementStyle}
                     >
                         <ScenarioGraph
+                            model={this.props.model}
+                            selectedConnection = {this.props.selectedConnection}
+                            onMouseEvent={this._mouseEventsProxy.bind(this)}
+                        />
+                    </div>
+                    <div
+                        className="absolute-position"
+                        style={viewportInternalElementStyle}
+                    >
+                        <ScenarioEditor
                             model={this.props.model}
                             selectedNodes = {this.props.selectedNodes}
                             selectedConnection = {this.props.selectedConnection}

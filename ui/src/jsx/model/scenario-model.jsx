@@ -30,6 +30,10 @@ export default class ScenarioModel {
         this.nodesMap[node.name] = node;
     }
 
+    getNodeByName(name){
+        return this.nodesMap[name]
+    }
+
     moveNodeTo(name, x, y){
         this.nodesMap[name].x=x;
         this.nodesMap[name].y=y;

@@ -2,7 +2,6 @@ import React from 'react';
 import Node from './node';
 import Connection from './connection';
 import ScenarioEvent from '../scenario-event'
-import ConnectionLine from '../connection-line'
 
 export default class ScenarioGraph extends React.Component {
 
@@ -13,7 +12,6 @@ export default class ScenarioGraph extends React.Component {
             return (<Node key={node.name}
                   ref={node.name}
                   model={node}
-                  selected={this.props.selectedNodes[node.name]}
                   onMouseEvent={this.props.onMouseEvent}
             />)
         });
@@ -23,16 +21,10 @@ export default class ScenarioGraph extends React.Component {
             return (<Connection key={c.src+c.des+c.index} selected={selected} model={c} onMouseEvent={this.props.onMouseEvent}/>)
         });
 
-        var connectionLine;
-        if(this.props.connectionLine!=null){
-            connectionLine = <ConnectionLine model={this.props.connectionLine} />
-        }
-
         return (
         	<div>
         		{connections}
         		{nodes}
-                {connectionLine}
         	</div>)
     }
 
@@ -75,10 +67,8 @@ export default class ScenarioGraph extends React.Component {
 
 ScenarioGraph.propertyTypes = {
 	model: React.PropTypes.object.isRequired,
-    selectedNodes: React.PropTypes.array.isRequired,
     selectedConnection: React.PropTypes.string,
     onMouseEvent: React.PropTypes.func,
-    connectionLine: React.PropTypes.object
 };
 
 

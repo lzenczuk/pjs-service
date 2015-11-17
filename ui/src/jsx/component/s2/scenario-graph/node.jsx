@@ -70,13 +70,8 @@ export default class Node extends React.Component {
             />
         );
 
-        var cn = classNames({
-            box: true,
-            'selected-node': this.props.selected
-        });
-
         return(
-            <div className={cn}
+            <div className="box"
                  style={style}
                  onMouseDown={this._onMouseDown.bind(this)}
                  onMouseUp={this._onMouseUp.bind(this)}
@@ -95,7 +90,6 @@ export default class Node extends React.Component {
 
 Node.propertyTypes = {
     model: React.PropTypes.object,
-    selected: React.PropTypes.boolean,
 	onMouseEvent: React.PropTypes.func
 };
 
