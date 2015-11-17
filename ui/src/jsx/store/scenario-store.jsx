@@ -31,14 +31,6 @@ export default class ScenarioStore extends EventEmitter {
             } else if (action.actionType == ActionTypes.connectionAdded) {
                 this._model.scenario.connectNodes(action.payload.srcNodeName, action.payload.slotIndex, action.payload.desNodeName);
                 this.emit('CHANGE');
-            } else if (action.actionType == ActionTypes.connectionLine) {
-                this._model.ui.connectionLine = action.payload;
-                this.emit('CHANGE');
-            } else if (action.actionType == ActionTypes.cleanUi) {
-                this._model.ui.connectionLine = null;
-                this._model.ui.state.activeEvent = null;
-                this._model.ui.state.payload = null;
-                this.emit('CHANGE');
             } else if (action.actionType == ActionTypes.transformScenario) {
                 this._model.scenario.transformScenario(action.payload.offsetX, action.payload.offsetY, action.payload.scale);
                 this.emit('CHANGE');
@@ -46,11 +38,6 @@ export default class ScenarioStore extends EventEmitter {
                 action.payload.changes.forEach((change => {
                     this._model.scenario.resizeNode(change.nodeName, change.width, change.height, change.contentHeight)
                 }).bind(this));
-                this.emit('CHANGE');
-            } else if (action.actionType == ActionTypes.activeUiEventChanged) {
-                this._model.ui.state.activeEvent = action.payload.event;
-                this._model.ui.state.payload = action.payload.payload;
-
                 this.emit('CHANGE');
             } else if (action.actionType == ActionTypes.elementsSelected) {
                 this._model.ui.selectedNodeName = {};
@@ -90,10 +77,6 @@ export default class ScenarioStore extends EventEmitter {
             ui: {
                 selectedNodeName: {},
                 selectedConnection: '',
-                state: {
-                    activeEvent: null,
-                    payload: null
-                }
             }
         };
     }
@@ -121,10 +104,6 @@ export default class ScenarioStore extends EventEmitter {
         this._model.status.errorMsg = '';
         this._model.ui.selectedNodeName = {};
         this._model.ui.selectedConnection = '';
-        this._model.ui.activeEvent = {
-            activeEvent: null,
-            payload: null
-        }
     }
 
     get model() {
