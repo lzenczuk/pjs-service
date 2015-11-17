@@ -195,10 +195,9 @@ class ScenarioView extends React.Component {
                             </div>
                         </div>
                         <ScenarioViewport
-                            nodes={this.state.scenario.nodes}
+                            model={this.state.scenario}
                             selectedNodes={this.state.ui.selectedNodeName}
                             selectedConnection={this.state.ui.selectedConnection}
-                            connections={this.state.scenario.connections}
                             onMouseEvent={this._onEvent.bind(this)}
                             offsetX={this.state.scenario.offsetX}
                             offsetY={this.state.scenario.offsetY}

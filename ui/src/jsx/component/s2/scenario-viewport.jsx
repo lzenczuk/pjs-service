@@ -166,8 +166,7 @@ class ScenarioViewport extends React.Component {
                         style={viewportInternalElementStyle}
                     >
                         <ScenarioGraph
-                            nodes={this.props.nodes}
-                            connections={this.props.connections}
+                            model={this.props.model}
                             selectedNodes = {this.props.selectedNodes}
                             selectedConnection = {this.props.selectedConnection}
                             connectionLine={this.props.connectionLine}
@@ -195,8 +194,7 @@ class ScenarioViewport extends React.Component {
 }
 
 ScenarioViewport.propertyTypes = {
-    nodes: React.PropTypes.array.isRequired,
-    connections: React.PropTypes.array.isRequired,
+    model: React.PropTypes.array.isRequired,
     selectedNodes: React.PropTypes.array.isRequired,
     selectedConnection: React.PropTypes.string,
     offsetX: React.PropTypes.number.isRequired,
