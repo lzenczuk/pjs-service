@@ -12,15 +12,8 @@ export default class ScenarioGraph extends React.Component {
         var nodes = this.props.model.nodes.map(node => {
             return (<Node key={node.name}
                   ref={node.name}
-                  name={node.name}
+                  model={node}
                   selected={this.props.selectedNodes[node.name]}
-                  description={node.description}
-                  x={node.x}
-                  y={node.y}
-                  width={node.width}
-                  height={node.height}
-                  contentHeight={node.contentHeight}
-                  slots={node.slots.slots}
                   onMouseEvent={this.props.onMouseEvent}
             />)
         });

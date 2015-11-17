@@ -12,7 +12,7 @@ export default class Node extends React.Component {
             event.preventDefault();
             event.stopPropagation();
 
-            this.props.onMouseEvent(ScenarioEvent.nodeMouseDownEvent(event.clientX, event.clientY, this.props.name));
+            this.props.onMouseEvent(ScenarioEvent.nodeMouseDownEvent(event.clientX, event.clientY, this.props.model.name));
         }
     }
 
@@ -21,7 +21,7 @@ export default class Node extends React.Component {
             event.preventDefault();
             event.stopPropagation();
 
-            this.props.onMouseEvent(ScenarioEvent.nodeMouseUpEvent(event.clientX, event.clientY, this.props.name));
+            this.props.onMouseEvent(ScenarioEvent.nodeMouseUpEvent(event.clientX, event.clientY, this.props.model.name));
         }
     }
 
@@ -40,8 +40,8 @@ export default class Node extends React.Component {
         let width = Math.max(cw, sw);
         let height = totalCh+sh;
 
-        if(width!=this.props.width || height!=this.props.height || totalCh!=this.props.contentHeight){
-            return {nodeName: this.props.name, width: width, height: height, contentHeight: totalCh}
+        if(width!=this.props.model.width || height!=this.props.model.height || totalCh!=this.props.model.contentHeight){
+            return {nodeName: this.props.model.name, width: width, height: height, contentHeight: totalCh}
         }else{
             return null;
         }
@@ -50,22 +50,22 @@ export default class Node extends React.Component {
     render(){
 
         var numberOfSlots = 0;
-        if(this.props.slots!=null){
-            numberOfSlots = this.props.slots.length
+        if(this.props.model.slots.slots!=null){
+            numberOfSlots = this.props.model.slots.slots.length
         }
 
         var style = {
-            top: this.props.y,
-            left: this.props.x,
-            width: this.props.width,
-            height: this.props.height
+            top: this.props.model.y,
+            left: this.props.model.x,
+            width: this.props.model.width,
+            height: this.props.model.height
         };
 
-        var slots = this.props.slots.map((slot, index) =>
-            <Slot key={this.props.name+index}
+        var slots = this.props.model.slots.slots.map((slot, index) =>
+            <Slot key={this.props.model.name+index}
                   label={slot.label}
                   index={index}
-                  nodeName={this.props.name}
+                  nodeName={this.props.model.name}
                   onMouseEvent={this.props.onMouseEvent}
             />
         );
@@ -82,8 +82,8 @@ export default class Node extends React.Component {
                  onMouseUp={this._onMouseUp.bind(this)}
             >
                 <div className="content" ref="content">
-                    <div className="title">{this.props.name}</div>
-                    <div className="script">{this.props.description}</div>
+                    <div className="title">{this.props.model.name}</div>
+                    <div className="script">{this.props.model.description}</div>
                 </div>
                 <div ref="slots">
                     {slots}
@@ -94,15 +94,8 @@ export default class Node extends React.Component {
 }
 
 Node.propertyTypes = {
-	name: React.PropTypes.string.isRequired,
-	description: React.PropTypes.string.isRequired,
+    model: React.PropTypes.object,
     selected: React.PropTypes.boolean,
-	x: React.PropTypes.number.isRequired,
-	y: React.PropTypes.number.isRequired,
-	width: React.PropTypes.number.isRequired,
-	height: React.PropTypes.number.isRequired,
-    contentHeight: React.PropTypes.number.isRequired,
-	slots: React.PropTypes.array.isRequired,
 	onMouseEvent: React.PropTypes.func
 };
 
