@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import ScenarioEvent from '../scenario-event'
+import ScenarioEvent from '../scenario-low-level-event'
 
 import Slot from './slot'
 

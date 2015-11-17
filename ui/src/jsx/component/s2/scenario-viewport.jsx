@@ -1,7 +1,7 @@
 import React from 'react';
 import ScenarioGraph from './scenario-graph/scenario-graph';
 import ScenarioEditor from './scenario-editor/scenario-editor';
-import ScenarioEvent from './scenario-event';
+import ScenarioEvent from './scenario-low-level-event';
 import ctx from '../../context';
 import ServerModel from '../../model/server-model';
 

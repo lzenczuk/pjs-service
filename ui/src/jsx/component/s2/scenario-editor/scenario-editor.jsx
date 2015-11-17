@@ -1,5 +1,5 @@
 import React from 'react';
-import ScenarioEvent from '../scenario-event'
+import ScenarioEvent from '../scenario-low-level-event'
 import ConnectionLine from './connection-line'
 import SelectedNode from './selected-node'
 import SelectedConnection from './selected-connection'

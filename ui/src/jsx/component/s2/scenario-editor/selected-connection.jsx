@@ -1,5 +1,5 @@
 import React from 'react';
-import ScenarioEvent from '../scenario-event'
+import ScenarioEvent from '../scenario-low-level-event'
 
 export default class SelectedConnection extends React.Component {
 
