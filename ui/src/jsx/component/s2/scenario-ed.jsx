@@ -1,7 +1,7 @@
 import React from 'react';
 
 import ScenarioViewport from './scenario-viewport'
-import ScenarioEvent from './scenario-low-level-event';
+import ScenarioLowLevelEvent from './scenario-low-level-event';
 import {
     ScenarioTransformEvent,
     NodeDragEvent,
@@ -31,35 +31,35 @@ class ScenarioEd extends React.Component {
     }
 
     /**
-     * @param {ScenarioEvent} event
+     * @param {ScenarioLowLevelEvent} event
      * @private
      */
     _onEvent(event) {
 
         switch (event.eventType) {
-            case ScenarioEvent.eventType.MOUSE_DOWN:
+            case ScenarioLowLevelEvent.eventType.MOUSE_DOWN:
                 this._onMouseDownEvent(event);
                 break;
-            case ScenarioEvent.eventType.MOUSE_MOVE:
+            case ScenarioLowLevelEvent.eventType.MOUSE_MOVE:
                 this._onMouseMoveEvent(event);
                 break;
-            case ScenarioEvent.eventType.MOUSE_UP:
+            case ScenarioLowLevelEvent.eventType.MOUSE_UP:
                 this._onMouseUpEvent(event);
                 break;
-            case ScenarioEvent.eventType.WHEEL:
+            case ScenarioLowLevelEvent.eventType.WHEEL:
                 this._onWheelEvent(event);
                 break;
-            case ScenarioEvent.eventType.SIZE:
+            case ScenarioLowLevelEvent.eventType.SIZE:
                 this._onSizeEvent(event);
                 break;
-            case ScenarioEvent.eventType.KEY:
+            case ScenarioLowLevelEvent.eventType.KEY:
                 this._onKeyEvent(event);
                 break;
         }
     }
 
     /**
-     * @param {ScenarioEvent} event
+     * @param {ScenarioLowLevelEvent} event
      * @private
      */
     _onMouseDownEvent(event) {
@@ -67,13 +67,13 @@ class ScenarioEd extends React.Component {
         var payload;
 
         switch (event.sourceType) {
-            case ScenarioEvent.sourceType.SCENARIO:
+            case ScenarioLowLevelEvent.sourceType.SCENARIO:
             {
                 payload = {};
             }
                 break;
 
-            case ScenarioEvent.sourceType.NODE:
+            case ScenarioLowLevelEvent.sourceType.NODE:
             {
                 payload = {
                     nodeX: this.props.model.nodesMap[event.payload.get('nodeName')].x,
@@ -84,13 +84,13 @@ class ScenarioEd extends React.Component {
             }
                 break;
 
-            case ScenarioEvent.sourceType.CONNECTION:
+            case ScenarioLowLevelEvent.sourceType.CONNECTION:
             {
                 payload = {};
             }
                 break;
 
-            case ScenarioEvent.sourceType.SLOT:
+            case ScenarioLowLevelEvent.sourceType.SLOT:
             {
                 payload = {
                     index: event.payload.get('slotIndex'),

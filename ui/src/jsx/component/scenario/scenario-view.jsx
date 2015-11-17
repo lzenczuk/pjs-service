@@ -30,7 +30,7 @@ class ScenarioView extends React.Component {
     }
 
     /**
-     * @param {ScenarioEvent} event
+     * @param {ScenarioLowLevelEvent} event
      * @private
      */
     _onEvent(event){

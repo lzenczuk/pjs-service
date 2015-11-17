@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import ScenarioEvent from '../scenario-low-level-event'
+import ScenarioLowLevelEvent from '../scenario-low-level-event'
 
 import Slot from './slot'
 
@@ -12,7 +12,7 @@ export default class Node extends React.Component {
             event.preventDefault();
             event.stopPropagation();
 
-            this.props.onMouseEvent(ScenarioEvent.nodeMouseDownEvent(event.clientX, event.clientY, this.props.model.name));
+            this.props.onMouseEvent(ScenarioLowLevelEvent.nodeMouseDownEvent(event.clientX, event.clientY, this.props.model.name));
         }
     }
 
@@ -21,7 +21,7 @@ export default class Node extends React.Component {
             event.preventDefault();
             event.stopPropagation();
 
-            this.props.onMouseEvent(ScenarioEvent.nodeMouseUpEvent(event.clientX, event.clientY, this.props.model.name));
+            this.props.onMouseEvent(ScenarioLowLevelEvent.nodeMouseUpEvent(event.clientX, event.clientY, this.props.model.name));
         }
     }
 
