@@ -3,7 +3,7 @@ import React from 'react';
 import ScenarioViewport from '../s2/scenario-viewport'
 import ScenarioControlPanel from './scenario-control-panel'
 
-import ScenarioEvent from '../s2/scenario/scenario-event';
+import ScenarioEvent from '../s2/scenario-event';
 
 import ctx from '../../context';
 

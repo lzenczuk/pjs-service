@@ -1,7 +1,7 @@
 import React from 'react';
 import Node from './node';
 import Connection from './connection';
-import ScenarioEvent from './scenario-event'
+import ScenarioEvent from '../scenario-event'
 import ConnectionLine from '../connection-line'
 
 export default class ScenarioGraph extends React.Component {

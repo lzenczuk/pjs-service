@@ -1,5 +1,5 @@
 import React from 'react';
-import ScenarioEvent from './scenario-event'
+import ScenarioEvent from '../scenario-event'
 
 export default class Connection extends React.Component {
 
