@@ -1,6 +1,6 @@
 import React from 'react';
 import ConnectionLine from './connection-line';
-import ScenarioGraph from './scenario/scenario-graph';
+import ScenarioGraph from './scenario-graph/scenario-graph';
 import ScenarioEvent from './scenario-event';
 import ctx from '../../context';
 import ServerModel from '../../model/server-model';
