@@ -56,6 +56,10 @@ export default class ScenarioModel {
         this._rebuildConnections()
     }
 
+    getConnectionById(connectionId){
+        return this.connectionsMap[connectionId];
+    }
+
     removeNode(nodeName){
         this.nodes = this.nodes.filter(node => node.name!=nodeName);
         this.nodes.forEach(node => node.removeConnectionsToNode(nodeName));

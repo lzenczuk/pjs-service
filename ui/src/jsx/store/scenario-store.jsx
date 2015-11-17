@@ -39,20 +39,10 @@ export default class ScenarioStore extends EventEmitter {
                     this._model.scenario.resizeNode(change.nodeName, change.width, change.height, change.contentHeight)
                 }).bind(this));
                 this.emit('CHANGE');
-            } else if (action.actionType == ActionTypes.elementsSelected) {
-                this._model.ui.selectedNodeName = {};
-                this._model.ui.selectedConnection = '';
-                action.payload.elements.forEach(element => {
+            }
 
-                    if (element.type == 'NODE') {
-                        this._model.ui.selectedNodeName[element.name] = true
-                    } else if (element.type == 'CONNECTION') {
-                        this._model.ui.selectedConnection = element.name
-                    }
-                });
-
-                this.emit('CHANGE');
-            } else if (action.actionType == ActionTypes.selectedElementsDeleted) {
+            // TODO - new implementation of selection delete
+            /*} else if (action.actionType == ActionTypes.selectedElementsDeleted) {
 
                 if (this._model.ui.selectedConnection != '') {
                     var connectionId = this._model.ui.selectedConnection;
@@ -61,7 +51,7 @@ export default class ScenarioStore extends EventEmitter {
 
                 Object.keys(this._model.ui.selectedNodeName).forEach(nodeName => this._model.scenario.removeNode(nodeName));
                 this.emit('CHANGE');
-            }
+            }*/
 
         })
     }
@@ -73,10 +63,6 @@ export default class ScenarioStore extends EventEmitter {
                 loading: false,
                 error: false,
                 errorMsg: ''
-            },
-            ui: {
-                selectedNodeName: {},
-                selectedConnection: '',
             }
         };
     }
@@ -102,8 +88,6 @@ export default class ScenarioStore extends EventEmitter {
         this._model.status.loading = false;
         this._model.status.error = false;
         this._model.status.errorMsg = '';
-        this._model.ui.selectedNodeName = {};
-        this._model.ui.selectedConnection = '';
     }
 
     get model() {

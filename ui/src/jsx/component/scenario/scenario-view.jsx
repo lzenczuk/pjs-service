@@ -15,6 +15,7 @@ class ScenarioView extends React.Component {
 
         this.scenarioActions = ctx.scenarioActions;
         this.scenarioStore = ctx.scenarioStore;
+        this.scenarioEditorStore = ctx.scenarioEditorStore;
 
         this.scenarioStoreCallback = function(){
             this.setState(this.scenarioStore.model);
