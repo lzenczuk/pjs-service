@@ -1,12 +1,12 @@
 import { Map } from 'immutable';
 
-export default class ScenarioMouseEvent {
+export default class ScenarioEvent {
 
 
 	static slotMouseDownEvent(clientX, clientY, slotIndex, nodeName){
-		return new ScenarioMouseEvent(
-			ScenarioMouseEvent.eventType.MOUSE_DOWN,
-			ScenarioMouseEvent.sourceType.SLOT,
+		return new ScenarioEvent(
+			ScenarioEvent.eventType.MOUSE_DOWN,
+			ScenarioEvent.sourceType.SLOT,
 			clientX,
 			clientY,
 			Map({slotIndex: slotIndex, nodeName: nodeName})
@@ -14,9 +14,9 @@ export default class ScenarioMouseEvent {
 	}
 
 	static nodeMouseDownEvent(clientX, clientY, nodeName){
-		return new ScenarioMouseEvent(
-			ScenarioMouseEvent.eventType.MOUSE_DOWN,
-			ScenarioMouseEvent.sourceType.NODE,
+		return new ScenarioEvent(
+			ScenarioEvent.eventType.MOUSE_DOWN,
+			ScenarioEvent.sourceType.NODE,
 			clientX,
 			clientY,
 			Map({nodeName: nodeName})
@@ -24,9 +24,9 @@ export default class ScenarioMouseEvent {
 	}
 
     static scenarioMouseDownEvent(clientX, clientY){
-        return new ScenarioMouseEvent(
-            ScenarioMouseEvent.eventType.MOUSE_DOWN,
-            ScenarioMouseEvent.sourceType.SCENARIO,
+        return new ScenarioEvent(
+            ScenarioEvent.eventType.MOUSE_DOWN,
+            ScenarioEvent.sourceType.SCENARIO,
             clientX,
             clientY,
             Map({})
@@ -34,9 +34,9 @@ export default class ScenarioMouseEvent {
     }
 
 	static connectionMouseDownEvent(clientX, clientY, srcNodeName, desNodeName, connectionId){
-		return new ScenarioMouseEvent(
-				ScenarioMouseEvent.eventType.MOUSE_DOWN,
-				ScenarioMouseEvent.sourceType.CONNECTION,
+		return new ScenarioEvent(
+				ScenarioEvent.eventType.MOUSE_DOWN,
+				ScenarioEvent.sourceType.CONNECTION,
 				clientX,
 				clientY,
 				Map({srcNodeName: srcNodeName, desNodeName: desNodeName, connectionId: connectionId})
@@ -44,9 +44,9 @@ export default class ScenarioMouseEvent {
 	}
 
 	static slotMouseUpEvent(clientX, clientY, slotIndex, nodeName){
-		return new ScenarioMouseEvent(
-			ScenarioMouseEvent.eventType.MOUSE_UP,
-			ScenarioMouseEvent.sourceType.SLOT,
+		return new ScenarioEvent(
+			ScenarioEvent.eventType.MOUSE_UP,
+			ScenarioEvent.sourceType.SLOT,
 			clientX,
 			clientY,
 			Map({slotIndex: slotIndex, nodeName: nodeName})
@@ -54,9 +54,9 @@ export default class ScenarioMouseEvent {
 	}
 
 	static connectionMouseUpEvent(clientX, clientY, srcNodeName, desNodeName, connectionId){
-		return new ScenarioMouseEvent(
-			ScenarioMouseEvent.eventType.MOUSE_UP,
-			ScenarioMouseEvent.sourceType.SLOT,
+		return new ScenarioEvent(
+			ScenarioEvent.eventType.MOUSE_UP,
+			ScenarioEvent.sourceType.SLOT,
 			clientX,
 			clientY,
 			Map({srcNodeName: srcNodeName, desNodeName: desNodeName, connectionId: connectionId})
@@ -65,9 +65,9 @@ export default class ScenarioMouseEvent {
 
 
 	static nodeMouseUpEvent(clientX, clientY, nodeName){
-		return new ScenarioMouseEvent(
-			ScenarioMouseEvent.eventType.MOUSE_UP,
-			ScenarioMouseEvent.sourceType.NODE,
+		return new ScenarioEvent(
+			ScenarioEvent.eventType.MOUSE_UP,
+			ScenarioEvent.sourceType.NODE,
 			clientX,
 			clientY,
 			Map({nodeName: nodeName})
@@ -75,9 +75,9 @@ export default class ScenarioMouseEvent {
 	}
 
     static scenarioMouseUpEvent(clientX, clientY){
-        return new ScenarioMouseEvent(
-            ScenarioMouseEvent.eventType.MOUSE_UP,
-            ScenarioMouseEvent.sourceType.SCENARIO,
+        return new ScenarioEvent(
+            ScenarioEvent.eventType.MOUSE_UP,
+            ScenarioEvent.sourceType.SCENARIO,
             clientX,
             clientY,
             Map({})
@@ -85,9 +85,9 @@ export default class ScenarioMouseEvent {
     }
 
     static scenarioMouseMoveEvent(clientX, clientY){
-        return new ScenarioMouseEvent(
-            ScenarioMouseEvent.eventType.MOUSE_MOVE,
-            ScenarioMouseEvent.sourceType.NONE,
+        return new ScenarioEvent(
+            ScenarioEvent.eventType.MOUSE_MOVE,
+            ScenarioEvent.sourceType.NONE,
             clientX,
             clientY,
             Map({})
@@ -95,9 +95,9 @@ export default class ScenarioMouseEvent {
     }
 
     static scenarioWheelEvent(deltaX, deltaY){
-        return new ScenarioMouseEvent(
-            ScenarioMouseEvent.eventType.WHEEL,
-            ScenarioMouseEvent.sourceType.NONE,
+        return new ScenarioEvent(
+            ScenarioEvent.eventType.WHEEL,
+            ScenarioEvent.sourceType.NONE,
             0,
             0,
             Map({deltaX: deltaX, deltaY: deltaY})
@@ -105,9 +105,9 @@ export default class ScenarioMouseEvent {
     }
 
 	static scenarioSizeEvent(changes){
-		return new ScenarioMouseEvent(
-				ScenarioMouseEvent.eventType.SIZE,
-				ScenarioMouseEvent.sourceType.NONE,
+		return new ScenarioEvent(
+				ScenarioEvent.eventType.SIZE,
+				ScenarioEvent.sourceType.NONE,
 				0,
 				0,
 				changes
@@ -115,9 +115,9 @@ export default class ScenarioMouseEvent {
 	}
 
 	static keyPressEvent(key){
-		return new ScenarioMouseEvent(
-				ScenarioMouseEvent.eventType.KEY,
-				ScenarioMouseEvent.sourceType.NONE,
+		return new ScenarioEvent(
+				ScenarioEvent.eventType.KEY,
+				ScenarioEvent.sourceType.NONE,
 				0,
 				0,
 				key
@@ -140,7 +140,7 @@ export default class ScenarioMouseEvent {
 	}
 
     setStateBasedParams(x, y, offsetX, offsetY, scale, width, height){
-        return new ScenarioMouseEvent(
+        return new ScenarioEvent(
 				this.eventType,
 				this.sourceType,
 				this.clientX,
@@ -156,47 +156,47 @@ export default class ScenarioMouseEvent {
     }
 
 	isMouseDown(){
-		return this.eventType==ScenarioMouseEvent.eventType.MOUSE_DOWN
+		return this.eventType==ScenarioEvent.eventType.MOUSE_DOWN
 	}
 
 	isMouseUp(){
-		return this.eventType==ScenarioMouseEvent.eventType.MOUSE_UP
+		return this.eventType==ScenarioEvent.eventType.MOUSE_UP
 	}
 
     isMouseMove(){
-        return this.eventType==ScenarioMouseEvent.eventType.MOUSE_MOVE
+        return this.eventType==ScenarioEvent.eventType.MOUSE_MOVE
     }
 
     isWheel(){
-        return this.eventType==ScenarioMouseEvent.eventType.WHEEL
+        return this.eventType==ScenarioEvent.eventType.WHEEL
     }
 
 	isSize(){
-        return this.eventType==ScenarioMouseEvent.eventType.SIZE
+        return this.eventType==ScenarioEvent.eventType.SIZE
     }
 
 	isKey(){
-		return this.eventType==ScenarioMouseEvent.eventType.KEY
+		return this.eventType==ScenarioEvent.eventType.KEY
 	}
 
 	isSlot(){
-		return this.sourceType==ScenarioMouseEvent.sourceType.SLOT
+		return this.sourceType==ScenarioEvent.sourceType.SLOT
 	}
 
 	isNode(){
-		return this.sourceType==ScenarioMouseEvent.sourceType.NODE
+		return this.sourceType==ScenarioEvent.sourceType.NODE
 	}
 
 	isConnection(){
-		return this.sourceType==ScenarioMouseEvent.sourceType.CONNECTION
+		return this.sourceType==ScenarioEvent.sourceType.CONNECTION
 	}
 
 	isScenario(){
-		return this.sourceType==ScenarioMouseEvent.sourceType.SCENARIO
+		return this.sourceType==ScenarioEvent.sourceType.SCENARIO
 	}
 }
 
-ScenarioMouseEvent.eventType = {
+ScenarioEvent.eventType = {
 	MOUSE_DOWN: "MOUSE_DOWN",
 	MOUSE_UP: "MOUSE_UP",
 	MOUSE_MOVE: "MOUSE_MOVE",
@@ -205,7 +205,7 @@ ScenarioMouseEvent.eventType = {
 	KEY: "KEY"
 };
 
-ScenarioMouseEvent.sourceType = {
+ScenarioEvent.sourceType = {
 	NONE: "NONE",
 	SLOT: "SLOT",
 	NODE: "NODE",

@@ -1,5 +1,5 @@
 import React from 'react';
-import ScenarioMouseEvent from './scenario-mouse-event'
+import ScenarioEvent from './scenario-event'
 
 export default class Slot extends React.Component {
 
@@ -9,7 +9,7 @@ export default class Slot extends React.Component {
             event.preventDefault();
             event.stopPropagation();
 
-            this.props.onMouseEvent(ScenarioMouseEvent.slotMouseDownEvent(event.clientX, event.clientY, this.props.index, this.props.nodeName));
+            this.props.onMouseEvent(ScenarioEvent.slotMouseDownEvent(event.clientX, event.clientY, this.props.index, this.props.nodeName));
         }
     }
 
@@ -19,7 +19,7 @@ export default class Slot extends React.Component {
             event.preventDefault();
             event.stopPropagation();
 
-            this.props.onMouseEvent(ScenarioMouseEvent.slotMouseUpEvent(event.clientX, event.clientY, this.props.index, this.props.nodeName));
+            this.props.onMouseEvent(ScenarioEvent.slotMouseUpEvent(event.clientX, event.clientY, this.props.index, this.props.nodeName));
         }
     }
 

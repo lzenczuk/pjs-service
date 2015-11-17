@@ -1,7 +1,7 @@
 import React from 'react';
 import ConnectionLine from './connection-line';
 import ScenarioGraph from './scenario/scenario-graph';
-import ScenarioMouseEvent from './scenario/scenario-mouse-event';
+import ScenarioEvent from './scenario/scenario-event';
 import ctx from '../../context';
 import ServerModel from '../../model/server-model';
 
@@ -90,7 +90,7 @@ class ScenarioViewport extends React.Component {
             event.preventDefault();
             event.stopPropagation();
 
-            this._mouseEventsProxy(ScenarioMouseEvent.scenarioMouseDownEvent(event.clientX, event.clientY));
+            this._mouseEventsProxy(ScenarioEvent.scenarioMouseDownEvent(event.clientX, event.clientY));
         }
     }
 
@@ -99,7 +99,7 @@ class ScenarioViewport extends React.Component {
             event.preventDefault();
             event.stopPropagation();
 
-            this._mouseEventsProxy(ScenarioMouseEvent.scenarioMouseUpEvent(event.clientX, event.clientY));
+            this._mouseEventsProxy(ScenarioEvent.scenarioMouseUpEvent(event.clientX, event.clientY));
         }
     }
 
@@ -108,7 +108,7 @@ class ScenarioViewport extends React.Component {
             event.preventDefault();
             event.stopPropagation();
 
-            this._mouseEventsProxy(ScenarioMouseEvent.scenarioMouseMoveEvent(event.clientX, event.clientY));
+            this._mouseEventsProxy(ScenarioEvent.scenarioMouseMoveEvent(event.clientX, event.clientY));
         }
     }
 
@@ -117,7 +117,7 @@ class ScenarioViewport extends React.Component {
             event.preventDefault();
             event.stopPropagation();
 
-            this._mouseEventsProxy(ScenarioMouseEvent.scenarioWheelEvent(event.deltaX, event.deltaY));
+            this._mouseEventsProxy(ScenarioEvent.scenarioWheelEvent(event.deltaX, event.deltaY));
         }
     }
 
@@ -127,7 +127,7 @@ class ScenarioViewport extends React.Component {
             event.preventDefault();
             event.stopPropagation();
 
-            this._mouseEventsProxy(ScenarioMouseEvent.keyPressEvent(event.keyCode));
+            this._mouseEventsProxy(ScenarioEvent.keyPressEvent(event.keyCode));
         }
     }
 

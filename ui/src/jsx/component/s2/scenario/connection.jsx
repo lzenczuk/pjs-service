@@ -1,5 +1,5 @@
 import React from 'react';
-import ScenarioMouseEvent from './scenario-mouse-event'
+import ScenarioEvent from './scenario-event'
 
 export default class Connection extends React.Component {
 
@@ -14,7 +14,7 @@ export default class Connection extends React.Component {
             event.preventDefault();
             event.stopPropagation();
 
-            let connectionMouseDownEvent = ScenarioMouseEvent.connectionMouseDownEvent(
+            let connectionMouseDownEvent = ScenarioEvent.connectionMouseDownEvent(
                 event.clientX,
                 event.clientY,
                 this.props.model.src,
@@ -31,7 +31,7 @@ export default class Connection extends React.Component {
             event.preventDefault();
             event.stopPropagation();
 
-            this.props.onMouseEvent(ScenarioMouseEvent.connectionMouseUpEvent(
+            this.props.onMouseEvent(ScenarioEvent.connectionMouseUpEvent(
                 event.clientX,
                 event.clientY,
                 this.props.model.src,

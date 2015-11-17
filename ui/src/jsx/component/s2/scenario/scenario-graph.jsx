@@ -1,7 +1,7 @@
 import React from 'react';
 import Node from './node';
 import Connection from './connection';
-import ScenarioMouseEvent from './scenario-mouse-event'
+import ScenarioEvent from './scenario-event'
 import ConnectionLine from '../connection-line'
 
 export default class ScenarioGraph extends React.Component {
@@ -59,7 +59,7 @@ export default class ScenarioGraph extends React.Component {
             window.setTimeout(function(){
                 let changes = this.checkSize();
                 if(changes!=null && changes.length!=0){
-                    this.props.onMouseEvent(ScenarioMouseEvent.scenarioSizeEvent(changes))
+                    this.props.onMouseEvent(ScenarioEvent.scenarioSizeEvent(changes))
                 }
             }.bind(this), 0)
 
@@ -72,7 +72,7 @@ export default class ScenarioGraph extends React.Component {
             window.setTimeout(function(){
                 let changes = this.checkSize();
                 if(changes!=null && changes.length!=0){
-                    this.props.onMouseEvent(ScenarioMouseEvent.scenarioSizeEvent(changes))
+                    this.props.onMouseEvent(ScenarioEvent.scenarioSizeEvent(changes))
                 }
             }.bind(this), 0)
 

@@ -3,7 +3,7 @@ import React from 'react';
 import ScenarioViewport from '../s2/scenario-viewport'
 import ScenarioControlPanel from './scenario-control-panel'
 
-import ScenarioMouseEvent from '../s2/scenario/scenario-mouse-event';
+import ScenarioEvent from '../s2/scenario/scenario-event';
 
 import ctx from '../../context';
 
@@ -30,23 +30,23 @@ class ScenarioView extends React.Component {
     }
 
     /**
-     * @param {ScenarioMouseEvent} event
+     * @param {ScenarioEvent} event
      * @private
      */
     _onEvent(event){
 
         switch(event.eventType){
-            case ScenarioMouseEvent.eventType.MOUSE_DOWN: this._onMouseDownEvent(event); break;
-            case ScenarioMouseEvent.eventType.MOUSE_MOVE: this._onMouseMoveEvent(event); break;
-            case ScenarioMouseEvent.eventType.MOUSE_UP: this._onMouseUpEvent(event); break;
-            case ScenarioMouseEvent.eventType.WHEEL: this._onWheelEvent(event); break;
-            case ScenarioMouseEvent.eventType.SIZE: this._onSizeEvent(event); break;
-            case ScenarioMouseEvent.eventType.KEY: this._onKeyEvent(event); break;
+            case ScenarioEvent.eventType.MOUSE_DOWN: this._onMouseDownEvent(event); break;
+            case ScenarioEvent.eventType.MOUSE_MOVE: this._onMouseMoveEvent(event); break;
+            case ScenarioEvent.eventType.MOUSE_UP: this._onMouseUpEvent(event); break;
+            case ScenarioEvent.eventType.WHEEL: this._onWheelEvent(event); break;
+            case ScenarioEvent.eventType.SIZE: this._onSizeEvent(event); break;
+            case ScenarioEvent.eventType.KEY: this._onKeyEvent(event); break;
         }
     }
 
     /**
-     * @param {ScenarioMouseEvent} event
+     * @param {ScenarioEvent} event
      * @private
      */
     _onMouseDownEvent(event){
@@ -54,11 +54,11 @@ class ScenarioView extends React.Component {
         var payload;
 
         switch (event.sourceType){
-            case ScenarioMouseEvent.sourceType.SCENARIO: {
+            case ScenarioEvent.sourceType.SCENARIO: {
                 payload = {};
             } break;
 
-            case ScenarioMouseEvent.sourceType.NODE: {
+            case ScenarioEvent.sourceType.NODE: {
                 payload = {
                     nodeX: this.state.scenario.nodesMap[event.payload.get('nodeName')].x,
                     nodeY: this.state.scenario.nodesMap[event.payload.get('nodeName')].y,
@@ -66,11 +66,11 @@ class ScenarioView extends React.Component {
                 };
             } break;
 
-            case ScenarioMouseEvent.sourceType.CONNECTION: {
+            case ScenarioEvent.sourceType.CONNECTION: {
                 payload = {};
             } break;
 
-            case ScenarioMouseEvent.sourceType.SLOT: {
+            case ScenarioEvent.sourceType.SLOT: {
                 payload = {
                     index: event.payload.get('slotIndex'),
                     nodeName: event.payload.get('nodeName')
