@@ -20,8 +20,8 @@ const nodesTarget = {
 
         var node = {
             "serverClass" : "script_node",
-            "x" : (clientPosition.x - offset.x - props.offsetX)/props.scale,
-            "y" : (clientPosition.y - offset.y - props.offsetY)/props.scale,
+            "x" : (clientPosition.x - offset.x - props.model.offsetX)/props.model.scale,
+            "y" : (clientPosition.y - offset.y - props.model.offsetY)/props.model.scale,
             "name" : item.name,
             "description" : "New node",
             "script" : "function main(input, ctx){}",
@@ -73,11 +73,11 @@ class ScenarioViewport extends React.Component {
 
             this.props.onMouseEvent(
                 event.setStateBasedParams(
-                    (event.clientX - offset.x - this.props.offsetX)/this.props.scale,
-                    (event.clientY - offset.y - this.props.offsetY)/this.props.scale,
-                    this.props.offsetX,
-                    this.props.offsetY,
-                    this.props.scale,
+                    (event.clientX - offset.x - this.props.model.offsetX)/this.props.model.scale,
+                    (event.clientY - offset.y - this.props.model.offsetY)/this.props.model.scale,
+                    this.props.model.offsetX,
+                    this.props.model.offsetY,
+                    this.props.model.scale,
                     offset.width,
                     offset.height
                 ));
@@ -133,8 +133,8 @@ class ScenarioViewport extends React.Component {
 
     render() {
 
-        let translate = 'translate('+this.props.offsetX+'px, '+this.props.offsetY+'px)';
-        let scale = 'scale('+this.props.scale+', '+this.props.scale+')';
+        let translate = 'translate('+this.props.model.offsetX+'px, '+this.props.model.offsetY+'px)';
+        let scale = 'scale('+this.props.model.scale+', '+this.props.model.scale+')';
 
         var viewportInternalElementStyle = {
             transform: translate+" "+scale
@@ -197,9 +197,6 @@ ScenarioViewport.propertyTypes = {
     model: React.PropTypes.array.isRequired,
     selectedNodes: React.PropTypes.array.isRequired,
     selectedConnection: React.PropTypes.string,
-    offsetX: React.PropTypes.number.isRequired,
-    offsetY: React.PropTypes.number.isRequired,
-    scale: React.PropTypes.number.isRequired,
     onMouseEvent: React.PropTypes.func,
     connectionLine: React.PropTypes.object
 };
