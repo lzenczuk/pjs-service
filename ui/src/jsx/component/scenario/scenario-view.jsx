@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ScenarioEd from '../s2/scenario-ed'
+import ScenarioEditor from '../s2/scenario-editor'
 import ScenarioControlPanel from './scenario-control-panel'
 
 import ScenarioHighLevelEvent from '../s2/scenario-high-level-even';
@@ -80,7 +80,7 @@ class ScenarioView extends React.Component {
                             </div>
                         </div>
                         <div>
-                            <ScenarioEd
+                            <ScenarioEditor
                                 model={this.state.scenario}
                                 selectedNodes={this.state.ui.selectedNodeName}
                                 selectedConnection={this.state.ui.selectedConnection}
