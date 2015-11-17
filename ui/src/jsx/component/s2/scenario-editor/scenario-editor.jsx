@@ -2,6 +2,7 @@ import React from 'react';
 import ScenarioEvent from '../scenario-event'
 import ConnectionLine from './connection-line'
 import SelectedNode from './selected-node'
+import SelectedConnection from './selected-connection'
 
 export default class ScenarioEditor extends React.Component {
 
@@ -12,6 +13,12 @@ export default class ScenarioEditor extends React.Component {
             connectionLine = <ConnectionLine model={this.props.connectionLine} />
         }
 
+        var selectedConnections = this.props.model.connections.map(c => {
+            if(this.props.selectedConnection==c.src+'_'+c.des+'_'+c.index) {
+                return (<SelectedConnection key={c.src+c.des+c.index} model={c}/>)
+            }
+        });
+
         let selectedNodes = Object.keys(this.props.selectedNodes)
             .map(nodeName => this.props.model.getNodeByName(nodeName))
             .map(node => <SelectedNode key={node.name} model={node}/>);
@@ -20,6 +27,7 @@ export default class ScenarioEditor extends React.Component {
             <div>
                 {connectionLine}
                 {selectedNodes}
+                {selectedConnections}
             </div>)
     }
 }

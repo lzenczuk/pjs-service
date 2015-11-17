@@ -1,44 +1,10 @@
 import React from 'react';
 import ScenarioEvent from '../scenario-event'
 
-export default class Connection extends React.Component {
+export default class SelectedConnection extends React.Component {
 
     constructor(props){
         super(props);
-
-        this.state = {over: false}
-    }
-
-    _onMouseDown(event){
-        if(this.props.onMouseEvent!=null){
-            event.preventDefault();
-            event.stopPropagation();
-
-            let connectionMouseDownEvent = ScenarioEvent.connectionMouseDownEvent(
-                event.clientX,
-                event.clientY,
-                this.props.model.src,
-                this.props.model.des,
-                this.props.model.connectionId
-            );
-
-            this.props.onMouseEvent(connectionMouseDownEvent);
-        }
-    }
-
-    _onMouseUp(event){
-        if(this.props.onMouseEvent!=null){
-            event.preventDefault();
-            event.stopPropagation();
-
-            this.props.onMouseEvent(ScenarioEvent.connectionMouseUpEvent(
-                event.clientX,
-                event.clientY,
-                this.props.model.src,
-                this.props.model.des,
-                this.props.model.connectionId
-            ));
-        }
     }
 
     render() {
@@ -91,21 +57,8 @@ export default class Connection extends React.Component {
         };
 
 
-        var stroke = "grey";
-        var strokeWidth = "2";
-
-        if(this.state.over){
-            stroke = "black";
-        }
-
-        var over = function(event){
-            this.setState({over: true})
-        }.bind(this);
-
-        var out = function(event){
-            this.setState({over: false})
-        }.bind(this);
-
+        var stroke = "red";
+        var strokeWidth = "3";
 
         return (
             <svg style={style} width={width} height={height}>
@@ -115,10 +68,6 @@ export default class Connection extends React.Component {
                     stroke={stroke}
                     strokeWidth={strokeWidth}
                     fill="none"
-                    onMouseOver={over}
-                    onMouseOut={out}
-                    onMouseDown={this._onMouseDown.bind(this)}
-                    onMouseUp={this._onMouseUp.bind(this)}
                 />
             </svg>
         )
@@ -135,6 +84,6 @@ export default class Connection extends React.Component {
  desX: React.PropTypes.number.isRequired,
  desY: React.PropTypes.number.isRequired,
  */
-Connection.propertyTypes = {
-    onMouseEvent: React.PropTypes.func
+SelectedConnection.propertyTypes = {
+    model: React.PropTypes.object
 };
