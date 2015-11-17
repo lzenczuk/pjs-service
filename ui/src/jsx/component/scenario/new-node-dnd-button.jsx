@@ -28,7 +28,7 @@ class NewNodeDndButton extends React.Component {
         const { connectDragSource } = this.props;
 
         return connectDragSource(
-            <div>Drag me</div>
+            <div className="button">Drag me</div>
         )
     }
 }

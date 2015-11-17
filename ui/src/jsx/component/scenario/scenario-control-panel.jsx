@@ -8,7 +8,6 @@ class ScenarioControlPanel extends React.Component {
     render() {
         return (
             <div>
-            	Hello
             	<NewNodeDndButton />
             </div>
         )
