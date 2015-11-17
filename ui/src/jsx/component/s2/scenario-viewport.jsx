@@ -1,6 +1,6 @@
 import React from 'react';
 import ScenarioGraph from './scenario-graph/scenario-graph';
-import ScenarioEditor from './scenario-editor-controls/scenario-editor';
+import ScenarioEditorControls from './scenario-editor-controls/scenario-editor-controls';
 import ScenarioLowLevelEvent from './scenario-low-level-event';
 import ctx from '../../context';
 import ServerModel from '../../model/server-model';
@@ -175,7 +175,7 @@ class ScenarioViewport extends React.Component {
                         className="absolute-position"
                         style={viewportInternalElementStyle}
                     >
-                        <ScenarioEditor
+                        <ScenarioEditorControls
                             model={this.props.model}
                             selectedNodes = {this.props.selectedNodes}
                             selectedConnection = {this.props.selectedConnection}
