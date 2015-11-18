@@ -1,7 +1,7 @@
 import React from 'react';
 import { DragSource } from 'react-dnd';
 
-import dndTypes from '../../dnd/dnd-types'
+import dndTypes from '../../../dnd/dnd-types'
 
 const nodeSource = {
 

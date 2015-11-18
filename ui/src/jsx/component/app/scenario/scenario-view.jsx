@@ -1,11 +1,11 @@
 import React from 'react';
 
-import ScenarioEditor from '../scenario-editor/scenario-editor'
+import ScenarioEditor from '../../scenario-editor/scenario-editor'
 import ScenarioControlPanel from './scenario-control-panel'
 
-import ScenarioHighLevelEvent from '../scenario-editor/scenario-high-level-even';
+import ScenarioHighLevelEvent from '../../scenario-editor/scenario-high-level-even';
 
-import ctx from '../../context';
+import ctx from '../../../context';
 
 export default
 class ScenarioView extends React.Component {

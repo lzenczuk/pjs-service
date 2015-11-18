@@ -1,7 +1,7 @@
 import React from 'react';
 import TopBar from './app/top-bar'
 import ProjectView from './app/project/project-view'
-import ScenarioView from './scenario/scenario-view'
+import ScenarioView from './app/scenario/scenario-view'
 
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
