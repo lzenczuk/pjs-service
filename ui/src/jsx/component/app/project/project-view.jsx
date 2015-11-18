@@ -2,7 +2,7 @@ import React from 'react';
 import ProjectList from './projects-list';
 import Project from './project';
 
-import ctx from '../../context';
+import ctx from '../../../context';
 
 export default
 class ProjectView extends React.Component {

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ctx from '../../context';
+import ctx from '../../../context';
 
 export default class ScenariosList extends React.Component {
 
