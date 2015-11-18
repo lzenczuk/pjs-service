@@ -7,7 +7,7 @@ import ServerModel from '../../model/server-model';
 
 import { DropTarget } from 'react-dnd';
 
-import dndTypes from '../../dnd/dnd-types';
+import dndTypes from '../../dnd-types';
 
 // ----------------------- dnd
 const nodesTarget = {
