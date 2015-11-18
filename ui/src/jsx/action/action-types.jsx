@@ -19,6 +19,7 @@ export default {
 
     nodeAdded: 'NODE_ADDED',
     nodeMoved: 'NODE_MOVED',
+    nodeRenamed: 'NODE_RENAMED',
 
     connectionAdded: 'CONNECTION_ADDED',
 

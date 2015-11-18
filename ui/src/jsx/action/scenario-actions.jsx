@@ -28,8 +28,8 @@ export default class ScenarioActions{
         this._dispatcher.dispatch({actionType: ActionTypes.nodeMoved, payload: {x: x, y: y, nodeId: nodeId} })
     }
 
-    drawConnectLine(sx, sy, dx, dy){
-        this._dispatcher.dispatch({actionType: ActionTypes.connectionLine, payload: {sx: sx, sy: sy, dx: dx, dy: dy} })
+    renameNode(nodeId, newNodeName){
+        this._dispatcher.dispatch({actionType: ActionTypes.nodeRenamed, payload: {nodeId: nodeId, newNodeName: newNodeName} })
     }
 
     transformScenario(offsetX, offsetY, scale){
