@@ -32,6 +32,10 @@ export default class ScenarioActions{
         this._dispatcher.dispatch({actionType: ActionTypes.nodeRenamed, payload: {nodeId: nodeId, newNodeName: newNodeName} })
     }
 
+    changeNodeDescription(nodeId, newDescription){
+        this._dispatcher.dispatch({actionType: ActionTypes.nodeDescriptionChanged, payload: {nodeId: nodeId, newDescription: newDescription} })
+    }
+
     transformScenario(offsetX, offsetY, scale){
         this._dispatcher.dispatch({actionType: ActionTypes.transformScenario, payload: {offsetX: offsetX, offsetY: offsetY, scale: scale} })
     }

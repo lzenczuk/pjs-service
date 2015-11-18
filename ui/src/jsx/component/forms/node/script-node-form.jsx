@@ -4,8 +4,11 @@ import ctx from '../../../context';
 export default class ScriptNodeForm extends React.Component {
 
     onNameChange(event) {
-        console.log("change: "+event.target.value);
         ctx.scenarioActions.renameNode(this.props.nodeModel.id, event.target.value);
+    }
+
+    onDescriptionChange(event) {
+        ctx.scenarioActions.changeNodeDescription(this.props.nodeModel.id, event.target.value);
     }
 
     render(){
@@ -18,7 +21,7 @@ export default class ScriptNodeForm extends React.Component {
                 <div>Name</div>
                 <input type="text" value={nodeModel.name} onChange={this.onNameChange.bind(this)}/>
                 <div>Description</div>
-                <div>{nodeModel.description}</div>
+                <textarea value={nodeModel.description} onChange={this.onDescriptionChange.bind(this)}/>
             </div>
         )
     }

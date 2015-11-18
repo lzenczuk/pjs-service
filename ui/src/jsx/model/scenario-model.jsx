@@ -35,6 +35,10 @@ export default class ScenarioModel {
         this.nodesMap[nodeId].name = newNodeName;
     }
 
+    changeNodeDescription(nodeId, newDescription){
+        this.nodesMap[nodeId].description = newDescription;
+    }
+
     getNodeById(nodeId){
         return this.nodesMap[nodeId]
     }
