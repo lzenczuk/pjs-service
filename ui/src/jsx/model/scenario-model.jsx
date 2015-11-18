@@ -28,7 +28,7 @@ export default class ScenarioModel {
      */
     addNode(node){
         this.nodes.push(node);
-        this.nodesMap[node.name] = node;
+        this.nodesMap[node.id] = node;
     }
 
     getNodeById(nodeId){

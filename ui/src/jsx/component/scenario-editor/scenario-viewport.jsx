@@ -22,6 +22,7 @@ const nodesTarget = {
             "serverClass" : "script_node",
             "x" : (clientPosition.x - offset.x - props.model.offsetX)/props.model.scale,
             "y" : (clientPosition.y - offset.y - props.model.offsetY)/props.model.scale,
+            "id": new Date().getTime(),
             "name" : item.name,
             "description" : "New node",
             "script" : "function main(input, ctx){}",
