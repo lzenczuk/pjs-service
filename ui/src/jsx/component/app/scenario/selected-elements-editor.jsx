@@ -19,7 +19,7 @@ export default class SelectedElementsEditor extends React.Component{
             if(editor.isSingleNodeSelected()){
                 form = (<ScriptNodeForm nodeModel={editor.getSelectedNode(0)} />)
             }else if(editor.isConnectionSelected()){
-                form = (<ConnectionForm connectionModel={editor.getSelectedConnection()} />)
+                form = (<ConnectionForm scenarioModel={this.props.scenarioModel} connectionModel={editor.getSelectedConnection()} />)
             }else{
                 form = "Unknown selected element"
             }

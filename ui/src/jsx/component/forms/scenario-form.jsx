@@ -10,7 +10,7 @@ export default class ScenarioForm extends React.Component {
             <div>
                 <h3>Scenario</h3>
                 <div>Start node</div>
-                <div>{scenarioModel.startNodeName}</div>
+                <div>{scenarioModel.getNodeById(scenarioModel.startNodeId).name}</div>
             </div>
         )
     }
