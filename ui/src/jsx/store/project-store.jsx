@@ -1,7 +1,7 @@
 import EventEmitter from 'events';
 
-import ProjectsDO from './do/projects-do';
-import ScenariosDO from './do/scenarios-do';
+import ProjectsDO from './project-store/projects-do';
+import ScenariosDO from './project-store/scenarios-do';
 
 import ActionTypes from '../action/action-types';
 

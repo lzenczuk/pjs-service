@@ -45,6 +45,10 @@ export default class ScenarioModel {
         this._rebuildConnections()
     }
 
+    getConnectionById(connectionId){
+        return this.connectionsMap[connectionId];
+    }
+
     resizeNode(nodeName, width, height, contentHeight){
         this.nodesMap[nodeName].resize(width, height, contentHeight);
         this._rebuildConnections()

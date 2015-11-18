@@ -1,6 +1,8 @@
 import EventEmitter from 'events';
 import ActionTypes from '../action/action-types';
 import ServerModel from '../model/server-model';
+import LoadingStatus from './scenario-store/loading-status';
+import ScenarioEditorModel from './scenario-store/scenario-editor-model';
 
 
 export default class ScenarioStore extends EventEmitter {
@@ -14,52 +16,62 @@ export default class ScenarioStore extends EventEmitter {
         this.dispatcher.register(action => {
 
             if (action.actionType == ActionTypes.scenarioLoading) {
-                this._loading();
+                this._loadingStatus.loading();
+                this._scenarioModel = null;
+                this._scenarioEditorModel.reset();
                 this.emit('CHANGE');
             } else if (action.actionType == ActionTypes.scenarioLoaded) {
-                this._loaded(action.scenario);
+                this._loadingStatus.loaded();
+                this._scenarioModel = ServerModel.scenarioFromServerModel(action.scenario);
+                this._scenarioEditorModel.reset();
                 this.emit('CHANGE');
             } else if (action.actionType == ActionTypes.scenarioLoadingError) {
-                this._loadingError(action.message);
+                this._loadingStatus.loadingError(action.message);
+                this._scenarioModel = null;
+                this._scenarioEditorModel.reset();
                 this.emit('CHANGE');
             } else if (action.actionType == ActionTypes.nodeAdded) {
-                this._model.scenario.addNode(action.payload.node);
+                this._scenarioModel.addNode(action.payload.node);
                 this.emit('CHANGE');
             } else if (action.actionType == ActionTypes.nodeMoved) {
-                this._model.scenario.moveNodeTo(action.payload.nodeName, action.payload.x, action.payload.y);
+                this._scenarioModel.moveNodeTo(action.payload.nodeName, action.payload.x, action.payload.y);
+                this._scenarioEditorModel.updateModels(this._scenarioModel);
                 this.emit('CHANGE');
             } else if (action.actionType == ActionTypes.connectionAdded) {
-                this._model.scenario.connectNodes(action.payload.srcNodeName, action.payload.slotIndex, action.payload.desNodeName);
+                this._scenarioModel.connectNodes(action.payload.srcNodeName, action.payload.slotIndex, action.payload.desNodeName);
                 this.emit('CHANGE');
             } else if (action.actionType == ActionTypes.transformScenario) {
-                this._model.scenario.transformScenario(action.payload.offsetX, action.payload.offsetY, action.payload.scale);
+                this._scenarioModel.transformScenario(action.payload.offsetX, action.payload.offsetY, action.payload.scale);
                 this.emit('CHANGE');
             } else if (action.actionType == ActionTypes.nodesResized) {
                 action.payload.changes.forEach((change => {
-                    this._model.scenario.resizeNode(change.nodeName, change.width, change.height, change.contentHeight)
+                    this._scenarioModel.resizeNode(change.nodeName, change.width, change.height, change.contentHeight)
                 }).bind(this));
+                this._scenarioEditorModel.updateModels(this._scenarioModel);
                 this.emit('CHANGE');
             } else if (action.actionType == ActionTypes.elementsSelected) {
-                this._model.ui.selectedNodeName = {};
-                this._model.ui.selectedConnection = '';
+                var selectedNodeName = {};
+                var selectedConnection = '';
                 action.payload.elements.forEach(element => {
 
                     if (element.type == 'NODE') {
-                        this._model.ui.selectedNodeName[element.name] = true
+                        selectedNodeName[element.name] = true
                     } else if (element.type == 'CONNECTION') {
-                        this._model.ui.selectedConnection = element.name
+                        selectedConnection = element.name
                     }
                 });
 
+                this._scenarioEditorModel.setSelected(selectedNodeName, selectedConnection);
+                this._scenarioEditorModel.updateModels(this._scenarioModel);
                 this.emit('CHANGE');
             } else if (action.actionType == ActionTypes.selectedElementsDeleted) {
 
-                if (this._model.ui.selectedConnection != '') {
-                    var connectionId = this._model.ui.selectedConnection;
-                    this._model.scenario.removeConnectionById(connectionId);
+                if (this._scenarioEditorModel.selectedConnectionId != '') {
+                    this._scenarioModel.removeConnectionById(this._scenarioEditorModel.selectedConnectionId);
                 }
 
-                Object.keys(this._model.ui.selectedNodeName).forEach(nodeName => this._model.scenario.removeNode(nodeName));
+                Object.keys(this._scenarioEditorModel.selectedNodeName).forEach(nodeName => this._scenarioModel.removeNode(nodeName));
+                this._scenarioEditorModel.reset();
                 this.emit('CHANGE');
             }
 
@@ -67,47 +79,21 @@ export default class ScenarioStore extends EventEmitter {
     }
 
     _reset() {
-        this._model = {
-            scenario: null,
-            status: {
-                loading: false,
-                error: false,
-                errorMsg: ''
-            },
-            ui: {
-                selectedNodeName: {},
-                selectedConnection: '',
-            }
-        };
+        this._scenarioModel = null;
+        this._loadingStatus = new LoadingStatus();
+        this._scenarioEditorModel = new ScenarioEditorModel();
     }
 
-    _loading() {
-        this._model.scenario = null;
-        this._model.status.loading = true;
-        this._model.status.error = false;
-        this._model.status.errorMsg = '';
+    get scenarioModel() {
+        return this._scenarioModel
     }
 
-    _loadingError(message) {
-        this._model.scenario = null;
-        this._model.status.loading = false;
-        this._model.status.error = true;
-        this._model.status.errorMsg = message;
+    get scenarioEditorModel() {
+        return this._scenarioEditorModel
     }
 
-    _loaded(scenario) {
-
-        this._model.scenario = ServerModel.scenarioFromServerModel(scenario);
-
-        this._model.status.loading = false;
-        this._model.status.error = false;
-        this._model.status.errorMsg = '';
-        this._model.ui.selectedNodeName = {};
-        this._model.ui.selectedConnection = '';
-    }
-
-    get model() {
-        return this._model
+    get loadingStatus(){
+        return this._loadingStatus;
     }
 
     addChangeListener(callback) {

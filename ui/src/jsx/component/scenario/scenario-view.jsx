@@ -17,7 +17,11 @@ class ScenarioView extends React.Component {
         this.scenarioStore = ctx.scenarioStore;
 
         this.scenarioStoreCallback = function(){
-            this.setState(this.scenarioStore.model);
+            this.setState({
+                scenario: this.scenarioStore.scenarioModel,
+                editor: this.scenarioStore.scenarioEditorModel,
+                loadingStatus: this.scenarioStore.loadingStatus
+            });
         }.bind(this);
     }
 
@@ -52,7 +56,7 @@ class ScenarioView extends React.Component {
                 this.scenarioActions.resizeNodes(event.nodesSizesArray);
                 break;
             case ScenarioHighLevelEvent.eventsTypes.DELETE_SELECTED_EVENT:
-                this.scenarioActions.deleteSelectedElements()
+                this.scenarioActions.deleteSelectedElements();
                 break;
 
         }
@@ -60,15 +64,17 @@ class ScenarioView extends React.Component {
 
     render() {
 
-        if(this.state == null || this.state.status == null) return (<div className="max"></div>);
+        if(this.state == null || this.state.loadingStatus == null) return (<div className="max"></div>);
 
-        if(this.state.status.error){
-            return (<div className="max">Error: {this.state.status.errorMsg}</div>)
+        if(this.state.loadingStatus.isError()){
+            return (<div className="max">Error: {this.state.status.loadingStatus.errorMessage}</div>)
         }
 
-        if(this.state.status.loading){
+        if(this.state.loadingStatus.isLoading()){
             return (<div className="max">Loading...</div>)
         }
+
+        console.log("rend11");
 
         return (
             <div className="max">
@@ -82,8 +88,8 @@ class ScenarioView extends React.Component {
                         <div>
                             <ScenarioEditor
                                 model={this.state.scenario}
-                                selectedNodes={this.state.ui.selectedNodeName}
-                                selectedConnection={this.state.ui.selectedConnection}
+                                selectedNodes={this.state.editor.selectedNodeName}
+                                selectedConnection={this.state.editor.selectedConnectionId}
                                 onEvent={this._onEvent.bind(this)}
                             />
                         </div>
