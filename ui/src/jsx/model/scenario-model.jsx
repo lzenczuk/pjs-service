@@ -7,9 +7,10 @@ export default class ScenarioModel {
      * @param {Object} nodesMap
      * @param {Array<Connection>} connections
      */
-    constructor(nodes, offsetX, offsetY, scale){
+    constructor(nodes, startNodeName, offsetX, offsetY, scale){
         this.nodes = nodes;
 
+        this.startNodeName = startNodeName;
         this.offsetX = offsetX;
         this.offsetY = offsetY;
         this.scale = scale;

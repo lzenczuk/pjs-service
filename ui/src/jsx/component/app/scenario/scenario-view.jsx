@@ -2,6 +2,7 @@ import React from 'react';
 
 import ScenarioEditor from '../../scenario-editor/scenario-editor'
 import ScenarioControlPanel from './scenario-control-panel'
+import SelectedElementsEditor from './selected-elements-editor'
 
 import ScenarioHighLevelEvent from '../../scenario-editor/scenario-high-level-even';
 
@@ -16,7 +17,7 @@ class ScenarioView extends React.Component {
         this.scenarioActions = ctx.scenarioActions;
         this.scenarioStore = ctx.scenarioStore;
 
-        this.scenarioStoreCallback = function(){
+        this.scenarioStoreCallback = function () {
             this.setState({
                 scenario: this.scenarioStore.scenarioModel,
                 editor: this.scenarioStore.scenarioEditorModel,
@@ -29,7 +30,7 @@ class ScenarioView extends React.Component {
         this.scenarioStore.addChangeListener(this.scenarioStoreCallback);
     }
 
-    componentWillUnmount(){
+    componentWillUnmount() {
         this.scenarioStore.removeChangeListener(this.scenarioStoreCallback)
     }
 
@@ -37,9 +38,9 @@ class ScenarioView extends React.Component {
      * @param {ScenarioLowLevelEvent} event
      * @private
      */
-    _onEvent(event){
+    _onEvent(event) {
 
-        switch(event.eventType){
+        switch (event.eventType) {
             case ScenarioHighLevelEvent.eventsTypes.SCENARIO_TRANSFORM_EVENT:
                 this.scenarioActions.transformScenario(event.offsetX, event.offsetY, event.scale);
                 break;
@@ -64,13 +65,13 @@ class ScenarioView extends React.Component {
 
     render() {
 
-        if(this.state == null || this.state.loadingStatus == null) return (<div className="max"></div>);
+        if (this.state == null || this.state.loadingStatus == null) return (<div className="max"></div>);
 
-        if(this.state.loadingStatus.isError()){
+        if (this.state.loadingStatus.isError()) {
             return (<div className="max">Error: {this.state.status.loadingStatus.errorMessage}</div>)
         }
 
-        if(this.state.loadingStatus.isLoading()){
+        if (this.state.loadingStatus.isLoading()) {
             return (<div className="max">Loading...</div>)
         }
 
@@ -83,21 +84,20 @@ class ScenarioView extends React.Component {
                                 <ScenarioControlPanel />
                             </div>
                         </div>
-                        <div>
-                            <ScenarioEditor
-                                model={this.state.scenario}
-                                selectedNodes={this.state.editor.selectedNodeName}
-                                selectedConnection={this.state.editor.selectedConnectionId}
-                                onEvent={this._onEvent.bind(this)}
-                            />
-                        </div>
+                        <ScenarioEditor
+                            model={this.state.scenario}
+                            selectedNodes={this.state.editor.selectedNodeName}
+                            selectedConnection={this.state.editor.selectedConnectionId}
+                            onEvent={this._onEvent.bind(this)}
+                        />
                     </div>
                 </div>
 
                 <div className="scenario-right-panel">
-                    <div>
-                        Right scenario
-                    </div>
+                    <SelectedElementsEditor
+                        scenarioModel={this.state.scenario}
+                        editorModel={this.state.editor}
+                    />
                 </div>
             </div>
         )

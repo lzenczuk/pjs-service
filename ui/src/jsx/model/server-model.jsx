@@ -21,7 +21,7 @@ export default class ServerModel {
                 nodesMap[nodeModel.name] = nodeModel;
             });
 
-        return new ScenarioModel(nodes, smodel.offsetX, smodel.offsetY, smodel.scale)
+        return new ScenarioModel(nodes, smodel.startNodeName, smodel.offsetX, smodel.offsetY, smodel.scale)
 
     }
 

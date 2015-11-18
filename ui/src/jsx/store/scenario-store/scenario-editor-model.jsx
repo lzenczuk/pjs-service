@@ -17,6 +17,31 @@ export default class ScenarioEditorModel {
         this.selectedConnectionId = connectionId;
     }
 
+    numberOfSelectedElements(){
+        var selected = 0;
+
+        if(this.selectedConnectionId!='') selected=1;
+        selected += this.selectedNodes.length;
+
+        return selected
+    }
+
+    isConnectionSelected(){
+        return this.numberOfSelectedElements()==1 && this.selectedConnectionId!=''
+    }
+
+    isSingleNodeSelected(){
+        return this.numberOfSelectedElements()==1 && this.selectedNodes.length==1
+    }
+
+    getSelectedNode(index){
+        return this.selectedNodes[index]
+    }
+
+    getSelectedConnection(){
+        return this.selectedConnection
+    }
+
     /**
      *
      * @param {ScenarioModel} scenarioModel
