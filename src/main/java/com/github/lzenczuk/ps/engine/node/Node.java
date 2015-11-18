@@ -15,6 +15,8 @@ import java.util.Map;
 )
 public abstract class Node {
 
+    private Long id;
+
     private long x;
     private long y;
     private Long width;
@@ -23,6 +25,14 @@ public abstract class Node {
 
     private String name;
     private String description;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

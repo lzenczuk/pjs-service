@@ -10,6 +10,6 @@ import java.util.Map;
 public class AlwaysTrueSlot extends Slot {
     @Override
     public SlotValidationResult validate(Map<String, Object> ctx, Object outPut, ScriptExecutor scriptExecutor) {
-        return new SlotValidationResult(true, getNodeName());
+        return new SlotValidationResult(true, getDesNodeId());
     }
 }

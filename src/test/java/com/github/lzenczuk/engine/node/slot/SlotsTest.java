@@ -35,8 +35,8 @@ public class SlotsTest {
 
             scriptExecutor = new PhantomJSScriptExecutor();
 
-            Slot s1 = new ScriptSlot(falseScript, "n1");
-            Slot s2 = new ScriptSlot(trueScript, "n2");
+            Slot s1 = new ScriptSlot(falseScript, 1L);
+            Slot s2 = new ScriptSlot(trueScript, 2L);
 
             Slots slots = new Slots();
             slots.addSlot(s1);
@@ -47,9 +47,9 @@ public class SlotsTest {
             assertThat(result, is(notNullValue()));
 
             assertThat(result.isError(), is(false));
-            assertThat(result.getNextNode(), is(notNullValue()));
-            assertThat(result.getNextNode().isPresent(), is(true));
-            assertThat(result.getNextNode().get(), is(equalTo("n2")));
+            assertThat(result.getNextNodeId(), is(notNullValue()));
+            assertThat(result.getNextNodeId().isPresent(), is(true));
+            assertThat(result.getNextNodeId().get(), is(equalTo(2L)));
 
         }finally {
             if(scriptExecutor!=null) scriptExecutor.shutDown();
@@ -71,7 +71,7 @@ public class SlotsTest {
             assertThat(result, is(notNullValue()));
 
             assertThat(result.isError(), is(false));
-            assertThat(result.getNextNode(), is(Optional.empty()));
+            assertThat(result.getNextNodeId(), is(Optional.empty()));
         }finally {
             if(scriptExecutor!=null) scriptExecutor.shutDown();
         }
@@ -89,8 +89,8 @@ public class SlotsTest {
 
             scriptExecutor = new PhantomJSScriptExecutor();
 
-            Slot s1 = new ScriptSlot(falseScript, "n1");
-            Slot s2 = new ScriptSlot(falseScript, "n2");
+            Slot s1 = new ScriptSlot(falseScript, 1L);
+            Slot s2 = new ScriptSlot(falseScript, 2L);
 
             Slots slots = new Slots();
             slots.addSlot(s1);
@@ -120,8 +120,8 @@ public class SlotsTest {
 
             scriptExecutor = new PhantomJSScriptExecutor();
 
-            Slot s1 = new ScriptSlot(errorScript, "n1");
-            Slot s2 = new ScriptSlot(errorScript, "n2");
+            Slot s1 = new ScriptSlot(errorScript, 1L);
+            Slot s2 = new ScriptSlot(errorScript, 2L);
 
             Slots slots = new Slots();
             slots.addSlot(s1);

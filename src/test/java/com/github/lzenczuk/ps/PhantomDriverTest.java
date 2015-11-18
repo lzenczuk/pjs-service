@@ -93,45 +93,63 @@ public class PhantomDriverTest {
 
         Thread bing = new Thread(() -> {
             try {
+                System.out.println("===========> Bing waiting");
                 startGate.await();
             } catch (InterruptedException | BrokenBarrierException e) {
                 e.printStackTrace();
             }
 
-            RemoteWebDriver driver = new RemoteWebDriver(service.getUrl(), DesiredCapabilities.phantomjs());
+            System.out.println("===========> Bing running");
+
+            RemoteWebDriver driver = new RemoteWebDriver(service.getUrl(), DesiredCapabilities.chrome());
 
             driver.get("http://www.bing.com/");
             Object title = driver.executeScript("return document.title");
 
+            System.out.println("===========> Bing script executed");
+
             assertThat(title.toString(), is("Bing"));
+
+            System.out.println("===========> Bing script OK");
 
             result.add("Bing");
 
             driver.close();
+
+            System.out.println("===========> Bing done");
             endGate.countDown();
         });
 
-        Thread bloomberg = new Thread(() -> {
+        Thread google = new Thread(() -> {
             try {
+                System.out.println("===========> Google waiting");
                 startGate.await();
             } catch (InterruptedException | BrokenBarrierException e) {
                 e.printStackTrace();
             }
-            RemoteWebDriver driver = new RemoteWebDriver(service.getUrl(), DesiredCapabilities.phantomjs());
 
-            driver.get("http://www.bloomberg.com/");
+            System.out.println("===========> Google running");
+
+            RemoteWebDriver driver = new RemoteWebDriver(service.getUrl(), DesiredCapabilities.chrome());
+
+            driver.get("http://www.google.com/");
             Object title = driver.executeScript("return document.title");
 
-            assertThat(title.toString(), containsString("Bloomberg"));
+            System.out.println("===========> Google script executed");
 
-            result.add("Bloomberg");
+            assertThat(title.toString(), containsString("Google"));
+
+            System.out.println("===========> Google script OK");
+
+            result.add("Google");
 
             driver.close();
+            System.out.println("===========> Google done");
             endGate.countDown();
         });
 
         bing.start();
-        bloomberg.start();
+        google.start();
 
         try {
             startGate.await();
@@ -145,7 +163,7 @@ public class PhantomDriverTest {
             e.printStackTrace();
         }
 
-        assertThat(result, hasItems("Bloomberg", "Bing"));
+        assertThat(result, hasItems("Google", "Bing"));
     }
 
     @Test
@@ -161,10 +179,10 @@ public class PhantomDriverTest {
         driver.get("http://notexistingpage.com/");
         log(driver);
 
-        driver.get("http://www.bloomberg.com/");
+        driver.get("http://www.bing.com/");
         log(driver);
 
-        driver.get("http://www.bloomberg.com/blablabla");
+        driver.get("http://www.bing.com/blablabla");
         log(driver);
 
         driver.close();

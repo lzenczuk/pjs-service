@@ -39,9 +39,9 @@ public class ScenarioService {
     }
 
     private Scenario createScenario() {
-        Scenario scenario = new Scenario(Optional.of("randomNumberNode"));
+        Scenario scenario = new Scenario(Optional.of(0L));
 
-        ScriptNode randomNumberNode = new ScriptNode("randomNumberNode");
+        ScriptNode randomNumberNode = new ScriptNode(0L, "randomNumberNode");
         randomNumberNode.setScript("function main(input, ctx){ ctx.msg='Random number: '; return Math.floor((Math.random()*100))}");
         randomNumberNode.setX(250);
         randomNumberNode.setY(10);
@@ -49,14 +49,14 @@ public class ScenarioService {
         scenario.add(randomNumberNode);
 
 
-        ScriptNode lessThen50Node = new ScriptNode("lessThen50Node");
+        ScriptNode lessThen50Node = new ScriptNode(1L, "lessThen50Node");
         lessThen50Node.setScript("function main(input, ctx){ return ctx.msg+'less then 50'}");
         lessThen50Node.setX(350);
         lessThen50Node.setY(400);
         lessThen50Node.setDescription("Number is smaller then 50. Terminate scenario.");
         scenario.add(lessThen50Node);
 
-        ScriptNode moreThen50Node = new ScriptNode("moreThen50Node");
+        ScriptNode moreThen50Node = new ScriptNode(2L, "moreThen50Node");
         moreThen50Node.setScript("function main(input, ctx){ return ctx.msg+'more then 50'}");
         moreThen50Node.setX(50);
         moreThen50Node.setY(400);
@@ -66,12 +66,12 @@ public class ScenarioService {
         ScriptSlot lessThen50Slot = new ScriptSlot();
         lessThen50Slot.setScript("function main(input, ctx){ return input < 50}");
         lessThen50Slot.setLabel("<50");
-        lessThen50Slot.setNodeName("lessThen50Node");
+        lessThen50Slot.setDesNodeId(1L);
 
         ScriptSlot moreThen50Slot = new ScriptSlot();
         moreThen50Slot.setScript("function main(input, ctx){ return input >= 50}");
         moreThen50Slot.setLabel(">=50");
-        moreThen50Slot.setNodeName("moreThen50Node");
+        moreThen50Slot.setDesNodeId(2L);
 
         Slots randomNumberSlots = new Slots();
         randomNumberSlots.addSlot(lessThen50Slot);
@@ -80,7 +80,7 @@ public class ScenarioService {
         randomNumberNode.setSlots(randomNumberSlots);
 
         Slot repeatSlot = new AlwaysTrueSlot();
-        repeatSlot.setNodeName("randomNumberNode");
+        repeatSlot.setDesNodeId(0L);
 
         Slots repeatSlots = new Slots();
         repeatSlots.addSlot(repeatSlot);

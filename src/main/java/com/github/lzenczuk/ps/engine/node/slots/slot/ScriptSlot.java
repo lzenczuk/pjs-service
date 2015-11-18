@@ -15,8 +15,8 @@ public class ScriptSlot extends Slot {
     public ScriptSlot() {
     }
 
-    public ScriptSlot(java.lang.String script, String nodeName) {
-        this.setNodeName(nodeName);
+    public ScriptSlot(java.lang.String script, Long desNodeId) {
+        this.setDesNodeId(desNodeId);
         this.script = script;
     }
 
@@ -29,7 +29,7 @@ public class ScriptSlot extends Slot {
         }
 
         if(scriptExecutionResult.getOutPut() instanceof Boolean){
-            return new SlotValidationResult((Boolean) scriptExecutionResult.getOutPut(), this.getNodeName());
+            return new SlotValidationResult((Boolean) scriptExecutionResult.getOutPut(), this.getDesNodeId());
         }else{
             return new SlotValidationResult("Validation script return non boolean value");
         }

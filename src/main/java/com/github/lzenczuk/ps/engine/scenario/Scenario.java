@@ -14,7 +14,7 @@ import java.util.Optional;
  */
 public class Scenario {
 
-    private Optional<String> startNodeName;
+    private Optional<Long> startNodeId;
 
     @JsonIgnore
     private boolean started = false;
@@ -23,12 +23,12 @@ public class Scenario {
     private boolean terminated = false;
 
     @JsonIgnore
-    private Optional<String> activeNodeName;
+    private Optional<Long> activeNodeId;
 
     @JsonIgnore
     private ScriptExecutorManager executorManager = new ScriptExecutorManager();
 
-    private Map<String, Node> nodesMap = new HashMap<>();
+    private Map<Long, Node> nodesMap = new HashMap<>();
 
     private long offsetX = 0;
     private long offsetY = 0;
@@ -37,17 +37,17 @@ public class Scenario {
     public Scenario() {
     }
 
-    public Scenario(Optional<String> startNodeName) {
-        this.startNodeName = startNodeName;
+    public Scenario(Optional<Long> startNodeId) {
+        this.startNodeId = startNodeId;
     }
 
     public ScenarioExecutionResult execute(Map<java.lang.String, Object> ctx, Object input){
 
         if(!started){
             started=true;
-            activeNodeName = startNodeName;
+            activeNodeId = startNodeId;
 
-            if(!activeNodeName.isPresent()){
+            if(!activeNodeId.isPresent()){
                 terminated=true;
             }
         }
@@ -56,13 +56,13 @@ public class Scenario {
             return new ScenarioExecutionResult(ctx, input, true);
         }
 
-        if(!activeNodeName.isPresent()){
+        if(!activeNodeId.isPresent()){
             return new ScenarioExecutionResult("No active node name");
         }
 
-        Node activeNode = nodesMap.get(activeNodeName.get());
+        Node activeNode = nodesMap.get(activeNodeId.get());
         if(activeNode==null){
-            return new ScenarioExecutionResult("No node with name: "+activeNodeName);
+            return new ScenarioExecutionResult("No node with name: "+activeNodeId);
         }
 
         NodeExecutionResult result = activeNode.execute(ctx, input, executorManager);
@@ -71,9 +71,9 @@ public class Scenario {
             return new ScenarioExecutionResult(result.getErrorMessage());
         }
 
-        activeNodeName = result.getNextNodeName();
+        activeNodeId = result.getNextNodeId();
 
-        if(activeNodeName.isPresent()){
+        if(activeNodeId.isPresent()){
             return new ScenarioExecutionResult(result.getCtx(), result.getOutPut());
         }else{
             return new ScenarioExecutionResult(result.getCtx(), result.getOutPut(), true);
@@ -86,6 +86,6 @@ public class Scenario {
             throw new IllegalArgumentException("Node have to have name");
         }
 
-        nodesMap.put(node.getName(), node);
+        nodesMap.put(node.getId(), node);
     }
 }

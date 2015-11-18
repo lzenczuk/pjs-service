@@ -23,7 +23,7 @@ public class Slots {
     public SlotsValidationResult getNextNode(Map<String, Object> ctx, Object outPut, ScriptExecutor scriptExecutor){
 
         if(slots.isEmpty()){
-            return new SlotsValidationResult(Optional.<String>empty());
+            return new SlotsValidationResult(Optional.<Long>empty());
         }
 
         for(Slot s : slots){
@@ -34,7 +34,7 @@ public class Slots {
             }
 
             if(result.isValid()){
-                return new SlotsValidationResult(result.getNextNodeName());
+                return new SlotsValidationResult(result.getNextNodeId());
             }
         }
 

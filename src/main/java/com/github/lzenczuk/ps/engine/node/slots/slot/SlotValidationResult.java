@@ -7,21 +7,21 @@ import java.util.Optional;
  */
 public class SlotValidationResult {
     private final boolean valid;
-    private final Optional<String> nextNodeName;
+    private final Optional<Long> nextNodeId;
     private final boolean error;
     private String errorMessage = null;
 
-    public SlotValidationResult(boolean valid, String nextNodeName) {
+    public SlotValidationResult(boolean valid, Long nextNodeId) {
         this.valid = valid;
         this.error=false;
-        this.nextNodeName = Optional.ofNullable(nextNodeName);
+        this.nextNodeId = Optional.ofNullable(nextNodeId);
     }
 
     public SlotValidationResult(String errorMessage) {
         this.error = true;
         this.errorMessage = errorMessage;
         this.valid = false;
-        this.nextNodeName = Optional.empty();
+        this.nextNodeId = Optional.empty();
     }
 
     public boolean isValid() {
@@ -36,7 +36,7 @@ public class SlotValidationResult {
         return errorMessage;
     }
 
-    public Optional<String> getNextNodeName() {
-        return nextNodeName;
+    public Optional<Long> getNextNodeId() {
+        return nextNodeId;
     }
 }

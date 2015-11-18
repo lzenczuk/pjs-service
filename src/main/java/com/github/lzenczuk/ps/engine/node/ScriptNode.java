@@ -19,7 +19,8 @@ public class ScriptNode extends Node {
     public ScriptNode() {
     }
 
-    public ScriptNode(String name) {
+    public ScriptNode(Long id, String name) {
+        this.setId(id);
         this.setName(name);
     }
 
@@ -50,7 +51,7 @@ public class ScriptNode extends Node {
                 return new NodeExecutionResult(slotsValidationResult.getErrorMessage());
             }
 
-            return new NodeExecutionResult(scriptExecutionResult.getCtx(), scriptExecutionResult.getOutPut(), slotsValidationResult.getNextNode());
+            return new NodeExecutionResult(scriptExecutionResult.getCtx(), scriptExecutionResult.getOutPut(), slotsValidationResult.getNextNodeId());
         }).orElse(new NodeExecutionResult("Script executor: " + executorName + " not found."));
     }
 

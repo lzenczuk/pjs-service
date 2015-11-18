@@ -42,7 +42,7 @@ public class ScriptNodeTest {
 
             Slots slotsMock = mock(Slots.class);
 
-            when(slotsMock.getNextNode(anyMap(), any(), any())).thenReturn(new SlotsValidationResult(Optional.of("nextNode")));
+            when(slotsMock.getNextNode(anyMap(), any(), any())).thenReturn(new SlotsValidationResult(Optional.of(100L)));
 
             ScriptNode node = new ScriptNode(script, slotsMock, "ph");
 
@@ -57,9 +57,9 @@ public class ScriptNodeTest {
 
             assertThat(result.getOutPut(), is(equalTo("input: test")));
 
-            assertThat(result.getNextNodeName(), is(notNullValue()));
-            assertThat(result.getNextNodeName().isPresent(), is(true));
-            assertThat(result.getNextNodeName().get(), is(equalTo("nextNode")));
+            assertThat(result.getNextNodeId(), is(notNullValue()));
+            assertThat(result.getNextNodeId().isPresent(), is(true));
+            assertThat(result.getNextNodeId().get(), is(equalTo(100L)));
 
         }finally {
             if(scriptExecutor!=null) scriptExecutor.shutDown();
@@ -85,7 +85,7 @@ public class ScriptNodeTest {
 
             Slots slotsMock = mock(Slots.class);
 
-            when(slotsMock.getNextNode(anyMap(), any(), any())).thenReturn(new SlotsValidationResult(Optional.of("nextNode")));
+            when(slotsMock.getNextNode(anyMap(), any(), any())).thenReturn(new SlotsValidationResult(Optional.of(200L)));
 
             ScriptNode node = new ScriptNode(script, slotsMock);
 

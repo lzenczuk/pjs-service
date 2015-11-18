@@ -16,15 +16,15 @@ import java.util.Map;
 })
 public abstract class Slot {
 
-    private String nodeName;
+    private Long desNodeId;
     private String label;
 
-    public void setNodeName(String nodeName){
-        this.nodeName = nodeName;
+    public Long getDesNodeId() {
+        return desNodeId;
     }
 
-    public String getNodeName() {
-        return nodeName;
+    public void setDesNodeId(Long desNodeId) {
+        this.desNodeId = desNodeId;
     }
 
     public String getLabel() {

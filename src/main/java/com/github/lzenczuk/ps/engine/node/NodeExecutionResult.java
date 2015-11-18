@@ -12,11 +12,11 @@ public class NodeExecutionResult {
 
     private final Map<java.lang.String, Object> ctx;
     private final Object outPut;
-    private final Optional<String> nextNodeName;
+    private final Optional<Long> nextNodeId;
 
-    public NodeExecutionResult(Map<java.lang.String, Object> ctx, Object outPut, Optional<String> nextNodeName) {
+    public NodeExecutionResult(Map<String, Object> ctx, Object outPut, Optional<Long> nextNodeId) {
         this.ctx = ctx;
-        this.nextNodeName = nextNodeName;
+        this.nextNodeId = nextNodeId;
         this.outPut = outPut;
 
         this.error=false;
@@ -28,7 +28,7 @@ public class NodeExecutionResult {
 
         this.ctx=null;
         this.outPut=null;
-        this.nextNodeName =null;
+        this.nextNodeId =null;
     }
 
     public Map<java.lang.String, Object> getCtx() {
@@ -43,8 +43,8 @@ public class NodeExecutionResult {
         return errorMessage;
     }
 
-    public Optional<String> getNextNodeName() {
-        return nextNodeName;
+    public Optional<Long> getNextNodeId() {
+        return nextNodeId;
     }
 
     public Object getOutPut() {
