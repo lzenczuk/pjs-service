@@ -1,9 +1,9 @@
 import React from 'react';
 
-import ScenarioEditor from '../s2/scenario-editor'
+import ScenarioEditor from '../scenario-editor/scenario-editor'
 import ScenarioControlPanel from './scenario-control-panel'
 
-import ScenarioHighLevelEvent from '../s2/scenario-high-level-even';
+import ScenarioHighLevelEvent from '../scenario-editor/scenario-high-level-even';
 
 import ctx from '../../context';
 
@@ -73,8 +73,6 @@ class ScenarioView extends React.Component {
         if(this.state.loadingStatus.isLoading()){
             return (<div className="max">Loading...</div>)
         }
-
-        console.log("rend11");
 
         return (
             <div className="max">
