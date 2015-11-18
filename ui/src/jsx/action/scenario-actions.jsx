@@ -24,8 +24,8 @@ export default class ScenarioActions{
         this._dispatcher.dispatch({actionType: ActionTypes.nodeAdded, payload: {node: node} })
     }
 
-    moveNode(nodeName, x, y){
-        this._dispatcher.dispatch({actionType: ActionTypes.nodeMoved, payload: {x: x, y: y, nodeName: nodeName} })
+    moveNode(nodeId, x, y){
+        this._dispatcher.dispatch({actionType: ActionTypes.nodeMoved, payload: {x: x, y: y, nodeId: nodeId} })
     }
 
     drawConnectLine(sx, sy, dx, dy){
@@ -40,8 +40,8 @@ export default class ScenarioActions{
         this._dispatcher.dispatch({actionType: ActionTypes.nodesResized, payload: {changes: changes} })
     }
 
-    addConnection(srcNodeName, slotIndex, desNodeName){
-        this._dispatcher.dispatch({actionType: ActionTypes.connectionAdded, payload: {srcNodeName: srcNodeName, desNodeName: desNodeName, slotIndex: slotIndex} })
+    addConnection(srcNodeId, slotIndex, desNodeId){
+        this._dispatcher.dispatch({actionType: ActionTypes.connectionAdded, payload: {srcNodeId: srcNodeId, desNodeId: desNodeId, slotIndex: slotIndex} })
     }
 
     cleanUi(){

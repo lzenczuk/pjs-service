@@ -34,18 +34,17 @@ export default class ScenarioStore extends EventEmitter {
                 this._scenarioModel.addNode(action.payload.node);
                 this.emit('CHANGE');
             } else if (action.actionType == ActionTypes.nodeMoved) {
-                this._scenarioModel.moveNodeTo(action.payload.nodeName, action.payload.x, action.payload.y);
+                this._scenarioModel.moveNodeTo(action.payload.nodeId, action.payload.x, action.payload.y);
                 this._scenarioEditorModel.updateModels(this._scenarioModel);
                 this.emit('CHANGE');
             } else if (action.actionType == ActionTypes.connectionAdded) {
-                this._scenarioModel.connectNodes(action.payload.srcNodeName, action.payload.slotIndex, action.payload.desNodeName);
+                this._scenarioModel.connectNodes(action.payload.srcNodeId, action.payload.slotIndex, action.payload.desNodeId);
                 this.emit('CHANGE');
             } else if (action.actionType == ActionTypes.transformScenario) {
                 this._scenarioModel.transformScenario(action.payload.offsetX, action.payload.offsetY, action.payload.scale);
                 this.emit('CHANGE');
             } else if (action.actionType == ActionTypes.nodesResized) {
                 action.payload.changes.forEach((change => {
-                    console.log("-----> resize");
                     this._scenarioModel.resizeNode(change.nodeId, change.width, change.height, change.contentHeight)
                 }).bind(this));
                 this._scenarioEditorModel.updateModels(this._scenarioModel);
@@ -71,7 +70,7 @@ export default class ScenarioStore extends EventEmitter {
                     this._scenarioModel.removeConnectionById(this._scenarioEditorModel.selectedConnectionId);
                 }
 
-                Object.keys(this._scenarioEditorModel.selectedNodeName).forEach(nodeName => this._scenarioModel.removeNode(nodeName));
+                Object.keys(this._scenarioEditorModel.selectedNodeIds).forEach(nodeId => this._scenarioModel.removeNode(nodeId));
                 this._scenarioEditorModel.reset();
                 this.emit('CHANGE');
             }

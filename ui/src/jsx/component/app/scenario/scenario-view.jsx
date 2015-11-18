@@ -45,10 +45,10 @@ class ScenarioView extends React.Component {
                 this.scenarioActions.transformScenario(event.offsetX, event.offsetY, event.scale);
                 break;
             case ScenarioHighLevelEvent.eventsTypes.NODE_DRAG_EVENT:
-                this.scenarioActions.moveNode(event.nodeName, event.x, event.y);
+                this.scenarioActions.moveNode(event.nodeId, event.x, event.y);
                 break;
             case ScenarioHighLevelEvent.eventsTypes.CONNECTION_CREATED_EVENT:
-                this.scenarioActions.addConnection(event.srcNodeName, event.srcNodeIndex, event.desNodeName);
+                this.scenarioActions.addConnection(event.srcNodeId, event.srcNodeIndex, event.desNodeId);
                 break;
             case ScenarioHighLevelEvent.eventsTypes.SELECT_EVENT:
                 this.scenarioActions.selectElements(event.selectedElementsArray);
