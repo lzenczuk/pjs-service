@@ -14,8 +14,8 @@ export default class ScriptNodeModel extends NodeModel {
      * @param {SlotsModel} slots
      * @param executorName
      */
-    constructor(name, description, x, y, width, height, contentHeight, script, slots, executorName) {
-        super(name, description, x, y, width, height, contentHeight);
+    constructor(id, name, description, x, y, width, height, contentHeight, script, slots, executorName) {
+        super(id, name, description, x, y, width, height, contentHeight);
 
         this.script = script;
         this.slots = slots;
@@ -28,21 +28,21 @@ export default class ScriptNodeModel extends NodeModel {
     getConnectionModels(){
 
         return this.slots.getConnectionModels().map(connection => {
-            connection.src = this.name;
+            connection.src = this.id;
 
             return connection
         })
     }
 
-    connectToNode(nodeName, index){
-        this.slots.connectToNode(nodeName, index)
+    connectToNode(desNodeId, index){
+        this.slots.connectToNode(desNodeId, index)
     }
 
     removeConnectionById(slotIndex){
         this.slots.removeConnectionById(slotIndex)
     }
 
-    removeConnectionsToNode(nodeName){
-        this.slots.removeConnectionsToNode(nodeName)
+    removeConnectionsToNode(desNodeId){
+        this.slots.removeConnectionsToNode(desNodeId)
     }
 }

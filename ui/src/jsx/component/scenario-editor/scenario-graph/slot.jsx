@@ -9,7 +9,7 @@ export default class Slot extends React.Component {
             event.preventDefault();
             event.stopPropagation();
 
-            this.props.onMouseEvent(ScenarioLowLevelEvent.slotMouseDownEvent(event.clientX, event.clientY, this.props.index, this.props.nodeName));
+            this.props.onMouseEvent(ScenarioLowLevelEvent.slotMouseDownEvent(event.clientX, event.clientY, this.props.index, this.props.nodeId));
         }
     }
 
@@ -19,7 +19,7 @@ export default class Slot extends React.Component {
             event.preventDefault();
             event.stopPropagation();
 
-            this.props.onMouseEvent(ScenarioLowLevelEvent.slotMouseUpEvent(event.clientX, event.clientY, this.props.index, this.props.nodeName));
+            this.props.onMouseEvent(ScenarioLowLevelEvent.slotMouseUpEvent(event.clientX, event.clientY, this.props.index, this.props.nodeId));
         }
     }
 
@@ -43,6 +43,6 @@ export default class Slot extends React.Component {
 Slot.propertyTypes = {
 	label: React.PropTypes.string.isRequired,
 	index: React.PropTypes.number.isRequired,
-    nodeName: React.PropTypes.string.isRequired,
+    nodeId: React.PropTypes.number.isRequired,
 	onMouseEvent: React.PropTypes.func
 };

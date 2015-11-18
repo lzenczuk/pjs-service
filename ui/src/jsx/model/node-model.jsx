@@ -1,6 +1,7 @@
 export default class NodeModel {
 
-    constructor(name, description, x, y, width, height, contentHeight) {
+    constructor(id, name, description, x, y, width, height, contentHeight) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.x = x;
@@ -18,7 +19,7 @@ export default class NodeModel {
         return []
     }
 
-    connectToNode(nodeName, index){
+    connectToNode(desNodeId, index){
         throw "NodeModel:connectToNode - NodeModel not support slots"
     }
 
@@ -26,7 +27,7 @@ export default class NodeModel {
         throw "NodeModel:removeConnection - NodeModel not support slots"
     }
 
-    removeConnectionsToNode(nodeName){
+    removeConnectionsToNode(desNodeId){
         throw "NodeModel:removeConnectionsToNode - NodeModel not support slots"
     }
 

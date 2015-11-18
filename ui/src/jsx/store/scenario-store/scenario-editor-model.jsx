@@ -5,15 +5,15 @@ export default class ScenarioEditorModel {
     }
 
     reset() {
-        this.selectedNodeName = {};
+        this.selectedNodeIds = {};
         this.selectedConnectionId = '';
         this.selectedNodes = [];
         this.selectedConnection = null
     }
 
-    setSelected(selectedNodesNames, connectionId) {
+    setSelected(selectedNodesIds, connectionId) {
         this.reset();
-        this.selectedNodeName = selectedNodesNames;
+        this.selectedNodeIds = selectedNodesIds;
         this.selectedConnectionId = connectionId;
     }
 
@@ -59,13 +59,13 @@ export default class ScenarioEditorModel {
             }
         }
 
-        Object.keys(this.selectedNodeName).map(nodeName => {
-            let node = scenarioModel.getNodeByName(nodeName);
+        Object.keys(this.selectedNodeIds).map(nodeId => {
+            let node = scenarioModel.getNodeById(nodeId);
 
             if (node) {
                 this.selectedNodes.push(node)
             } else {
-                this.selectedNodeName[nodeName] = false
+                this.selectedNodeIds[nodeId] = false
             }
         })
     }

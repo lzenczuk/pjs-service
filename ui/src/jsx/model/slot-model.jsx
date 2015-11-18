@@ -2,8 +2,8 @@ import ConnectionModel from './connection-model';
 
 export default class SlotModel{
 
-    constructor(nodeName, label){
-        this.nodeName = nodeName;
+    constructor(desNodeId, label){
+        this.desNodeId = desNodeId;
         this.label = label
     }
 
@@ -11,25 +11,25 @@ export default class SlotModel{
      * @returns {ConnectionModel} return model or null when slot is not connected
      */
     getConnectionModel(){
-        if(this.nodeName) {
-            let connectionModel = new ConnectionModel(null, this.nodeName, 0, 0, 0, 0, null);
+        if(this.desNodeId) {
+            let connectionModel = new ConnectionModel(null, this.desNodeId, 0, 0, 0, 0, null);
             return connectionModel
         }
 
         return null
     }
 
-    connectToNode(nodeName){
-        this.nodeName = nodeName
+    connectToNode(desNodeId){
+        this.desNodeId = desNodeId
     }
 
     removeConnection(){
-        this.nodeName = null
+        this.desNodeId = null
     }
 
-    removeConnectionToNode(nodeName){
-        if(this.nodeName==nodeName){
-            this.nodeName = null
+    removeConnectionToNode(desNodeId){
+        if(this.desNodeId==desNodeId){
+            this.desNodeId = null
         }
     }
 }

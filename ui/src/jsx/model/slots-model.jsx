@@ -19,15 +19,15 @@ export default class SlotsModel{
         }).filter(connection => connection)
     }
 
-    connectToNode(nodeName, slotIndex){
-        this.slots[slotIndex].connectToNode(nodeName)
+    connectToNode(desNodeId, slotIndex){
+        this.slots[slotIndex].connectToNode(desNodeId)
     }
 
     removeConnectionById(slotIndex){
         this.slots[slotIndex].removeConnection()
     }
 
-    removeConnectionsToNode(nodeName){
-        this.slots.forEach(slot => slot.removeConnectionToNode(nodeName))
+    removeConnectionsToNode(desNodeId){
+        this.slots.forEach(slot => slot.removeConnectionToNode(desNodeId))
     }
 }

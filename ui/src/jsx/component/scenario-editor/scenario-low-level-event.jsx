@@ -3,23 +3,23 @@ import { Map } from 'immutable';
 export default class ScenarioLowLevelEvent {
 
 
-	static slotMouseDownEvent(clientX, clientY, slotIndex, nodeName){
+	static slotMouseDownEvent(clientX, clientY, slotIndex, nodeId){
 		return new ScenarioLowLevelEvent(
 			ScenarioLowLevelEvent.eventType.MOUSE_DOWN,
 			ScenarioLowLevelEvent.sourceType.SLOT,
 			clientX,
 			clientY,
-			Map({slotIndex: slotIndex, nodeName: nodeName})
+			Map({slotIndex: slotIndex, nodeId: nodeId})
 		)
 	}
 
-	static nodeMouseDownEvent(clientX, clientY, nodeName){
+	static nodeMouseDownEvent(clientX, clientY, nodeId){
 		return new ScenarioLowLevelEvent(
 			ScenarioLowLevelEvent.eventType.MOUSE_DOWN,
 			ScenarioLowLevelEvent.sourceType.NODE,
 			clientX,
 			clientY,
-			Map({nodeName: nodeName})
+			Map({nodeId: nodeId})
 		)
 	}
 
@@ -33,44 +33,44 @@ export default class ScenarioLowLevelEvent {
         )
     }
 
-	static connectionMouseDownEvent(clientX, clientY, srcNodeName, desNodeName, connectionId){
+	static connectionMouseDownEvent(clientX, clientY, srcNodeId, desNodeId, connectionId){
 		return new ScenarioLowLevelEvent(
 				ScenarioLowLevelEvent.eventType.MOUSE_DOWN,
 				ScenarioLowLevelEvent.sourceType.CONNECTION,
 				clientX,
 				clientY,
-				Map({srcNodeName: srcNodeName, desNodeName: desNodeName, connectionId: connectionId})
+				Map({srcNodeId: srcNodeId, desNodeId: desNodeId, connectionId: connectionId})
 		)
 	}
 
-	static slotMouseUpEvent(clientX, clientY, slotIndex, nodeName){
+	static slotMouseUpEvent(clientX, clientY, slotIndex, nodeId){
 		return new ScenarioLowLevelEvent(
 			ScenarioLowLevelEvent.eventType.MOUSE_UP,
 			ScenarioLowLevelEvent.sourceType.SLOT,
 			clientX,
 			clientY,
-			Map({slotIndex: slotIndex, nodeName: nodeName})
+			Map({slotIndex: slotIndex, nodeId: nodeId})
 		)
 	}
 
-	static connectionMouseUpEvent(clientX, clientY, srcNodeName, desNodeName, connectionId){
+	static connectionMouseUpEvent(clientX, clientY, srcNodeId, desNodeId, connectionId){
 		return new ScenarioLowLevelEvent(
 			ScenarioLowLevelEvent.eventType.MOUSE_UP,
 			ScenarioLowLevelEvent.sourceType.SLOT,
 			clientX,
 			clientY,
-			Map({srcNodeName: srcNodeName, desNodeName: desNodeName, connectionId: connectionId})
+			Map({srcNodeId: srcNodeId, desNodeId: desNodeId, connectionId: connectionId})
 		)
 	}
 
 
-	static nodeMouseUpEvent(clientX, clientY, nodeName){
+	static nodeMouseUpEvent(clientX, clientY, nodeId){
 		return new ScenarioLowLevelEvent(
 			ScenarioLowLevelEvent.eventType.MOUSE_UP,
 			ScenarioLowLevelEvent.sourceType.NODE,
 			clientX,
 			clientY,
-			Map({nodeName: nodeName})
+			Map({nodeId: nodeId})
 		)
 	}
 

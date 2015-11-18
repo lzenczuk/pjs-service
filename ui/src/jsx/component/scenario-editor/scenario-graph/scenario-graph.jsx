@@ -9,8 +9,8 @@ export default class ScenarioGraph extends React.Component {
 
 
         var nodes = this.props.model.nodes.map(node => {
-            return (<Node key={node.name}
-                  ref={node.name}
+            return (<Node key={node.name+'_'+node.id}
+                  ref={node.id}
                   model={node}
                   onMouseEvent={this.props.onMouseEvent}
             />)
@@ -66,7 +66,7 @@ export default class ScenarioGraph extends React.Component {
 
 ScenarioGraph.propertyTypes = {
 	model: React.PropTypes.object.isRequired,
-    onMouseEvent: React.PropTypes.func,
+    onMouseEvent: React.PropTypes.func
 };
 
 

@@ -21,7 +21,7 @@ export default class ServerModel {
                 nodesMap[nodeModel.name] = nodeModel;
             });
 
-        return new ScenarioModel(nodes, smodel.startNodeName, smodel.offsetX, smodel.offsetY, smodel.scale)
+        return new ScenarioModel(nodes, smodel.startNodeId, smodel.offsetX, smodel.offsetY, smodel.scale)
 
     }
 
@@ -37,6 +37,7 @@ export default class ServerModel {
         let slots = ServerModel.slotsModelFromServerModel(smodel.slots);
 
         return new ScriptNodeModel(
+            smodel.id,
             smodel.name,
             smodel.description,
             smodel.x,
@@ -67,14 +68,14 @@ export default class ServerModel {
 
     static alwaysTrueSlotFromServerModel(smodel) {
         return new AlwaysTrueSlot(
-            smodel.nodeName,
+            smodel.desNodeId,
             smodel.label
         )
     }
 
     static scriptSlotFromServerModel(smodel) {
         return new ScriptSlot(
-            smodel.nodeName,
+            smodel.desNodeId,
             smodel.label,
             smodel.script
         )

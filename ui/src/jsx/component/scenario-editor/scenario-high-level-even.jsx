@@ -28,10 +28,10 @@ export class ScenarioTransformEvent extends ScenarioHighLevelEvent{
 
 export class NodeDragEvent extends ScenarioHighLevelEvent{
 
-    constructor(nodeName, x, y){
+    constructor(nodeId, x, y){
         super(ScenarioHighLevelEvent.eventsTypes.NODE_DRAG_EVENT);
 
-        this.nodeName = nodeName;
+        this.nodeId = nodeId;
         this.x = x;
         this.y = y
     }
@@ -39,12 +39,12 @@ export class NodeDragEvent extends ScenarioHighLevelEvent{
 
 export class ConnectionCreatedEvent extends ScenarioHighLevelEvent{
 
-    constructor(srcNodeName, srcNodeIndex, desNodeName){
+    constructor(srcNodeId, srcNodeIndex, desNodeId){
         super(ScenarioHighLevelEvent.eventsTypes.CONNECTION_CREATED_EVENT);
 
-        this.srcNodeName = srcNodeName;
+        this.srcNodeId = srcNodeId;
         this.srcNodeIndex = srcNodeIndex;
-        this.desNodeName = desNodeName
+        this.desNodeId = desNodeId
     }
 }
 

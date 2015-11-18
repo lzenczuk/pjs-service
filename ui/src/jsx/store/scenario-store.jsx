@@ -45,23 +45,24 @@ export default class ScenarioStore extends EventEmitter {
                 this.emit('CHANGE');
             } else if (action.actionType == ActionTypes.nodesResized) {
                 action.payload.changes.forEach((change => {
-                    this._scenarioModel.resizeNode(change.nodeName, change.width, change.height, change.contentHeight)
+                    console.log("-----> resize");
+                    this._scenarioModel.resizeNode(change.nodeId, change.width, change.height, change.contentHeight)
                 }).bind(this));
                 this._scenarioEditorModel.updateModels(this._scenarioModel);
                 this.emit('CHANGE');
             } else if (action.actionType == ActionTypes.elementsSelected) {
-                var selectedNodeName = {};
+                var selectedNodeId = {};
                 var selectedConnection = '';
                 action.payload.elements.forEach(element => {
 
                     if (element.type == 'NODE') {
-                        selectedNodeName[element.name] = true
+                        selectedNodeId[element.id] = true
                     } else if (element.type == 'CONNECTION') {
-                        selectedConnection = element.name
+                        selectedConnection = element.id
                     }
                 });
 
-                this._scenarioEditorModel.setSelected(selectedNodeName, selectedConnection);
+                this._scenarioEditorModel.setSelected(selectedNodeId, selectedConnection);
                 this._scenarioEditorModel.updateModels(this._scenarioModel);
                 this.emit('CHANGE');
             } else if (action.actionType == ActionTypes.selectedElementsDeleted) {

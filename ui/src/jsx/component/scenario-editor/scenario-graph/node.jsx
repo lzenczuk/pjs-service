@@ -12,7 +12,7 @@ export default class Node extends React.Component {
             event.preventDefault();
             event.stopPropagation();
 
-            this.props.onMouseEvent(ScenarioLowLevelEvent.nodeMouseDownEvent(event.clientX, event.clientY, this.props.model.name));
+            this.props.onMouseEvent(ScenarioLowLevelEvent.nodeMouseDownEvent(event.clientX, event.clientY, this.props.model.id));
         }
     }
 
@@ -21,7 +21,7 @@ export default class Node extends React.Component {
             event.preventDefault();
             event.stopPropagation();
 
-            this.props.onMouseEvent(ScenarioLowLevelEvent.nodeMouseUpEvent(event.clientX, event.clientY, this.props.model.name));
+            this.props.onMouseEvent(ScenarioLowLevelEvent.nodeMouseUpEvent(event.clientX, event.clientY, this.props.model.id));
         }
     }
 
@@ -41,7 +41,7 @@ export default class Node extends React.Component {
         let height = totalCh+sh;
 
         if(width!=this.props.model.width || height!=this.props.model.height || totalCh!=this.props.model.contentHeight){
-            return {nodeName: this.props.model.name, width: width, height: height, contentHeight: totalCh}
+            return {nodeId: this.props.model.id, width: width, height: height, contentHeight: totalCh}
         }else{
             return null;
         }
@@ -62,10 +62,10 @@ export default class Node extends React.Component {
         };
 
         var slots = this.props.model.slots.slots.map((slot, index) =>
-            <Slot key={this.props.model.name+index}
+            <Slot key={this.props.model.id+index}
                   label={slot.label}
                   index={index}
-                  nodeName={this.props.model.name}
+                  nodeId={this.props.model.id}
                   onMouseEvent={this.props.onMouseEvent}
             />
         );

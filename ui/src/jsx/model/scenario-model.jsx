@@ -7,10 +7,10 @@ export default class ScenarioModel {
      * @param {Object} nodesMap
      * @param {Array<Connection>} connections
      */
-    constructor(nodes, startNodeName, offsetX, offsetY, scale){
+    constructor(nodes, startNodeId, offsetX, offsetY, scale){
         this.nodes = nodes;
 
-        this.startNodeName = startNodeName;
+        this.startNodeId = startNodeId;
         this.offsetX = offsetX;
         this.offsetY = offsetY;
         this.scale = scale;
@@ -31,18 +31,18 @@ export default class ScenarioModel {
         this.nodesMap[node.name] = node;
     }
 
-    getNodeByName(name){
-        return this.nodesMap[name]
+    getNodeById(nodeId){
+        return this.nodesMap[nodeId]
     }
 
-    moveNodeTo(name, x, y){
-        this.nodesMap[name].x=x;
-        this.nodesMap[name].y=y;
+    moveNodeTo(nodeId, x, y){
+        this.nodesMap[nodeId].x=x;
+        this.nodesMap[nodeId].y=y;
         this._rebuildConnections()
     }
 
-    connectNodes(srcNodeName, slotIndex, desNodeName){
-        this.nodesMap[srcNodeName].connectToNode(desNodeName, slotIndex);
+    connectNodes(srcNodeId, slotIndex, desNodeId){
+        this.nodesMap[srcNodeId].connectToNode(desNodeId, slotIndex);
         this._rebuildConnections()
     }
 
@@ -50,8 +50,8 @@ export default class ScenarioModel {
         return this.connectionsMap[connectionId];
     }
 
-    resizeNode(nodeName, width, height, contentHeight){
-        this.nodesMap[nodeName].resize(width, height, contentHeight);
+    resizeNode(nodeId, width, height, contentHeight){
+        this.nodesMap[nodeId].resize(width, height, contentHeight);
         this._rebuildConnections()
     }
 
@@ -61,9 +61,9 @@ export default class ScenarioModel {
         this._rebuildConnections()
     }
 
-    removeNode(nodeName){
-        this.nodes = this.nodes.filter(node => node.name!=nodeName);
-        this.nodes.forEach(node => node.removeConnectionsToNode(nodeName));
+    removeNode(nodeId){
+        this.nodes = this.nodes.filter(node => node.id!=nodeId);
+        this.nodes.forEach(node => node.removeConnectionsToNode(nodeId));
         this._rebuildConnections()
     }
 
@@ -75,7 +75,7 @@ export default class ScenarioModel {
 
     _rebuildNodesMap(){
         this.nodesMap = {};
-        this.nodes.forEach(node => this.nodesMap[node.name] = node)
+        this.nodes.forEach(node => this.nodesMap[node.id] = node)
     }
 
     _rebuildConnections(){

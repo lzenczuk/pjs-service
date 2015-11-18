@@ -86,7 +86,7 @@ class ScenarioView extends React.Component {
                         </div>
                         <ScenarioEditor
                             model={this.state.scenario}
-                            selectedNodes={this.state.editor.selectedNodeName}
+                            selectedNodes={this.state.editor.selectedNodeIds}
                             selectedConnection={this.state.editor.selectedConnectionId}
                             onEvent={this._onEvent.bind(this)}
                         />

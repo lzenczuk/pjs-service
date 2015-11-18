@@ -12,7 +12,7 @@ import {
 } from './scenario-high-level-even';
 
 export default
-class ScenarioEd extends React.Component {
+class ScenarioEditor extends React.Component {
 
     constructor(props) {
         super(props);
@@ -76,10 +76,10 @@ class ScenarioEd extends React.Component {
             case ScenarioLowLevelEvent.sourceType.NODE:
             {
                 payload = {
-                    nodeX: this.props.model.nodesMap[event.payload.get('nodeName')].x,
-                    nodeY: this.props.model.nodesMap[event.payload.get('nodeName')].y,
-                    nodeY: this.props.model.nodesMap[event.payload.get('nodeName')].y,
-                    nodeName: event.payload.get('nodeName')
+                    nodeX: this.props.model.nodesMap[event.payload.get('nodeId')].x,
+                    nodeY: this.props.model.nodesMap[event.payload.get('nodeId')].y,
+                    nodeY: this.props.model.nodesMap[event.payload.get('nodeId')].y,
+                    nodeId: event.payload.get('nodeId')
                 };
             }
                 break;
@@ -94,7 +94,7 @@ class ScenarioEd extends React.Component {
             {
                 payload = {
                     index: event.payload.get('slotIndex'),
-                    nodeName: event.payload.get('nodeName')
+                    nodeId: event.payload.get('nodeId')
                 };
             }
                 break;
@@ -130,7 +130,7 @@ class ScenarioEd extends React.Component {
                 var newX = payload.nodeX - changeX;
                 var newY = payload.nodeY - changeY;
 
-                this._dispatchEvent(new NodeDragEvent(payload.nodeName, newX, newY))
+                this._dispatchEvent(new NodeDragEvent(payload.nodeId, newX, newY))
 
             } else if (activeEvent.isMouseDown() && activeEvent.isSlot()) {
 
@@ -156,11 +156,11 @@ class ScenarioEd extends React.Component {
         if (activeEvent && activeEvent.isMouseDown()) {
             if (activeEvent.isSlot() && (event.isNode() || event.isSlot())) {
 
-                this._dispatchEvent(new ConnectionCreatedEvent(payload.nodeName, payload.index, event.payload.get('nodeName')))
+                this._dispatchEvent(new ConnectionCreatedEvent(payload.nodeId, payload.index, event.payload.get('nodeId')))
 
             } else if (activeEvent.isNode() && event.isNode() && activeEvent.x == event.x && activeEvent.y == event.y) {
 
-                this._dispatchEvent(new SelectEvent([{type: 'NODE', name: event.payload.get('nodeName')}]));
+                this._dispatchEvent(new SelectEvent([{type: 'NODE', id: event.payload.get('nodeId')}]));
 
             } else if (activeEvent.isScenario() && activeEvent.clientX == event.clientX && activeEvent.clientY == event.clientY) {
 
@@ -168,7 +168,7 @@ class ScenarioEd extends React.Component {
 
             } else if (activeEvent.isConnection() && activeEvent.x == event.x && activeEvent.y == event.y) {
 
-                this._dispatchEvent(new SelectEvent([{type: 'CONNECTION', name: event.payload.get('connectionId')}]));
+                this._dispatchEvent(new SelectEvent([{type: 'CONNECTION', id: event.payload.get('connectionId')}]));
             }
         }
     }

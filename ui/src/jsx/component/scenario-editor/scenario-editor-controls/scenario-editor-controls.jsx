@@ -4,7 +4,7 @@ import ConnectionLine from './connection-line'
 import SelectedNode from './selected-node'
 import SelectedConnection from './selected-connection'
 
-export default class ScenarioEditor extends React.Component {
+export default class ScenarioEditorControls extends React.Component {
 
     render(){
 
@@ -20,7 +20,7 @@ export default class ScenarioEditor extends React.Component {
         });
 
         let selectedNodes = Object.keys(this.props.selectedNodes)
-            .map(nodeName => this.props.model.getNodeByName(nodeName))
+            .map(nodeId => this.props.model.getNodeById(nodeId))
             .map(node => <SelectedNode key={node.name} model={node}/>);
 
         return (
@@ -32,7 +32,7 @@ export default class ScenarioEditor extends React.Component {
     }
 }
 
-ScenarioEditor.propertyTypes = {
+ScenarioEditorControls.propertyTypes = {
     model: React.PropTypes.object.isRequired,
     selectedNodes: React.PropTypes.array.isRequired,
     selectedConnection: React.PropTypes.string,
