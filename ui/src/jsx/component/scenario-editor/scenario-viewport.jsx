@@ -64,8 +64,10 @@ class ScenarioViewport extends React.Component {
 
     _mouseEventsProxy(event) {
 
-        if(this._keyInterceptorElement){
-            this._keyInterceptorElement.focus()
+        if(event.isMouseDown()) {
+            if (this._keyInterceptorElement) {
+                this._keyInterceptorElement.focus()
+            }
         }
 
         if (this.props.onMouseEvent != null) {
