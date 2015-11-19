@@ -11,6 +11,10 @@ export default class ScriptNodeForm extends React.Component {
         ctx.scenarioActions.changeNodeDescription(this.props.nodeModel.id, event.target.value);
     }
 
+    onScriptChange(event) {
+        ctx.scenarioActions.changeNodeScript(this.props.nodeModel.id, event.target.value);
+    }
+
     render(){
 
         let nodeModel = this.props.nodeModel;
@@ -19,9 +23,11 @@ export default class ScriptNodeForm extends React.Component {
             <div>
                 <h3>Script node</h3>
                 <div>Name</div>
-                <input type="text" value={nodeModel.name} onChange={this.onNameChange.bind(this)}/>
+                <input className="name-form" type="text" value={nodeModel.name} onChange={this.onNameChange.bind(this)}/>
                 <div>Description</div>
-                <textarea value={nodeModel.description} onChange={this.onDescriptionChange.bind(this)}/>
+                <textarea className="description-form" value={nodeModel.description} onChange={this.onDescriptionChange.bind(this)}/>
+                <div>Script</div>
+                <textarea className="script-form" value={nodeModel.script} onChange={this.onScriptChange.bind(this)}/>
             </div>
         )
     }

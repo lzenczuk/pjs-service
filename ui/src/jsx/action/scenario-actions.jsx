@@ -36,6 +36,10 @@ export default class ScenarioActions{
         this._dispatcher.dispatch({actionType: ActionTypes.nodeDescriptionChanged, payload: {nodeId: nodeId, newDescription: newDescription} })
     }
 
+    changeNodeScript(nodeId, newScript){
+        this._dispatcher.dispatch({actionType: ActionTypes.nodeScriptChanged, payload: {nodeId: nodeId, newScript: newScript} })
+    }
+
     transformScenario(offsetX, offsetY, scale){
         this._dispatcher.dispatch({actionType: ActionTypes.transformScenario, payload: {offsetX: offsetX, offsetY: offsetY, scale: scale} })
     }

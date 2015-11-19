@@ -21,6 +21,7 @@ export default {
     nodeMoved: 'NODE_MOVED',
     nodeRenamed: 'NODE_RENAMED',
     nodeDescriptionChanged: 'NODE_DESCRIPTION_CHANGED',
+    nodeScriptChanged: 'NODE_SCRIPT_CHANGED',
 
     connectionAdded: 'CONNECTION_ADDED',
 
