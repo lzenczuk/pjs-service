@@ -39,9 +39,9 @@ public class ScenarioService {
     }
 
     private Scenario createScenario() {
-        Scenario scenario = new Scenario(Optional.of(0L));
+        Scenario scenario = new Scenario(Optional.of(10L));
 
-        ScriptNode randomNumberNode = new ScriptNode(0L, "randomNumberNode");
+        ScriptNode randomNumberNode = new ScriptNode(10L, "randomNumberNode");
         randomNumberNode.setScript("function main(input, ctx){ ctx.msg='Random number: '; return Math.floor((Math.random()*100))}");
         randomNumberNode.setX(250);
         randomNumberNode.setY(10);
@@ -80,7 +80,7 @@ public class ScenarioService {
         randomNumberNode.setSlots(randomNumberSlots);
 
         Slot repeatSlot = new AlwaysTrueSlot();
-        repeatSlot.setDesNodeId(0L);
+        repeatSlot.setDesNodeId(10L);
 
         Slots repeatSlots = new Slots();
         repeatSlots.addSlot(repeatSlot);
