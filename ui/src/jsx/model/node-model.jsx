@@ -35,6 +35,18 @@ export default class NodeModel {
         this.width = width;
         this.height = height;
         this.contentHeight = contentHeight;
+    }
 
+    getServerModel(){
+        return {
+            id: this.id,
+            name: this.name,
+            description: this.description,
+            x: this.x,
+            y: this.y,
+            width: this.width,
+            height: this.height,
+            contentHeight: this.contentHeight
+        }
     }
 }

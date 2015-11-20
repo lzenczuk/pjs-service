@@ -20,6 +20,19 @@ export default class ScenarioActions{
             }).bind(this))
     }
 
+    saveScenario(scenario){
+        let scenarioServerModel = scenario.getServerModel();
+
+        // TODO - bug - not serialize javascript object correctly - sends [object Object] instead of JSON - incorrect interceptor?
+        this._server.POST('/api/scenario', JSON.stringify(scenarioServerModel),
+            (response => {
+                console.log("Saved successful")
+            }).bind(this),
+            ((code, message) => {
+                console.log("Saving error: "+message)
+            }).bind(this))
+    }
+
     addNode(node){
         this._dispatcher.dispatch({actionType: ActionTypes.nodeAdded, payload: {node: node} })
     }

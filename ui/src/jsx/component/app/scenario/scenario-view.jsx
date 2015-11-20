@@ -34,6 +34,10 @@ class ScenarioView extends React.Component {
         this.scenarioStore.removeChangeListener(this.scenarioStoreCallback)
     }
 
+    saveScenario() {
+        this.scenarioActions.saveScenario(this.state.scenario);
+    }
+
     /**
      * @param {ScenarioLowLevelEvent} event
      * @private
@@ -81,7 +85,7 @@ class ScenarioView extends React.Component {
                     <div>
                         <div className="max-width top-bar-height no-scrollbars bottom-edge">
                             <div>
-                                <ScenarioControlPanel />
+                                <ScenarioControlPanel onSaveScenario={this.saveScenario.bind(this)}/>
                             </div>
                         </div>
                         <ScenarioEditor

@@ -30,4 +30,13 @@ export default class SlotsModel{
     removeConnectionsToNode(desNodeId){
         this.slots.forEach(slot => slot.removeConnectionToNode(desNodeId))
     }
+
+    getServerModel(){
+
+        let slots = this.slots.map(slot => slot.getServerModel());
+
+        return {
+            slots: slots
+        }
+    }
 }

@@ -45,4 +45,17 @@ export default class ScriptNodeModel extends NodeModel {
     removeConnectionsToNode(desNodeId){
         this.slots.removeConnectionsToNode(desNodeId)
     }
+
+    getServerModel(){
+        let serverNodeModel = super.getServerModel();
+
+        let slots = this.slots.getServerModel();
+
+        serverNodeModel.serverClass = "script_node";
+        serverNodeModel.script = this.script;
+        serverNodeModel.executorName = this.executorName;
+        serverNodeModel.slots = slots;
+
+        return serverNodeModel
+    }
 }

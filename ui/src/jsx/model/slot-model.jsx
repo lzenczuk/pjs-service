@@ -32,4 +32,11 @@ export default class SlotModel{
             this.desNodeId = null
         }
     }
+
+    getServerModel(){
+        return {
+            label: this.label,
+            desNodeId: this.desNodeId
+        }
+    }
 }

@@ -12,15 +12,17 @@ export default class Server {
     }
 
     GET(path, successFunction, errorFunction){
-        this._callServer('GET', path, successFunction, errorFunction)
+        let requestProperties = {method: 'GET', path: path};
+        this._callServer(requestProperties, successFunction, errorFunction)
     }
 
-    POST(path, successFunction, errorFunction){
-        this._callServer('POST', path, successFunction, errorFunction)
+    POST(path, body, successFunction, errorFunction){
+        let requestProperties = {method: 'POST', entity: body, path: path};
+        this._callServer(requestProperties, successFunction, errorFunction)
     }
 
-    _callServer(method, path, successFunction, errorFunction){
-        this._client({method: method, path: path}).then(
+    _callServer(requestProperties, successFunction, errorFunction){
+        this._client(requestProperties).then(
                 response => {
                 if(typeof successFunction !== 'undefined'){
                     successFunction(response.entity)

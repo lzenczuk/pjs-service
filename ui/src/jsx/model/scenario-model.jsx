@@ -118,5 +118,20 @@ export default class ScenarioModel {
        })
     }
 
+    getServerModel(){
 
+        let nodesMap={};
+
+        this.nodes.forEach(node => {
+            nodesMap[node.id]=node.getServerModel()
+        });
+
+        return {
+            startNodeId: this.startNodeId,
+            offsetX: this.offsetX,
+            offsetY: this.offsetY,
+            scale: this.scale,
+            nodesMap: nodesMap
+        }
+    }
 }
