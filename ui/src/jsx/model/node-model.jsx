@@ -45,6 +45,10 @@ export default class NodeModel {
         throw "NodeModel:changeSlotScript - NodeModel not support slots"
     }
 
+    destroySlot(index){
+        throw "NodeModel:destroySlot - NodeModel not support slots"
+    }
+
     getServerModel(){
         return {
             id: this.id,

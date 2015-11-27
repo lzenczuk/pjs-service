@@ -51,6 +51,10 @@ export default class ScenarioModel {
         this.nodesMap[nodeId].changeSlotScript(index, newScript)
     }
 
+    destroySlot(nodeId, index){
+        this.nodesMap[nodeId].destroySlot(index)
+    }
+
     getNodeById(nodeId){
         return this.nodesMap[nodeId]
     }

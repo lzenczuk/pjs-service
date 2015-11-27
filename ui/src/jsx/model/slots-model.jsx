@@ -39,6 +39,10 @@ export default class SlotsModel{
         this.slots[index].changeSlotScript(newScript)
     }
 
+    destroySlot(index){
+        this.slots = this.slots.filter((slot, slotIndex) => slotIndex!=index)
+    }
+
     getServerModel(){
 
         let slots = this.slots.map(slot => slot.getServerModel());

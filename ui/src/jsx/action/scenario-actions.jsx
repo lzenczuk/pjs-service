@@ -61,6 +61,10 @@ export default class ScenarioActions{
         this._dispatcher.dispatch({actionType: ActionTypes.slotScriptChanged, payload: {nodeId: nodeId, index: index, newScript: newScript} })
     }
 
+    destroySlot(nodeId, index){
+        this._dispatcher.dispatch({actionType: ActionTypes.slotDestroyed, payload: {nodeId: nodeId, index: index} })
+    }
+
     transformScenario(offsetX, offsetY, scale){
         this._dispatcher.dispatch({actionType: ActionTypes.transformScenario, payload: {offsetX: offsetX, offsetY: offsetY, scale: scale} })
     }

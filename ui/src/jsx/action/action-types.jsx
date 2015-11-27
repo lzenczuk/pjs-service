@@ -24,6 +24,7 @@ export default {
     nodeScriptChanged: 'NODE_SCRIPT_CHANGED',
     slotLabelChanged: 'SLOT_LABEL_CHANGED',
     slotScriptChanged: 'SLOT_SCRIPT_CHANGED',
+    slotDestroyed: 'SLOT_DESTROYED',
 
     connectionAdded: 'CONNECTION_ADDED',
 
