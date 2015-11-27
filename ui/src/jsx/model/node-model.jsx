@@ -53,6 +53,14 @@ export default class NodeModel {
         throw "NodeModel:addSlot - NodeModel not support slots"
     }
 
+    moveUpSlot(index){
+        throw "NodeModel:moveUpSlot - NodeModel not support slots"
+    }
+
+    moveDownSlot(index){
+        throw "NodeModel:moveDownSlot - NodeModel not support slots"
+    }
+
     getServerModel(){
         return {
             id: this.id,

@@ -47,6 +47,24 @@ export default class SlotsModel{
         this.slots.push(slot)
     }
 
+    moveUpSlot(index){
+        if(index>0){
+            let slot = this.slots[index];
+
+            this.destroySlot(index);
+            this.slots.splice(index-1, 0, slot)
+        }
+    }
+
+    moveDownSlot(index){
+        if(index<this.slots.length-1){
+            let slot = this.slots[index];
+
+            this.destroySlot(index);
+            this.slots.splice(index+1, 0, slot)
+        }
+    }
+
     getServerModel(){
 
         let slots = this.slots.map(slot => slot.getServerModel());

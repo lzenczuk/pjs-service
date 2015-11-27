@@ -60,6 +60,16 @@ export default class ScenarioModel {
         this.nodesMap[nodeId].addSlot(slot)
     }
 
+    moveUpSlot(nodeId, index){
+        this.nodesMap[nodeId].moveUpSlot(index);
+        this._rebuildConnections()
+    }
+
+    moveDownSlot(nodeId, index){
+        this.nodesMap[nodeId].moveDownSlot(index);
+        this._rebuildConnections()
+    }
+
     getNodeById(nodeId){
         return this.nodesMap[nodeId]
     }

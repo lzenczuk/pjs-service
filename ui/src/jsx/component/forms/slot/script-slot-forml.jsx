@@ -15,13 +15,25 @@ export default class ScriptSlotForm extends React.Component {
         ctx.scenarioActions.destroySlot(this.props.nodeId, this.props.index);
     }
 
+    onMoveUpSlotClick(){
+        ctx.scenarioActions.moveUpSlot(this.props.nodeId, this.props.index);
+    }
+
+    onMoveDownClick(){
+        ctx.scenarioActions.moveDownSlot(this.props.nodeId, this.props.index);
+    }
+
     render(){
 
         let slotModel = this.props.slotModel;
 
         return (
             <div>
-                <div>Script slot<span className="destroy-slot-button" onClick={this.onDestroySlotClick.bind(this)}>x</span></div>
+                <div>Script slot
+                    <span className="destroy-slot-button" onClick={this.onDestroySlotClick.bind(this)}>x</span>
+                    <span className="move-slot-button" onClick={this.onMoveUpSlotClick.bind(this)}>^</span>
+                    <span className="move-slot-button" onClick={this.onMoveDownClick.bind(this)}>v</span>
+                </div>
                 <input className="name-form" type="text" value={slotModel.label} onChange={this.onLabelChange.bind(this)}/>
                 <textarea className="script-form" value={slotModel.script} onChange={this.onScriptChange.bind(this)}/>
                 <div>{slotModel.desNodeId}</div>

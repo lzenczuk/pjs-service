@@ -58,6 +58,14 @@ export default class ScriptNodeModel extends NodeModel {
         this.slots.destroySlot(index)
     }
 
+    moveUpSlot(index){
+        this.slots.moveUpSlot(index)
+    }
+
+    moveDownSlot(index){
+        this.slots.moveDownSlot(index)
+    }
+
     addSlot(slot){
         this.slots.addSlot(slot)
     }
