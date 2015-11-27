@@ -22,6 +22,7 @@ export default {
     nodeRenamed: 'NODE_RENAMED',
     nodeDescriptionChanged: 'NODE_DESCRIPTION_CHANGED',
     nodeScriptChanged: 'NODE_SCRIPT_CHANGED',
+    slotLabelChanged: 'SLOT_LABEL_CHANGED',
 
     connectionAdded: 'CONNECTION_ADDED',
 

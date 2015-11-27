@@ -33,6 +33,14 @@ export default class SlotModel{
         }
     }
 
+    changeSlotLabel(newLabel){
+        this.label=newLabel
+    }
+
+    getServerClass(){
+        throw "SlotModel not implement getServerClass method, it should be override in child class."
+    }
+
     getServerModel(){
         return {
             label: this.label,

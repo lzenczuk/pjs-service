@@ -53,6 +53,10 @@ export default class ScenarioActions{
         this._dispatcher.dispatch({actionType: ActionTypes.nodeScriptChanged, payload: {nodeId: nodeId, newScript: newScript} })
     }
 
+    changeSlotLabel(nodeId, index, newLabel){
+        this._dispatcher.dispatch({actionType: ActionTypes.slotLabelChanged, payload: {nodeId: nodeId, index: index, newLabel: newLabel} })
+    }
+
     transformScenario(offsetX, offsetY, scale){
         this._dispatcher.dispatch({actionType: ActionTypes.transformScenario, payload: {offsetX: offsetX, offsetY: offsetY, scale: scale} })
     }

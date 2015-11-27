@@ -31,6 +31,10 @@ export default class SlotsModel{
         this.slots.forEach(slot => slot.removeConnectionToNode(desNodeId))
     }
 
+    changeSlotLabel(index, newLabel){
+        this.slots[index].changeSlotLabel(newLabel)
+    }
+
     getServerModel(){
 
         let slots = this.slots.map(slot => slot.getServerModel());

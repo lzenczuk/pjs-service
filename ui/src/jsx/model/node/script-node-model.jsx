@@ -46,6 +46,10 @@ export default class ScriptNodeModel extends NodeModel {
         this.slots.removeConnectionsToNode(desNodeId)
     }
 
+    changeSlotLabel(index, newLabel){
+        this.slots.changeSlotLabel(index, newLabel)
+    }
+
     getServerModel(){
         let serverNodeModel = super.getServerModel();
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import SlotsForm from '../slots-form';
 import ctx from '../../../context';
 
 export default class ScriptNodeForm extends React.Component {
@@ -28,6 +29,7 @@ export default class ScriptNodeForm extends React.Component {
                 <textarea className="description-form" value={nodeModel.description} onChange={this.onDescriptionChange.bind(this)}/>
                 <div>Script</div>
                 <textarea className="script-form" value={nodeModel.script} onChange={this.onScriptChange.bind(this)}/>
+                <SlotsForm slotsModel={nodeModel.slots} nodeId={nodeModel.id}/>
             </div>
         )
     }

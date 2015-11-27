@@ -6,6 +6,10 @@ export default class AlwaysTrueSlot extends SlotModel{
         super(desNodeId, label)
     }
 
+    getServerClass(){
+        return 'always_true_slot'
+    }
+
     getServerModel(){
         let slotServerModel = super.getServerModel();
 

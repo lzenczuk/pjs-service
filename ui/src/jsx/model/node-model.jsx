@@ -37,6 +37,10 @@ export default class NodeModel {
         this.contentHeight = contentHeight;
     }
 
+    changeSlotLabel(index, newLabel){
+        throw "NodeModel:changeSlotLabel - NodeModel not support slots"
+    }
+
     getServerModel(){
         return {
             id: this.id,
