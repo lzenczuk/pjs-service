@@ -21,7 +21,7 @@ export default class ScriptSlotForm extends React.Component {
 
         return (
             <div>
-                <div>Script slot<span className="destroy-slot-button" onClick={this.onDestroySlotClick.bind(this)}>X</span></div>
+                <div>Script slot<span className="destroy-slot-button" onClick={this.onDestroySlotClick.bind(this)}>x</span></div>
                 <input className="name-form" type="text" value={slotModel.label} onChange={this.onLabelChange.bind(this)}/>
                 <textarea className="script-form" value={slotModel.script} onChange={this.onScriptChange.bind(this)}/>
                 <div>{slotModel.desNodeId}</div>

@@ -17,7 +17,7 @@ export default class AlwaysTrueSlotForm extends React.Component {
 
         return (
             <div>
-                <div>Always true<span className="destroy-slot-button" onClick={this.onDestroySlotClick.bind(this)}>X</span></div>
+                <div>Always true<span className="destroy-slot-button" onClick={this.onDestroySlotClick.bind(this)}>x</span></div>
                 <input className="name-form" type="text" value={slotModel.label} onChange={this.onLabelChange.bind(this)}/>
                 <div>{slotModel.desNodeId}</div>
                 <hr/>

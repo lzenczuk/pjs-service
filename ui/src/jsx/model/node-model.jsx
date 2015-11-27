@@ -49,6 +49,10 @@ export default class NodeModel {
         throw "NodeModel:destroySlot - NodeModel not support slots"
     }
 
+    addSlot(slot){
+        throw "NodeModel:addSlot - NodeModel not support slots"
+    }
+
     getServerModel(){
         return {
             id: this.id,

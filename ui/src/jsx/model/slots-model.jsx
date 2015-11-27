@@ -43,6 +43,10 @@ export default class SlotsModel{
         this.slots = this.slots.filter((slot, slotIndex) => slotIndex!=index)
     }
 
+    addSlot(slot){
+        this.slots.push(slot)
+    }
+
     getServerModel(){
 
         let slots = this.slots.map(slot => slot.getServerModel());

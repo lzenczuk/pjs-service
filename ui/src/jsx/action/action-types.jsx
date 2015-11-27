@@ -25,6 +25,7 @@ export default {
     slotLabelChanged: 'SLOT_LABEL_CHANGED',
     slotScriptChanged: 'SLOT_SCRIPT_CHANGED',
     slotDestroyed: 'SLOT_DESTROYED',
+    slotAdded: 'SLOT_ADDED',
 
     connectionAdded: 'CONNECTION_ADDED',
 

@@ -51,17 +51,20 @@ export default class ScenarioStore extends EventEmitter {
             }else if (action.actionType == ActionTypes.slotDestroyed) {
                 this._scenarioModel.destroySlot(action.payload.nodeId, action.payload.index);
                 this.emit('CHANGE');
-            } else if (action.actionType == ActionTypes.nodeMoved) {
+            }else if (action.actionType == ActionTypes.slotAdded) {
+                this._scenarioModel.addSlot(action.payload.nodeId, action.payload.slot);
+                this.emit('CHANGE');
+            }else if (action.actionType == ActionTypes.nodeMoved) {
                 this._scenarioModel.moveNodeTo(action.payload.nodeId, action.payload.x, action.payload.y);
                 this._scenarioEditorModel.updateModels(this._scenarioModel);
                 this.emit('CHANGE');
-            } else if (action.actionType == ActionTypes.connectionAdded) {
+            }else if (action.actionType == ActionTypes.connectionAdded) {
                 this._scenarioModel.connectNodes(action.payload.srcNodeId, action.payload.slotIndex, action.payload.desNodeId);
                 this.emit('CHANGE');
-            } else if (action.actionType == ActionTypes.transformScenario) {
+            }else if (action.actionType == ActionTypes.transformScenario) {
                 this._scenarioModel.transformScenario(action.payload.offsetX, action.payload.offsetY, action.payload.scale);
                 this.emit('CHANGE');
-            } else if (action.actionType == ActionTypes.nodesResized) {
+            }else if (action.actionType == ActionTypes.nodesResized) {
                 action.payload.changes.forEach((change => {
                     this._scenarioModel.resizeNode(change.nodeId, change.width, change.height, change.contentHeight)
                 }).bind(this));

@@ -52,7 +52,12 @@ export default class ScenarioModel {
     }
 
     destroySlot(nodeId, index){
-        this.nodesMap[nodeId].destroySlot(index)
+        this.nodesMap[nodeId].destroySlot(index);
+        this._rebuildConnections()
+    }
+
+    addSlot(nodeId, slot){
+        this.nodesMap[nodeId].addSlot(slot)
     }
 
     getNodeById(nodeId){

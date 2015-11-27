@@ -57,6 +57,10 @@ export default class ScenarioActions{
         this._dispatcher.dispatch({actionType: ActionTypes.slotLabelChanged, payload: {nodeId: nodeId, index: index, newLabel: newLabel} })
     }
 
+    addSlot(nodeId, slot){
+        this._dispatcher.dispatch({actionType: ActionTypes.slotAdded, payload: {nodeId: nodeId, slot: slot} })
+    }
+
     changeSlotScript(nodeId, index, newScript){
         this._dispatcher.dispatch({actionType: ActionTypes.slotScriptChanged, payload: {nodeId: nodeId, index: index, newScript: newScript} })
     }

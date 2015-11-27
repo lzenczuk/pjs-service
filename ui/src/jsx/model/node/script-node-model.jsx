@@ -58,6 +58,10 @@ export default class ScriptNodeModel extends NodeModel {
         this.slots.destroySlot(index)
     }
 
+    addSlot(slot){
+        this.slots.addSlot(slot)
+    }
+
     getServerModel(){
         let serverNodeModel = super.getServerModel();
 
