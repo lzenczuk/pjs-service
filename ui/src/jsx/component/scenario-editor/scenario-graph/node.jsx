@@ -78,7 +78,7 @@ export default class Node extends React.Component {
             >
                 <div className="content" ref="content">
                     <div className="title">{this.props.model.name}</div>
-                    <div className="script">{this.props.model.description}</div>
+                    <div className="description">{this.props.model.description}</div>
                 </div>
                 <div ref="slots">
                     {slots}
