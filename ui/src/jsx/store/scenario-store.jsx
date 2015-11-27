@@ -45,6 +45,9 @@ export default class ScenarioStore extends EventEmitter {
             }else if (action.actionType == ActionTypes.slotLabelChanged) {
                 this._scenarioModel.changeSlotLabel(action.payload.nodeId, action.payload.index, action.payload.newLabel);
                 this.emit('CHANGE');
+            }else if (action.actionType == ActionTypes.slotScriptChanged) {
+                this._scenarioModel.changeSlotScript(action.payload.nodeId, action.payload.index, action.payload.newScript);
+                this.emit('CHANGE');
             } else if (action.actionType == ActionTypes.nodeMoved) {
                 this._scenarioModel.moveNodeTo(action.payload.nodeId, action.payload.x, action.payload.y);
                 this._scenarioEditorModel.updateModels(this._scenarioModel);

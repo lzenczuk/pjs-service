@@ -12,6 +12,10 @@ export default class ScriptSlot extends SlotModel{
         return 'script_slot'
     }
 
+    changeSlotScript(newScript){
+        this.script=newScript
+    }
+
     getServerModel(){
         let slotServerModel = super.getServerModel();
 

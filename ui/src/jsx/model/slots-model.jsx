@@ -35,6 +35,10 @@ export default class SlotsModel{
         this.slots[index].changeSlotLabel(newLabel)
     }
 
+    changeSlotScript(index, newScript){
+        this.slots[index].changeSlotScript(newScript)
+    }
+
     getServerModel(){
 
         let slots = this.slots.map(slot => slot.getServerModel());

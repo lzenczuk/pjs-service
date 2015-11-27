@@ -47,6 +47,10 @@ export default class ScenarioModel {
         this.nodesMap[nodeId].changeSlotLabel(index, newLabel)
     }
 
+    changeSlotScript(nodeId, index, newScript){
+        this.nodesMap[nodeId].changeSlotScript(index, newScript)
+    }
+
     getNodeById(nodeId){
         return this.nodesMap[nodeId]
     }

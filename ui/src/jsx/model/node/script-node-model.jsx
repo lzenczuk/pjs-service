@@ -50,6 +50,10 @@ export default class ScriptNodeModel extends NodeModel {
         this.slots.changeSlotLabel(index, newLabel)
     }
 
+    changeSlotScript(index, newScript){
+        this.slots.changeSlotScript(index, newScript)
+    }
+
     getServerModel(){
         let serverNodeModel = super.getServerModel();
 

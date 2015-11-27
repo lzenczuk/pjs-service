@@ -37,6 +37,10 @@ export default class SlotModel{
         this.label=newLabel
     }
 
+    changeSlotScript(newScript){
+        throw "SlotModel not implement changeSlotScript method, it should be override in child class."
+    }
+
     getServerClass(){
         throw "SlotModel not implement getServerClass method, it should be override in child class."
     }

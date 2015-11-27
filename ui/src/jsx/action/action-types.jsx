@@ -23,6 +23,7 @@ export default {
     nodeDescriptionChanged: 'NODE_DESCRIPTION_CHANGED',
     nodeScriptChanged: 'NODE_SCRIPT_CHANGED',
     slotLabelChanged: 'SLOT_LABEL_CHANGED',
+    slotScriptChanged: 'SLOT_SCRIPT_CHANGED',
 
     connectionAdded: 'CONNECTION_ADDED',
 
