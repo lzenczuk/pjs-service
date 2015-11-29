@@ -11,6 +11,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.logging.LogEntries;
 import org.openqa.selenium.phantomjs.PhantomJSDriverService;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.ErrorHandler;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.io.IOException;
@@ -285,5 +286,32 @@ public class PhantomDriverTest {
         System.out.println("Ctx: "+ctx);
 
         engine.close();
+    }
+
+    /**
+     * How to validate is page was loaded successfully?
+     * There is no exception. Title is empty (different from chrome where title have some value)
+     * and document contains empty head and body elements:
+     * Title: ; Page source: <html><head></head><body></body></html>
+     */
+    @Test
+    public void driverWithErrorHandling(){
+
+        DesiredCapabilities phantomjs = DesiredCapabilities.phantomjs();
+
+        System.out.println(phantomjs);
+
+
+        RemoteWebDriver driver = new RemoteWebDriver(service.getUrl(), phantomjs);
+
+        try {
+            driver.get("http://notexistingpage.com/");
+            Object title = driver.executeScript("return document.title");
+            final String pageSource = driver.getPageSource();
+            driver.close();
+            System.out.println("Title: "+title+"; Page source: "+pageSource);
+        }catch(Exception ex){
+            System.out.println("Exception: "+ex.getMessage());
+        }
     }
 }
