@@ -1,2 +1,6 @@
 rootProject.name = 'phantomjs-service'
+include 'ui'
+include 'scenario-server'
+include 'execution-server'
+include 'model'
 

@@ -46,8 +46,7 @@ export default class ServerModel {
             smodel.height,
             smodel.contentHeight,
             smodel.script,
-            slots,
-            smodel.executorName
+            slots
         )
     }
 

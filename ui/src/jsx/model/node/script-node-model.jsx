@@ -14,12 +14,11 @@ export default class ScriptNodeModel extends NodeModel {
      * @param {SlotsModel} slots
      * @param executorName
      */
-    constructor(id, name, description, x, y, width, height, contentHeight, script, slots, executorName) {
+    constructor(id, name, description, x, y, width, height, contentHeight, script, slots) {
         super(id, name, description, x, y, width, height, contentHeight);
 
         this.script = script;
         this.slots = slots;
-        this.executorName = executorName
     }
 
     /**
@@ -77,7 +76,6 @@ export default class ScriptNodeModel extends NodeModel {
 
         serverNodeModel.serverClass = "script_node";
         serverNodeModel.script = this.script;
-        serverNodeModel.executorName = this.executorName;
         serverNodeModel.slots = slots;
 
         return serverNodeModel

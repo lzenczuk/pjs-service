@@ -1,0 +1,154 @@
+{
+  "startNodeId": 10,
+  "nodesMap": {
+    "1": {
+      "serverClass": "script_node",
+      "id": 1,
+      "x": 563,
+      "y": 150,
+      "width": 131,
+      "height": 108,
+      "contentHeight": 70,
+      "name": "lessThen50Node",
+      "description": "Number is smaller then 50. Terminate scenario.",
+      "script": "function main(input, ctx){\nctx.msg+'less then 50'\nreturn input\n}",
+      "slots": {
+        "slots": [
+          {
+            "serverClass": "script_slot",
+            "desNodeId": 1448801273627,
+            "label": "<25",
+            "script": "function main(input, ctx){\nreturn input <25\n}"
+          },
+          {
+            "serverClass": "always_true_slot",
+            "desNodeId": 1448801368746,
+            "label": "Between 25 and 20"
+          }
+        ]
+      }
+    },
+    "10": {
+      "serverClass": "script_node",
+      "id": 10,
+      "x": 250,
+      "y": 65,
+      "width": 159,
+      "height": 114,
+      "contentHeight": 56,
+      "name": "randomNumberNode",
+      "description": "Generate random number between 0 and 100.",
+      "script": "function main(input, ctx){ \nctx.total = ctx.total+1\nreturn Math.floor((Math.random()*100))\n}",
+      "slots": {
+        "slots": [
+          {
+            "serverClass": "script_slot",
+            "desNodeId": 1448801666976,
+            "label": "Total 100",
+            "script": "function main(input, ctx){ \nreturn ctx.total > 90\n}\n"
+          },
+          {
+            "serverClass": "script_slot",
+            "desNodeId": 1,
+            "label": "<50",
+            "script": "function main(input, ctx){ return input < 50}"
+          },
+          {
+            "serverClass": "script_slot",
+            "desNodeId": 1448801436713,
+            "label": ">=50",
+            "script": "function main(input, ctx){ return input >= 50}"
+          }
+        ]
+      }
+    },
+    "1448801273627": {
+      "serverClass": "script_node",
+      "id": 1448801273627,
+      "x": 867,
+      "y": 71,
+      "width": 164,
+      "height": 60,
+      "contentHeight": 42,
+      "name": "less then 25",
+      "description": "Count numbers bellow 25",
+      "script": "function main(input, ctx){\nctx.counter25 = ctx.counter50+1\n}",
+      "slots": {
+        "slots": [
+          {
+            "serverClass": "always_true_slot",
+            "desNodeId": 10,
+            "label": "Retry"
+          }
+        ]
+      }
+    },
+    "1448801368746": {
+      "serverClass": "script_node",
+      "id": 1448801368746,
+      "x": 867,
+      "y": 238,
+      "width": 164,
+      "height": 74,
+      "contentHeight": 56,
+      "name": "Between 25 and 50",
+      "description": "Count numbers between 25 and 50",
+      "script": "function main(input, ctx){\nctx.counter2550 = ctx.counter2550+1\n}",
+      "slots": {
+        "slots": [
+          {
+            "serverClass": "always_true_slot",
+            "desNodeId": 10,
+            "label": "Retry"
+          }
+        ]
+      }
+    },
+    "1448801436713": {
+      "serverClass": "script_node",
+      "id": 1448801436713,
+      "x": 564,
+      "y": 348,
+      "width": 164,
+      "height": 74,
+      "contentHeight": 56,
+      "name": "50 or more",
+      "description": "Count number between 50 and 100",
+      "script": "function main(input, ctx){\nctx.counter50 = ctx.counter50 +1\n}",
+      "slots": {
+        "slots": [
+          {
+            "serverClass": "always_true_slot",
+            "desNodeId": 10,
+            "label": "Retry"
+          }
+        ]
+      }
+    },
+    "1448801666976": {
+      "serverClass": "script_node",
+      "id": 1448801666976,
+      "x": 511,
+      "y": 544,
+      "width": 164,
+      "height": 60,
+      "contentHeight": 42,
+      "name": "End node",
+      "description": "Calculations ended",
+      "script": "function main(input, ctx){}",
+      "slots": {
+        "slots": [
+          {
+            "serverClass": "always_true_slot",
+            "desNodeId": null,
+            "label": null
+          }
+        ]
+      }
+    }
+  },
+  "offsetX": 0,
+  "offsetY": 0,
+  "scale": 1,
+  "executorName": null
+}
