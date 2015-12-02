@@ -1,6 +1,7 @@
 import ScenarioModel from './scenario-model';
 import NodeModel from './node-model';
 import ScriptNodeModel from './node/script-node-model';
+import GetPageNodeModel from './node/get-page-node-model.jsx';
 import SlotsModel from './slots-model';
 import SlotModel from './slot-model';
 import AlwaysTrueSlot from './slot/always-true-slot';
@@ -21,13 +22,14 @@ export default class ServerModel {
                 nodesMap[nodeModel.name] = nodeModel;
             });
 
-        return new ScenarioModel(nodes, smodel.startNodeId, smodel.offsetX, smodel.offsetY, smodel.scale)
+        return new ScenarioModel(nodes, smodel.startNodeId, smodel.offsetX, smodel.offsetY, smodel.scale, smodel.executorName)
 
     }
 
     static nodeFromServerModel(smodel) {
         switch(smodel.serverClass){
             case 'script_node': return ServerModel.scriptNodeModelFromServerModel(smodel);
+            case 'get_page_node': return ServerModel.getPageNodeModelFromServerModel(smodel);
             default: throw "Can't create node. Unknown serverClass: "+smodel.serverClass
         }
     }
@@ -46,6 +48,24 @@ export default class ServerModel {
             smodel.height,
             smodel.contentHeight,
             smodel.script,
+            slots
+        )
+    }
+
+    static getPageNodeModelFromServerModel(smodel) {
+
+        let slots = ServerModel.slotsModelFromServerModel(smodel.slots);
+
+        return new GetPageNodeModel(
+            smodel.id,
+            smodel.name,
+            smodel.description,
+            smodel.x,
+            smodel.y,
+            smodel.width,
+            smodel.height,
+            smodel.contentHeight,
+            smodel.url,
             slots
         )
     }

@@ -33,6 +33,10 @@ export default class ScenarioActions{
             }).bind(this))
     }
 
+    changeScenarioStartNode(nodeId){
+        this._dispatcher.dispatch({actionType: ActionTypes.scenarioStartNodeChanged, payload: {nodeId: nodeId} })
+    }
+
     addNode(node){
         this._dispatcher.dispatch({actionType: ActionTypes.nodeAdded, payload: {node: node} })
     }
@@ -47,6 +51,10 @@ export default class ScenarioActions{
 
     changeNodeDescription(nodeId, newDescription){
         this._dispatcher.dispatch({actionType: ActionTypes.nodeDescriptionChanged, payload: {nodeId: nodeId, newDescription: newDescription} })
+    }
+
+    changeNodeUrl(nodeId, newUrl){
+        this._dispatcher.dispatch({actionType: ActionTypes.nodeUrlChanged, payload: {nodeId: nodeId, newUrl: newUrl} })
     }
 
     changeNodeScript(nodeId, newScript){

@@ -27,7 +27,8 @@ public class ScenarioExecutor {
 
     private NodeExecutor nodeExecutor = new NodeExecutor();
 
-    public ScenarioExecutor(Scenario scenario) {
+    public ScenarioExecutor(Scenario scenario, ScriptExecutorManager executorManager) {
+        this.executorManager = executorManager;
         this.scenario = scenario;
         this.scriptExecutor = executorManager.getExecutor(scenario.getExecutorName())
                 .orElseThrow(() -> new RuntimeException("Script executor: " + scenario.getExecutorName() + " not found."));

@@ -41,7 +41,11 @@ public class PhantomJSScriptExecutor implements ScriptExecutor {
 
         service.start();
 
-        engine = new RemoteWebDriver(service.getUrl(), DesiredCapabilities.phantomjs());
+        engine = createEngine();
+    }
+
+    private RemoteWebDriver createEngine() {
+        return new RemoteWebDriver(service.getUrl(), DesiredCapabilities.phantomjs());
     }
 
     @Override
@@ -80,5 +84,14 @@ public class PhantomJSScriptExecutor implements ScriptExecutor {
         if(service!=null && service.isRunning()){
             service.stop();
         }
+    }
+
+    public void goToPage(String url){
+        if(engine!=null){
+            engine.close();
+        }
+
+        engine = createEngine();
+        engine.get(url);
     }
 }

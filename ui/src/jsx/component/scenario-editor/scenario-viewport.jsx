@@ -18,26 +18,43 @@ const nodesTarget = {
         var offset = component._componentPositionInClientSpace();
         var clientPosition = monitor.getClientOffset();
 
-        var node = {
-            "serverClass" : "script_node",
-            "x" : (clientPosition.x - offset.x - props.model.offsetX)/props.model.scale,
-            "y" : (clientPosition.y - offset.y - props.model.offsetY)/props.model.scale,
-            "id": new Date().getTime(),
-            "name" : item.name,
-            "description" : "New node",
-            "script" : "function main(input, ctx){}",
-            "slots" : {
-                "slots" : [{
-                    serverClass: "always_true_slot",
-                    nodeName: null,
-                    label: null
-                } ]
-            },
-            "executorName" : null
-        };
+        if(item.type=='script_node'){
+            var node = {
+                "serverClass" : "script_node",
+                "x" : (clientPosition.x - offset.x - props.model.offsetX)/props.model.scale,
+                "y" : (clientPosition.y - offset.y - props.model.offsetY)/props.model.scale,
+                "id": new Date().getTime(),
+                "name" : item.name,
+                "description" : "New node",
+                "script" : "function main(input, ctx){}",
+                "slots" : {
+                    "slots" : [{
+                        serverClass: "always_true_slot",
+                        nodeName: null,
+                        label: null
+                    } ]
+                }
+            };
 
-        // TODO - move to component and use its method
-        ctx.scenarioActions.addNode(ServerModel.nodeFromServerModel(node));
+            // TODO - move to component and use its method
+            ctx.scenarioActions.addNode(ServerModel.nodeFromServerModel(node));
+        }else if(item.type=='get_page_node'){
+            var node = {
+                "serverClass" : "get_page_node",
+                "x" : (clientPosition.x - offset.x - props.model.offsetX)/props.model.scale,
+                "y" : (clientPosition.y - offset.y - props.model.offsetY)/props.model.scale,
+                "id": new Date().getTime(),
+                "name" : item.name,
+                "description" : "Get page by URl",
+                "url" : "",
+                "slots" : {
+                    "slots" : []
+                }
+            };
+
+            // TODO - move to component and use its method
+            ctx.scenarioActions.addNode(ServerModel.nodeFromServerModel(node));
+        }
     }
 };
 

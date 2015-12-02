@@ -73,4 +73,8 @@ export default class NodeModel {
             contentHeight: this.contentHeight
         }
     }
+
+    getServerClass(){
+        throw "NodeModel:getServerClass - NodeModel not support serverClass. Child classes should provide this"
+    }
 }

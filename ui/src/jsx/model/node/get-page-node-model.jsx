@@ -1,6 +1,6 @@
 import NodeModel from '../node-model';
 
-export default class ScriptNodeModel extends NodeModel {
+export default class GetPageNodeModel extends NodeModel {
 
     /**
      * @param name
@@ -14,10 +14,10 @@ export default class ScriptNodeModel extends NodeModel {
      * @param {SlotsModel} slots
      * @param executorName
      */
-    constructor(id, name, description, x, y, width, height, contentHeight, script, slots) {
+    constructor(id, name, description, x, y, width, height, contentHeight, url, slots) {
         super(id, name, description, x, y, width, height, contentHeight);
 
-        this.script = script;
+        this.url = url;
         this.slots = slots;
     }
 
@@ -75,13 +75,13 @@ export default class ScriptNodeModel extends NodeModel {
         let slots = this.slots.getServerModel();
 
         serverNodeModel.serverClass = this.getServerClass();
-        serverNodeModel.script = this.script;
+        serverNodeModel.url = this.url;
         serverNodeModel.slots = slots;
 
         return serverNodeModel
     }
 
     getServerClass(){
-        return "script_node"
+        return "get_page_node"
     }
 }

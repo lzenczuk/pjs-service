@@ -7,13 +7,14 @@ export default class ScenarioModel {
      * @param {Object} nodesMap
      * @param {Array<Connection>} connections
      */
-    constructor(nodes, startNodeId, offsetX, offsetY, scale){
+    constructor(nodes, startNodeId, offsetX, offsetY, scale, executorName){
         this.nodes = nodes;
 
         this.startNodeId = startNodeId;
         this.offsetX = offsetX;
         this.offsetY = offsetY;
         this.scale = scale;
+        this.executorName = executorName;
 
         this.nodesMap = {};
         this.connections = [];
@@ -35,8 +36,16 @@ export default class ScenarioModel {
         this.nodesMap[nodeId].name = newNodeName;
     }
 
+    changeScenarioStartNode(nodeId){
+        this.startNodeId = nodeId;
+    }
+
     changeNodeDescription(nodeId, newDescription){
         this.nodesMap[nodeId].description = newDescription;
+    }
+
+    changeNodeUrl(nodeId, newUrl){
+        this.nodesMap[nodeId].url = newUrl;
     }
 
     changeNodeScript(nodeId, newScript){
@@ -101,6 +110,9 @@ export default class ScenarioModel {
     }
 
     removeNode(nodeId){
+        if(this.startNodeId==nodeId){
+            this.startNodeId = null;
+        }
         this.nodes = this.nodes.filter(node => node.id!=nodeId);
         this.nodes.forEach(node => node.removeConnectionsToNode(nodeId));
         this._rebuildConnections()
@@ -158,6 +170,7 @@ export default class ScenarioModel {
             offsetX: this.offsetX,
             offsetY: this.offsetY,
             scale: this.scale,
+            executorName: this.executorName,
             nodesMap: nodesMap
         }
     }

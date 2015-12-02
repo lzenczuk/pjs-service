@@ -7,7 +7,7 @@ const nodeSource = {
 
   beginDrag(props, monitor, component) {
     // Return the data describing the dragged item
-    const item = { name: "Node"+new Date().getTime() };
+    const item = { name: "Node"+new Date().getTime(), type: props.type };
     return item;
   }
 };
@@ -28,7 +28,7 @@ class NewNodeDndButton extends React.Component {
         const { connectDragSource } = this.props;
 
         return connectDragSource(
-            <div className="button">Drag me</div>
+            <div className="button">{this.props.text}</div>
         )
     }
 }

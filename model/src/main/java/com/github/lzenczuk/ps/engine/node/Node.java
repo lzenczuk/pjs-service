@@ -7,9 +7,10 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
  * @author lzenczuk 29/09/2015
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "serverClass")
-@JsonSubTypes(
-        @JsonSubTypes.Type(value = ScriptNode.class, name = "script_node")
-)
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = ScriptNode.class, name = "script_node"),
+        @JsonSubTypes.Type(value = GetPageNode.class, name = "get_page_node")
+})
 public abstract class Node {
 
     private Long id;

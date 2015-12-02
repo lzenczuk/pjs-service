@@ -8,6 +8,8 @@ import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.github.lzenczuk.ps.engine.Scenario;
 import com.github.lzenczuk.ps.executor.ScenarioExecutor;
 import com.github.lzenczuk.ps.executor.result.ScenarioExecutionResult;
+import com.github.lzenczuk.ps.executor.script.ScriptExecutorManager;
+import com.github.lzenczuk.ps.executor.script.phantomjs.PhantomJSScriptExecutor;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -28,7 +30,7 @@ public class SimpleCommandLineScriptExecutor {
         executeScenario(getScenarioFromScenarioServer());
     }
 
-    private static void executeScenario(Scenario scenario) {
+    private static void executeScenario(Scenario scenario) throws IOException {
         System.out.println("===============> start");
 
         Object out = null;
@@ -36,7 +38,10 @@ public class SimpleCommandLineScriptExecutor {
 
         boolean finished = false;
 
-        ScenarioExecutor scenarioExecutor = new ScenarioExecutor(scenario);
+        final ScriptExecutorManager scriptExecutorManager = new ScriptExecutorManager();
+        scriptExecutorManager.addExecutor("phs", new PhantomJSScriptExecutor());
+
+        ScenarioExecutor scenarioExecutor = new ScenarioExecutor(scenario, scriptExecutorManager);
 
         while(true) {
             ScenarioExecutionResult result = scenarioExecutor.execute(ctx, out);

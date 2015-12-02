@@ -14,7 +14,8 @@ class ScenarioControlPanel extends React.Component {
     render() {
         return (
             <div>
-            	<NewNodeDndButton />
+            	<NewNodeDndButton type="script_node" text="Script node"/>
+            	<NewNodeDndButton type="get_page_node" text="Get page node"/>
                 <button type="button" onClick={this.onScenarioSave.bind(this)}>Save</button>
             </div>
         )

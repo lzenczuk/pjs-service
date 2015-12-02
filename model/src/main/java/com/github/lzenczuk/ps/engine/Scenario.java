@@ -17,7 +17,7 @@ public class Scenario {
 
     private long offsetX = 0;
     private long offsetY = 0;
-    private long scale = 1;
+    private double scale = 1;
 
     private String executorName;
 

@@ -16,11 +16,13 @@ export default {
     scenarioLoading: 'SCENARIO_LOADING',
     scenarioLoadingError: 'SCENARIO_LOADING_ERROR',
     scenarioLoaded: 'SCENARIO_LOADED',
+    scenarioStartNodeChanged: 'SCENARIO_START_NODE_CHANGED',
 
     nodeAdded: 'NODE_ADDED',
     nodeMoved: 'NODE_MOVED',
     nodeRenamed: 'NODE_RENAMED',
     nodeDescriptionChanged: 'NODE_DESCRIPTION_CHANGED',
+    nodeUrlChanged: 'NODE_URL_CHANGED',
     nodeScriptChanged: 'NODE_SCRIPT_CHANGED',
     slotLabelChanged: 'SLOT_LABEL_CHANGED',
     slotScriptChanged: 'SLOT_SCRIPT_CHANGED',
