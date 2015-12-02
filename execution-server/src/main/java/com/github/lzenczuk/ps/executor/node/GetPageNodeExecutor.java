@@ -20,12 +20,12 @@ public class GetPageNodeExecutor {
 
     public NodeExecutionResult execute(GetPageNode node, Map<String, Object> ctx, Object input, PhantomJSScriptExecutor scriptExecutor) {
 
-        scriptExecutor.goToPage(node.getUrl());
+        final boolean loadingResult = scriptExecutor.goToPage(node.getUrl());
 
         SlotsValidationResult slotsValidationResult = slotsExecutor.getNextNode(
                 node.getSlots(),
                 ctx,
-                null,
+                loadingResult,
                 scriptExecutor);
 
         if (slotsValidationResult.isError()) {

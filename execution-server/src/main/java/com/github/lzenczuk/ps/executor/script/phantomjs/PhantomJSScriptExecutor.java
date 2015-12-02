@@ -1,11 +1,15 @@
 package com.github.lzenczuk.ps.executor.script.phantomjs;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.lzenczuk.ps.executor.result.ScriptExecutionResult;
 import com.github.lzenczuk.ps.executor.script.ScriptExecutor;
 import com.github.lzenczuk.ps.executor.script.phantomjs.internal.PhantomJsErrorMessage;
+import com.github.lzenczuk.ps.executor.script.phantomjs.internal.log.LogContainer;
 import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
+import org.openqa.selenium.logging.LogEntries;
 import org.openqa.selenium.phantomjs.PhantomJSDriverService;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -86,12 +90,48 @@ public class PhantomJSScriptExecutor implements ScriptExecutor {
         }
     }
 
-    public void goToPage(String url){
+    public boolean goToPage(String url){
         if(engine!=null){
             engine.close();
         }
 
         engine = createEngine();
         engine.get(url);
+
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.setVisibility(mapper.getVisibilityChecker().withFieldVisibility(JsonAutoDetect.Visibility.ANY));
+
+        WebDriver.Options options = engine.manage();
+        LogEntries browserLogs = options.logs().get("har");
+
+        final boolean[] result = {false};
+
+        browserLogs.getAll().stream().findFirst().ifPresent(logEntry -> {
+            try {
+                LogContainer log = mapper.readValue(logEntry.getMessage(), LogContainer.class);
+                if(log.result().isSuccessful()){
+                    result[0] = true;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        System.out.println("==========> "+result[0]);
+
+        return result[0];
+        /*browserLogs.getAll().stream().forEach(le -> {
+
+            System.out.println("=======> "+le.getMessage());
+
+            try {
+                LogContainer log = mapper.readValue(le.getMessage(), LogContainer.class);
+
+                System.out.println("> " + log.result().isSuccessful());
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });*/
     }
 }
